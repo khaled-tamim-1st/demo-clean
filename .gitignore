@@ -8,6 +8,8 @@ out-tsc
 .expo
 .expo-shared
 .next
+out
+.wrangler
 next-env.d.ts
 
 # dependencies
