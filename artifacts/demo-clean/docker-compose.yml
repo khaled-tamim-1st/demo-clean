@@ -1,0 +1,18 @@
+services:
+  democlean_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: democlean_app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    networks:
+      - web_network
+
+networks:
+  web_network:
+    external: true

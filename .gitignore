@@ -7,6 +7,8 @@ out-tsc
 *.tsbuildinfo
 .expo
 .expo-shared
+.next
+next-env.d.ts
 
 # dependencies
 node_modules
@@ -44,6 +46,5 @@ Thumbs.db
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
 
-# Replit
 .cache/
 .local/
