@@ -56,11 +56,13 @@ copyRecursive(publicDir, outDir);
 copyRecursive(staticDir, path.join(outDir, '_next', 'static'));
 collectAppOutputs(serverAppDir);
 
-const rootWorker = path.join(__dirname, '..', '..', 'cloudflare-worker.mjs');
-if (fs.existsSync(rootWorker)) {
-  fs.copyFileSync(rootWorker, path.join(outDir, '_worker.js'));
-  console.log('✓ Copied cloudflare-worker.mjs to artifacts/demo-clean/out/_worker.js');
-}
+// Ensure .assetsignore exists so Wrangler knows not to upload worker files or internal artifacts
+const assetsIgnoreContent = `_worker.js
+_worker.js.map
+.assetsignore
+`;
+fs.writeFileSync(path.join(outDir, '.assetsignore'), assetsIgnoreContent, 'utf-8');
+console.log('✓ Created .assetsignore in artifacts/demo-clean/out');
 
 console.log('✓ Prepared Cloudflare static assets in artifacts/demo-clean/out');
 
