@@ -142,40 +142,52 @@ async function handleApi(request, url, env) {
     }
   }
 
-  if (pathname === '/api/reviews' && method === 'POST') {
-    try {
-      const body = await request.json();
-      const { authorName, governorateName, areaName, serviceName, rating, comment } = body || {};
-
-      if (!authorName || !comment || !serviceName) {
-        return jsonResponse(
-          { success: false, message: 'يرجى كتابة الاسم ونوع الخدمة ورأيك بالتجربة' },
-          400
-        );
-      }
-
-      const newRev = {
-        id: `rev-${Date.now()}`,
-        authorName: authorName.trim(),
-        governorateName: governorateName || 'الكويت',
-        areaName: areaName || 'عام',
-        serviceName: serviceName || 'مكافحة حشرات',
-        rating: Math.min(5, Math.max(1, Number(rating) || 5)),
-        comment: comment.trim(),
-        verified: true,
-        source: 'website',
-        status: 'pending',
-        date: new Date().toISOString().split('T')[0],
-      };
-      reviewsStore.unshift(newRev);
-
+  if (pathname === '/api/reviews') {
+    if (method === 'GET') {
+      reviewsStore = await getKv(env, 'reviewsStore', reviewsStore);
+      const approved = reviewsStore.filter((r) => r.status === 'approved');
       return jsonResponse({
         success: true,
-        review: newRev,
-        message: 'شكراً لك! تم استلام تقييمك وإضافته بنجاح.',
+        reviews: approved,
       });
-    } catch {
-      return jsonResponse({ success: false, message: 'حدث خطأ أثناء حفظ التقييم' }, 500);
+    }
+    if (method === 'POST') {
+      try {
+        const body = await request.json();
+        const { authorName, governorateName, areaName, serviceName, rating, comment } = body || {};
+
+        if (!authorName || !comment || !serviceName) {
+          return jsonResponse(
+            { success: false, message: 'يرجى كتابة الاسم ونوع الخدمة ورأيك بالتجربة' },
+            400
+          );
+        }
+
+        reviewsStore = await getKv(env, 'reviewsStore', reviewsStore);
+        const newRev = {
+          id: `rev-${Date.now()}`,
+          authorName: authorName.trim(),
+          governorateName: governorateName || 'الكويت',
+          areaName: areaName || 'عام',
+          serviceName: serviceName || 'مكافحة حشرات',
+          rating: Math.min(5, Math.max(1, Number(rating) || 5)),
+          comment: comment.trim(),
+          verified: true,
+          source: 'website',
+          status: 'pending',
+          date: new Date().toISOString().split('T')[0],
+        };
+        reviewsStore.unshift(newRev);
+        await setKv(env, 'reviewsStore', reviewsStore);
+
+        return jsonResponse({
+          success: true,
+          review: newRev,
+          message: 'شكراً لك! تم استلام تقييمك وإضافته بنجاح.',
+        });
+      } catch {
+        return jsonResponse({ success: false, message: 'حدث خطأ أثناء حفظ التقييم' }, 500);
+      }
     }
   }
 
@@ -245,6 +257,7 @@ async function handleApi(request, url, env) {
 
   if (pathname === '/api/dashboard/reviews') {
     if (method === 'GET') {
+      reviewsStore = await getKv(env, 'reviewsStore', reviewsStore);
       return jsonResponse({ success: true, reviews: reviewsStore });
     }
     if (method === 'POST') {
@@ -254,6 +267,7 @@ async function handleApi(request, url, env) {
         if (!authorName || !comment || !serviceName) {
           return jsonResponse({ success: false, message: 'يرجى إكمال البيانات الأساسية للتقييم' }, 400);
         }
+        reviewsStore = await getKv(env, 'reviewsStore', reviewsStore);
         const reviewSource = source === 'google' ? 'google' : 'website';
         const reviewStatus = status || (reviewSource === 'google' ? 'approved' : 'pending');
         const newRev = {
@@ -270,6 +284,7 @@ async function handleApi(request, url, env) {
           status: reviewStatus,
         };
         reviewsStore.unshift(newRev);
+        await setKv(env, 'reviewsStore', reviewsStore);
         return jsonResponse({ success: true, review: newRev, message: 'تمت إضافة التقييم بنجاح' }, 201);
       } catch {
         return jsonResponse({ success: false, message: 'فشل إضافة التقييم' }, 500);
@@ -281,11 +296,13 @@ async function handleApi(request, url, env) {
         if (!id || !status) {
           return jsonResponse({ success: false, message: 'معرف التقييم والحالة مطلوبان' }, 400);
         }
+        reviewsStore = await getKv(env, 'reviewsStore', reviewsStore);
         const item = reviewsStore.find((r) => r.id === id);
         if (!item) {
           return jsonResponse({ success: false, message: 'التقييم غير موجود' }, 404);
         }
         item.status = status;
+        await setKv(env, 'reviewsStore', reviewsStore);
         return jsonResponse({ success: true, message: 'تم تحديث حالة التقييم بنجاح' });
       } catch {
         return jsonResponse({ success: false, message: 'فشل تحديث حالة التقييم' }, 500);
@@ -296,7 +313,9 @@ async function handleApi(request, url, env) {
       if (!id) {
         return jsonResponse({ success: false, message: 'معرف التقييم مطلوب' }, 400);
       }
+      reviewsStore = await getKv(env, 'reviewsStore', reviewsStore);
       reviewsStore = reviewsStore.filter((r) => r.id !== id);
+      await setKv(env, 'reviewsStore', reviewsStore);
       return jsonResponse({ success: true, message: 'تم حذف التقييم بنجاح' });
     }
   }

@@ -295,9 +295,16 @@ export default function DashboardPage() {
         body: JSON.stringify({ id, status }),
       });
       if (res.ok) {
-        setReviews((prev) =>
-          prev.map((r) => (r.id === id ? { ...r, status } : r))
-        );
+        setReviews((prev) => {
+          const updated = prev.map((r) => (r.id === id ? { ...r, status } : r));
+          if (typeof window !== 'undefined') {
+            try {
+              const approvedOnly = updated.filter((r) => r.status === 'approved');
+              localStorage.setItem('democlean_approved_reviews', JSON.stringify(approvedOnly));
+            } catch {}
+          }
+          return updated;
+        });
       }
     } catch (err) {
       console.error('Error updating review status:', err);
@@ -309,7 +316,16 @@ export default function DashboardPage() {
     try {
       const res = await fetch(`/api/dashboard/reviews?id=${id}`, { method: 'DELETE' });
       if (res.ok) {
-        setReviews((prev) => prev.filter((r) => r.id !== id));
+        setReviews((prev) => {
+          const updated = prev.filter((r) => r.id !== id);
+          if (typeof window !== 'undefined') {
+            try {
+              const approvedOnly = updated.filter((r) => r.status === 'approved');
+              localStorage.setItem('democlean_approved_reviews', JSON.stringify(approvedOnly));
+            } catch {}
+          }
+          return updated;
+        });
       }
     } catch (err) {
       console.error('Error deleting review:', err);
@@ -325,8 +341,17 @@ export default function DashboardPage() {
         body: JSON.stringify(newReview),
       });
       const data = await res.json();
-      if (data.success) {
-        setReviews((prev) => [data.review, ...prev]);
+      if (data.success && data.review) {
+        setReviews((prev) => {
+          const updated = [data.review, ...prev];
+          if (typeof window !== 'undefined' && data.review.status === 'approved') {
+            try {
+              const approvedOnly = updated.filter((r) => r.status === 'approved');
+              localStorage.setItem('democlean_approved_reviews', JSON.stringify(approvedOnly));
+            } catch {}
+          }
+          return updated;
+        });
         setShowAddReviewModal(false);
         setNewReview({
           authorName: '',

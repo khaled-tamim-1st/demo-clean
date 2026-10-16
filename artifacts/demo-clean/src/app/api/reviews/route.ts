@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
-import { addReview } from '@/lib/db';
+import { addReview, getPublishedReviews } from '@/lib/db';
+
+export async function GET() {
+  const reviews = getPublishedReviews();
+  return NextResponse.json({ success: true, reviews });
+}
 
 export async function POST(request: Request) {
   try {
