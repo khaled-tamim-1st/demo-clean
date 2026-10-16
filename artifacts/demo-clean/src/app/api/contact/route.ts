@@ -34,23 +34,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // Attempt forward to backend api-server if reachable
-    const apiServerUrl = process.env.API_SERVER_URL || 'http://localhost:3001/api/contact';
-    try {
-      const apiRes = await fetch(apiServerUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name.trim(), phone: cleanPhone, governorate, service, notes }),
-      });
-      if (apiRes.ok) {
-        const apiData = await apiRes.json();
-        return NextResponse.json(apiData, { status: 201 });
-      }
-    } catch {
-      // Backend api-server is offline or internal; proceed with self-contained response
-    }
-
-    // Save lead to local storage for Dashboard
+    // 1. ALWAYS save lead to database / leads.json for the Dashboard
     const { saveLead } = await import('@/lib/db');
     const leadRecord = saveLead({
       name: name.trim(),
@@ -59,6 +43,18 @@ export async function POST(request: Request) {
       service,
       notes: notes?.trim() || '',
     });
+
+    // 2. Also forward to backend api-server in background if reachable
+    const apiServerUrl = process.env.API_SERVER_URL || 'http://localhost:3001/api/contact';
+    try {
+      await fetch(apiServerUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name.trim(), phone: cleanPhone, governorate, service, notes }),
+      });
+    } catch {
+      // Backend api-server is offline or internal; lead is already safely stored in local db
+    }
 
     return NextResponse.json({
       success: true,

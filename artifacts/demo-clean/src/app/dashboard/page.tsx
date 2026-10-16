@@ -108,7 +108,27 @@ export default function DashboardPage() {
       const reviewsData = await reviewsRes.json();
       const articlesData = await articlesRes.json();
 
-      if (leadsData.success) setLeads(leadsData.leads);
+      if (leadsData.success) {
+        let serverLeads: LeadItem[] = leadsData.leads || [];
+        if (typeof window !== 'undefined') {
+          try {
+            const deletedIds: string[] = JSON.parse(localStorage.getItem('democlean_deleted_leads') || '[]');
+            serverLeads = serverLeads.filter((l) => !deletedIds.includes(String(l.id)));
+
+            const localLeads: LeadItem[] = JSON.parse(localStorage.getItem('democlean_local_leads') || '[]');
+            const combined = [...serverLeads];
+            for (const loc of localLeads) {
+              if (!deletedIds.includes(String(loc.id)) && !combined.some((s) => String(s.id) === String(loc.id))) {
+                combined.unshift(loc);
+              }
+            }
+            serverLeads = combined;
+          } catch {
+            // Ignore storage error
+          }
+        }
+        setLeads(serverLeads);
+      }
       if (reviewsData.success) setReviews(reviewsData.reviews);
       if (articlesData.success) setArticles(articlesData.articles);
     } catch (err) {
@@ -165,10 +185,23 @@ export default function DashboardPage() {
   const handleDeleteLead = async (id: number | string) => {
     if (!confirm('هل أنت متأكد من حذف هذا الطلب؟')) return;
     try {
-      const res = await fetch(`/api/dashboard/leads?id=${id}`, { method: 'DELETE' });
-      if (res.ok) {
-        setLeads((prev) => prev.filter((l) => String(l.id) !== String(id)));
+      if (typeof window !== 'undefined') {
+        try {
+          const deletedIds: string[] = JSON.parse(localStorage.getItem('democlean_deleted_leads') || '[]');
+          if (!deletedIds.includes(String(id))) {
+            deletedIds.push(String(id));
+            localStorage.setItem('democlean_deleted_leads', JSON.stringify(deletedIds));
+          }
+          const localLeads: LeadItem[] = JSON.parse(localStorage.getItem('democlean_local_leads') || '[]');
+          const filteredLocal = localLeads.filter((l: any) => String(l.id) !== String(id));
+          localStorage.setItem('democlean_local_leads', JSON.stringify(filteredLocal));
+        } catch {
+          // Ignore storage error
+        }
       }
+
+      setLeads((prev) => prev.filter((l) => String(l.id) !== String(id)));
+      await fetch(`/api/dashboard/leads?id=${id}`, { method: 'DELETE' });
     } catch (err) {
       console.error('Error deleting lead:', err);
     }

@@ -58,39 +58,8 @@ function ensureDataDir() {
   }
 }
 
-// Initial sample leads if file doesn't exist
-const INITIAL_LEADS: LeadItem[] = [
-  {
-    id: 10421,
-    name: 'عبدالله الشمري',
-    phone: '67088755',
-    governorate: 'الجهراء',
-    service: 'مكافحة النمل الأبيض والأرضة',
-    notes: 'قسيمة سكنية جديدة في سعد العبدالله محتاجين حقن وقائي',
-    status: 'new',
-    createdAt: new Date(Date.now() - 1000 * 60 * 35).toISOString(),
-  },
-  {
-    id: 10420,
-    name: 'مها الصباح',
-    phone: '99887766',
-    governorate: 'حولي',
-    service: 'مكافحة الصراصير بالجل الألماني',
-    notes: 'شقة بالسالمية، مطبخ ودواليب بدون رائحة',
-    status: 'contacted',
-    createdAt: new Date(Date.now() - 1000 * 60 * 180).toISOString(),
-  },
-  {
-    id: 10419,
-    name: 'سالم الدوسري',
-    phone: '55443322',
-    governorate: 'الأحمدي',
-    service: 'مكافحة بق الفراش بالحرارة والضمان',
-    notes: 'غرفتين نوم بالمهبولة مع طلب شهادة الكفالة',
-    status: 'completed',
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
-  },
-];
+// Initial leads - empty by default so only real leads exist
+const INITIAL_LEADS: LeadItem[] = [];
 
 // Initial reviews - empty by default so only real owner/client reviews exist
 const INITIAL_REVIEWS: ReviewItem[] = [];

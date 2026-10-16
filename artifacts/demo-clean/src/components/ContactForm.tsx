@@ -55,6 +55,27 @@ export default function ContactForm({
         id: result.lead?.id || result.data?.id,
         message: result.message,
       });
+
+      if (typeof window !== 'undefined') {
+        try {
+          const leadData = result.lead || result.data || {
+            id: Math.floor(10000 + Math.random() * 90000),
+            name: formData.name.trim(),
+            phone: formData.phone.trim(),
+            governorate: formData.governorate,
+            service: formData.service,
+            notes: formData.notes.trim(),
+            status: 'new',
+            createdAt: new Date().toISOString(),
+          };
+          const existing = JSON.parse(localStorage.getItem('democlean_local_leads') || '[]');
+          existing.unshift(leadData);
+          localStorage.setItem('democlean_local_leads', JSON.stringify(existing.slice(0, 50)));
+        } catch {
+          // Ignore storage error
+        }
+      }
+
       setSubmitted(true);
     } catch (err: any) {
       setErrorMessage(
