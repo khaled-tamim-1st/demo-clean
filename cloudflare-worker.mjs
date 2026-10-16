@@ -59,7 +59,31 @@ function jsonResponse(data, status = 200) {
   });
 }
 
-async function handleApi(request, url) {
+async function getKv(env, key, fallback) {
+  const kv = env?.DEMO_CLEAN_KV || env?.KV;
+  if (kv) {
+    try {
+      const data = await kv.get(key, { type: 'json' });
+      if (data !== null && data !== undefined) return data;
+    } catch (e) {
+      console.error(`KV get error for ${key}:`, e);
+    }
+  }
+  return fallback;
+}
+
+async function setKv(env, key, value) {
+  const kv = env?.DEMO_CLEAN_KV || env?.KV;
+  if (kv) {
+    try {
+      await kv.put(key, JSON.stringify(value));
+    } catch (e) {
+      console.error(`KV put error for ${key}:`, e);
+    }
+  }
+}
+
+async function handleApi(request, url, env) {
   const { pathname, searchParams } = url;
   const method = request.method.toUpperCase();
 
@@ -83,25 +107,27 @@ async function handleApi(request, url) {
         );
       }
 
-      if (!governorate || typeof governorate !== 'string') {
-        return jsonResponse({ success: false, message: 'يرجى تحديد المحافظة' }, 400);
-      }
+      const safeGov = (governorate && typeof governorate === 'string' && governorate.trim())
+        ? governorate.trim()
+        : 'الكويت (عام)';
+      const safeService = (service && typeof service === 'string' && service.trim())
+        ? service.trim()
+        : 'مكافحة حشرات عامة';
 
-      if (!service || typeof service !== 'string') {
-        return jsonResponse({ success: false, message: 'يرجى تحديد نوع الخدمة المطلوبة' }, 400);
-      }
+      leadsStore = await getKv(env, 'leadsStore', leadsStore);
 
       const newLead = {
         id: Math.floor(10000 + Math.random() * 90000),
         name: name.trim(),
         phone: cleanPhone,
-        governorate,
-        service,
+        governorate: safeGov,
+        service: safeService,
         notes: notes?.trim() || '',
         status: 'new',
         createdAt: new Date().toISOString(),
       };
       leadsStore.unshift(newLead);
+      await setKv(env, 'leadsStore', leadsStore);
 
       return jsonResponse(
         {
@@ -155,7 +181,37 @@ async function handleApi(request, url) {
 
   if (pathname === '/api/dashboard/leads') {
     if (method === 'GET') {
-      return jsonResponse({ success: true, leads: leadsStore });
+      leadsStore = await getKv(env, 'leadsStore', leadsStore);
+      return jsonResponse({
+        success: true,
+        leads: leadsStore,
+        kvActive: !!(env?.DEMO_CLEAN_KV || env?.KV),
+      });
+    }
+    if (method === 'POST') {
+      try {
+        const body = await request.json();
+        const { name, phone, governorate, service, notes, status } = body || {};
+        if (!name || !phone) {
+          return jsonResponse({ success: false, message: 'الاسم ورقم الهاتف مطلوبان' }, 400);
+        }
+        leadsStore = await getKv(env, 'leadsStore', leadsStore);
+        const newLead = {
+          id: Math.floor(10000 + Math.random() * 90000),
+          name: name.trim(),
+          phone: String(phone).replace(/[^0-9]/g, ''),
+          governorate: governorate || 'الكويت (عام)',
+          service: service || 'مكافحة حشرات عامة',
+          notes: notes?.trim() || '',
+          status: status || 'new',
+          createdAt: new Date().toISOString(),
+        };
+        leadsStore.unshift(newLead);
+        await setKv(env, 'leadsStore', leadsStore);
+        return jsonResponse({ success: true, lead: newLead, message: 'تم تسجيل الطلب بنجاح' }, 201);
+      } catch {
+        return jsonResponse({ success: false, message: 'فشل إضافة الطلب' }, 500);
+      }
     }
     if (method === 'PATCH') {
       try {
@@ -163,11 +219,13 @@ async function handleApi(request, url) {
         if (!id || !status) {
           return jsonResponse({ success: false, message: 'البيانات غير مكتملة' }, 400);
         }
+        leadsStore = await getKv(env, 'leadsStore', leadsStore);
         const item = leadsStore.find((l) => String(l.id) === String(id));
         if (!item) {
           return jsonResponse({ success: false, message: 'الطلب غير موجود' }, 404);
         }
         item.status = status;
+        await setKv(env, 'leadsStore', leadsStore);
         return jsonResponse({ success: true, message: 'تم تحديث حالة الطلب بنجاح' });
       } catch {
         return jsonResponse({ success: false, message: 'فشل التحديث' }, 500);
@@ -178,7 +236,9 @@ async function handleApi(request, url) {
       if (!id) {
         return jsonResponse({ success: false, message: 'معرف الطلب مطلوب' }, 400);
       }
+      leadsStore = await getKv(env, 'leadsStore', leadsStore);
       leadsStore = leadsStore.filter((l) => String(l.id) !== String(id));
+      await setKv(env, 'leadsStore', leadsStore);
       return jsonResponse({ success: true, message: 'تم حذف الطلب بنجاح' });
     }
   }
@@ -347,6 +407,122 @@ async function handleApi(request, url) {
     });
   }
 
+  // Prices API
+  if (pathname === '/api/dashboard/prices') {
+    if (method === 'GET') {
+      const storedPrices = await getKv(env, 'pricesStore', null);
+      if (storedPrices) {
+        return jsonResponse({ success: true, prices: storedPrices });
+      }
+      return jsonResponse({
+        success: true,
+        prices: [
+          {
+            id: 'pkg-cockroaches',
+            slug: 'cockroaches',
+            title: 'مكافحة الصراصير بالمطبخ',
+            subtitle: 'جل أدفايون الأمريكي وجل بوسيدون الكوري',
+            price: '20',
+            unit: 'دينار كويتي (يبدأ من)',
+            currency: 'KWD',
+            badge: 'الأكثر طلباً',
+            popular: true,
+            order: 1,
+            status: 'active',
+            warrantyMonths: 6,
+            features: [
+              'استخدام جل أدفايون وبوسيدون بدون إفراغ الخزائن',
+              'معالجة فتحات الصرف وغرف التفتيش',
+              'آمن 100% على الأطفال والحيوانات الأليفة',
+              'بدون رائحة وبدون مغادرة المنزل',
+              'كفالة خطية 6 شهور (إعادة رش مجاني)',
+            ],
+            updatedAt: '2026-10-16',
+          },
+          {
+            id: 'pkg-bedbugs',
+            slug: 'bedbugs',
+            title: 'مكافحة بق الفراش الشاملة',
+            subtitle: 'بروتوكول مزدوج: بخار حراري ومبيدات دقيقة',
+            price: '35',
+            unit: 'دينار كويتي (للغرفة)',
+            currency: 'KWD',
+            badge: 'إبادة تامة للبيوض',
+            popular: false,
+            order: 2,
+            status: 'active',
+            warrantyMonths: 6,
+            features: [
+              'معالجة مزدوجة بالبخار 180 درجة مئوية',
+              'إبادة فورية للبق واليرقات والبيوض الدقيقة',
+              'لا داعي لرمي المراتب أو تبديل الأثاث',
+              'مبيدات صحة عامة (تمبرد إس سي) معتمدة',
+              'كفالة 6 شهور ومتابعة مجانية بعد 14 يوم',
+            ],
+            updatedAt: '2026-10-16',
+          },
+          {
+            id: 'pkg-rodents',
+            slug: 'rodents',
+            title: 'مكافحة القوارض والبيرعصي',
+            subtitle: 'محطات طعوم آمنة وسد منافذ التسلل',
+            price: '25',
+            unit: 'دينار كويتي (يبدأ من)',
+            currency: 'KWD',
+            badge: 'بدون روائح كريهة',
+            popular: false,
+            order: 3,
+            status: 'active',
+            warrantyMonths: 6,
+            features: [
+              'طعوم تسبب جفاف القوارض وخروجها للهواء',
+              'محطات طعوم مغلقة آمنة (Tamper-Resistant)',
+              'مكافحة البيرعصي (الوزغ)، العقارب، والแมง',
+              'إغلاق الفجوات الهندسية والمناور',
+              'كفالة 6 شهور على الفاعلية',
+            ],
+            updatedAt: '2026-10-16',
+          },
+          {
+            id: 'pkg-termites',
+            slug: 'termites',
+            title: 'مكافحة النمل الأبيض (الأرضة)',
+            subtitle: 'حقن هندسي للأبواب ورش الدفان',
+            price: '50',
+            unit: 'دينار كويتي (يبدأ من)',
+            currency: 'KWD',
+            badge: 'حماية الأثاث والأبواب',
+            popular: false,
+            order: 4,
+            status: 'active',
+            warrantyMonths: 120,
+            features: [
+              'حقن دقيق بدون تكسير للسيراميك والباركيه',
+              'مبيدات بايفليكس مرخصة تنهي المستعمرة',
+              'حماية الأبواب والمكتبات وقواطع المنازل',
+              'معالجة قسائم البناء قبل صب الخرسانة',
+              'كفالة تصل لـ 10 سنوات (حسب المعالجة)',
+            ],
+            updatedAt: '2026-10-16',
+          },
+        ],
+      });
+    }
+    if (method === 'POST' || method === 'PUT') {
+      try {
+        const body = await request.json();
+        const { prices } = body || {};
+        if (!Array.isArray(prices)) {
+          return jsonResponse({ success: false, message: 'قائمة الأسعار غير صحيحة' }, 400);
+        }
+        await setKv(env, 'pricesStore', prices);
+        return jsonResponse({ success: true, prices, message: 'تم حفظ وتحديث الأسعار بنجاح' });
+      } catch {
+        return jsonResponse({ success: false, message: 'فشل حفظ الأسعار' }, 500);
+      }
+    }
+  }
+
   return jsonResponse({ success: false, message: 'غير موجود' }, 404);
 }
 
@@ -356,7 +532,7 @@ export default {
 
     // 1. Handle API endpoints
     if (url.pathname.startsWith('/api/')) {
-      return handleApi(request, url);
+      return handleApi(request, url, env);
     }
 
     // 2. Handle Next.js Image Optimization fallback

@@ -56,6 +56,19 @@ export default function DashboardPage() {
   const [reviewStatusFilter, setReviewStatusFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
   const [showAddReviewModal, setShowAddReviewModal] = useState(false);
 
+  // Manual Lead & KV State
+  const [isKvActive, setIsKvActive] = useState<boolean | null>(null);
+  const [showManualLeadModal, setShowManualLeadModal] = useState(false);
+  const [manualLeadForm, setManualLeadForm] = useState({
+    name: '',
+    phone: '',
+    governorate: 'حولي',
+    service: 'مكافحة حشرات عامة',
+    notes: '',
+    status: 'new' as 'new' | 'contacted' | 'completed',
+  });
+  const [savingManualLead, setSavingManualLead] = useState(false);
+
   // Articles state
   const [articleSearchTerm, setArticleSearchTerm] = useState('');
   const [articleCategoryFilter, setArticleCategoryFilter] = useState('all');
@@ -109,6 +122,7 @@ export default function DashboardPage() {
       const articlesData = await articlesRes.json();
 
       if (leadsData.success) {
+        setIsKvActive(leadsData.kvActive ?? null);
         let serverLeads: LeadItem[] = leadsData.leads || [];
         if (typeof window !== 'undefined') {
           try {
@@ -136,6 +150,72 @@ export default function DashboardPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCreateManualLead = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!manualLeadForm.name || !manualLeadForm.phone) {
+      alert('يرجى إدخال اسم العميل ورقم الهاتف على الأقل');
+      return;
+    }
+    setSavingManualLead(true);
+    try {
+      const res = await fetch('/api/dashboard/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(manualLeadForm),
+      });
+      const data = await res.json();
+      if (data.success && data.lead) {
+        setLeads((prev) => [data.lead, ...prev]);
+        if (typeof window !== 'undefined') {
+          const local = JSON.parse(localStorage.getItem('democlean_local_leads') || '[]');
+          local.unshift(data.lead);
+          localStorage.setItem('democlean_local_leads', JSON.stringify(local.slice(0, 50)));
+        }
+        setShowManualLeadModal(false);
+        setManualLeadForm({
+          name: '',
+          phone: '',
+          governorate: 'حولي',
+          service: 'مكافحة حشرات عامة',
+          notes: '',
+          status: 'new',
+        });
+      } else {
+        alert(data.message || 'فشل تسجيل الطلب');
+      }
+    } catch {
+      alert('حدث خطأ أثناء حفظ الطلب');
+    } finally {
+      setSavingManualLead(false);
+    }
+  };
+
+  const exportLeadsToCsv = () => {
+    if (leads.length === 0) {
+      alert('لا توجد طلبات لتصديرها');
+      return;
+    }
+    const headers = ['رقم الطلب', 'الاسم', 'رقم الهاتف', 'المحافظة', 'الخدمة', 'الملاحظات', 'الحالة', 'تاريخ الطلب'];
+    const rows = leads.map((l) => [
+      l.id,
+      `"${(l.name || '').replace(/"/g, '""')}"`,
+      `"${l.phone}"`,
+      `"${(l.governorate || '').replace(/"/g, '""')}"`,
+      `"${(l.service || '').replace(/"/g, '""')}"`,
+      `"${(l.notes || '').replace(/"/g, '""')}"`,
+      l.status === 'completed' ? 'مكتمل' : l.status === 'contacted' ? 'تم التواصل' : 'جديد',
+      l.createdAt ? l.createdAt.split('T')[0] : '',
+    ]);
+    const csvContent = '\uFEFF' + [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `democlean-leads-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   // Check saved authentication on mount
@@ -877,6 +957,73 @@ export default function DashboardPage() {
         {/* TAB 1: LEADS MANAGEMENT */}
         {activeTab === 'leads' && (
           <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #dce2d6', padding: '24px', boxShadow: '0 4px 14px rgba(0,0,0,0.03)' }}>
+            
+            {/* Action Bar Header */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '14px', marginBottom: '22px', borderBottom: '1px solid #edf0e9', paddingBottom: '18px' }}>
+              <div>
+                <h3 style={{ margin: '0 0 6px', fontSize: '18px', fontWeight: 800, color: '#17354a' }}>
+                  سجل طلبات المعاينة والاتصالات ({leads.length})
+                </h3>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px' }}>
+                  {isKvActive ? (
+                    <span style={{ color: '#15803d', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '5px', background: '#ecfdf5', padding: '3px 8px', borderRadius: '6px' }}>
+                      <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#10b981' }} />
+                      قاعدة بيانات سحابية متزامنة (Cloudflare KV)
+                    </span>
+                  ) : (
+                    <span style={{ color: '#854d0e', fontWeight: 600, background: '#fef9c3', padding: '3px 8px', borderRadius: '6px' }}>
+                      ⚡ متزامن مع المتصفح والذاكرة
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  onClick={exportLeadsToCsv}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '9px 15px',
+                    background: '#f1f5eb',
+                    border: '1px solid #c9d8c4',
+                    borderRadius: '8px',
+                    color: '#284d33',
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                  }}
+                >
+                  <Download size={15} />
+                  <span>تصدير Excel/CSV</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setShowManualLeadModal(true)}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '9px 16px',
+                    background: '#204733',
+                    border: 'none',
+                    borderRadius: '8px',
+                    color: '#fff',
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    boxShadow: '0 2px 8px rgba(32,71,51,0.25)',
+                  }}
+                >
+                  <Plus size={16} />
+                  <span>إضافة طلب يدوي / هاتف</span>
+                </button>
+              </div>
+            </div>
+
             {/* Search & Filter Bar */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '14px', marginBottom: '20px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: '1 1 300px' }}>
@@ -2483,7 +2630,177 @@ export default function DashboardPage() {
             </div>
           </div>
         )}
-      </div>
+
+        {/* Modal: Add Manual Lead */}
+        {showManualLeadModal && (
+          <div
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(0,0,0,0.5)',
+              backdropFilter: 'blur(3px)',
+              display: 'grid',
+              placeItems: 'center',
+              zIndex: 1000,
+              padding: '20px',
+            }}
+          >
+            <div
+              style={{
+                background: '#fff',
+                width: '100%',
+                maxWidth: '520px',
+                borderRadius: '16px',
+                padding: '26px',
+                boxShadow: '0 20px 45px rgba(0,0,0,0.25)',
+                maxHeight: '90vh',
+                overflowY: 'auto',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
+                <h3 style={{ margin: 0, fontSize: '17px', fontWeight: 800, color: '#17354a' }}>
+                  تسجيل طلب معاينة جديد (يدوياً)
+                </h3>
+                <button
+                  type="button"
+                  onClick={() => setShowManualLeadModal(false)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#7a8982' }}
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <form onSubmit={handleCreateManualLead} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '12.5px', fontWeight: 700, color: '#334155', marginBottom: '5px' }}>
+                    اسم العميل الكريم *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="مثال: عبدالله الشمري"
+                    value={manualLeadForm.name}
+                    onChange={(e) => setManualLeadForm({ ...manualLeadForm, name: e.target.value })}
+                    style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1dad0', fontSize: '13px' }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '12.5px', fontWeight: 700, color: '#334155', marginBottom: '5px' }}>
+                    رقم الهاتف (الكويت) *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    dir="ltr"
+                    placeholder="مثال: 67088755"
+                    value={manualLeadForm.phone}
+                    onChange={(e) => setManualLeadForm({ ...manualLeadForm, phone: e.target.value })}
+                    style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1dad0', fontSize: '13px' }}
+                  />
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: 700, color: '#334155', marginBottom: '5px' }}>
+                      المحافظة
+                    </label>
+                    <select
+                      value={manualLeadForm.governorate}
+                      onChange={(e) => setManualLeadForm({ ...manualLeadForm, governorate: e.target.value })}
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1dad0', fontSize: '13px' }}
+                    >
+                      <option value="حولي">حولي</option>
+                      <option value="العاصمة">العاصمة</option>
+                      <option value="الفروانية">الفروانية</option>
+                      <option value="الأحمدي">الأحمدي</option>
+                      <option value="مبارك الكبير">مبارك الكبير</option>
+                      <option value="الجهراء">الجهراء</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: 700, color: '#334155', marginBottom: '5px' }}>
+                      الحالة الأولية
+                    </label>
+                    <select
+                      value={manualLeadForm.status}
+                      onChange={(e) => setManualLeadForm({ ...manualLeadForm, status: e.target.value as any })}
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1dad0', fontSize: '13px' }}
+                    >
+                      <option value="new">طلب جديد</option>
+                      <option value="contacted">تم التواصل</option>
+                      <option value="completed">مكتمل وتم الرش</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '12.5px', fontWeight: 700, color: '#334155', marginBottom: '5px' }}>
+                    نوع الخدمة المطلوبة
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="مثال: مكافحة الصراصير بالجل، بق الفراش..."
+                    value={manualLeadForm.service}
+                    onChange={(e) => setManualLeadForm({ ...manualLeadForm, service: e.target.value })}
+                    style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1dad0', fontSize: '13px' }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '12.5px', fontWeight: 700, color: '#334155', marginBottom: '5px' }}>
+                    ملاحظات أو تفاصيل العنوان
+                  </label>
+                  <textarea
+                    rows={3}
+                    placeholder="مثال: اتصل العميل عبر الهاتف، الموعد غداً 4 عصراً..."
+                    value={manualLeadForm.notes}
+                    onChange={(e) => setManualLeadForm({ ...manualLeadForm, notes: e.target.value })}
+                    style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1dad0', fontSize: '13px', resize: 'vertical' }}
+                  />
+                </div>
+
+                <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                  <button
+                    type="submit"
+                    disabled={savingManualLead}
+                    style={{
+                      flex: 1,
+                      padding: '11px',
+                      background: '#204733',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontSize: '13px',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {savingManualLead ? 'جاري الحفظ...' : 'تسجيل الطلب في اللوحة'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowManualLeadModal(false)}
+                    style={{
+                      padding: '11px 18px',
+                      background: '#f1f5ec',
+                      border: '1px solid #cad8bf',
+                      borderRadius: '8px',
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      color: '#495b51',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    إلغاء
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+        </div>
     </div>
   );
 }

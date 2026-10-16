@@ -20,27 +20,20 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!governorate || typeof governorate !== 'string') {
-      return NextResponse.json(
-        { success: false, message: 'يرجى تحديد المحافظة' },
-        { status: 400 }
-      );
-    }
-
-    if (!service || typeof service !== 'string') {
-      return NextResponse.json(
-        { success: false, message: 'يرجى تحديد نوع الخدمة المطلوبة' },
-        { status: 400 }
-      );
-    }
+    const safeGov = (governorate && typeof governorate === 'string' && governorate.trim())
+      ? governorate.trim()
+      : 'الكويت (عام)';
+    const safeService = (service && typeof service === 'string' && service.trim())
+      ? service.trim()
+      : 'مكافحة حشرات عامة';
 
     // 1. ALWAYS save lead to database / leads.json for the Dashboard
     const { saveLead } = await import('@/lib/db');
     const leadRecord = saveLead({
       name: name.trim(),
       phone: cleanPhone,
-      governorate,
-      service,
+      governorate: safeGov,
+      service: safeService,
       notes: notes?.trim() || '',
     });
 

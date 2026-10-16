@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
-import { ArrowLeft, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, AlertCircle, Loader2, MessageCircle, PhoneCall } from 'lucide-react';
 import { servicesData } from '@/data/services';
 import { cleaningServicesData } from '@/data/cleaning';
 import { governoratesData } from '@/data/locations';
@@ -38,11 +38,21 @@ export default function ContactForm({
     setIsSubmitting(true);
     setErrorMessage(null);
 
+    const safeGov = formData.governorate || defaultGovernorateSlug || 'الكويت (عام)';
+    const safeService = formData.service || defaultServiceSlug || 'مكافحة حشرات عامة';
+    const payload = {
+      name: formData.name.trim(),
+      phone: formData.phone.trim(),
+      governorate: safeGov,
+      service: safeService,
+      notes: formData.notes.trim(),
+    };
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const result = await response.json();
@@ -60,11 +70,11 @@ export default function ContactForm({
         try {
           const leadData = result.lead || result.data || {
             id: Math.floor(10000 + Math.random() * 90000),
-            name: formData.name.trim(),
-            phone: formData.phone.trim(),
-            governorate: formData.governorate,
-            service: formData.service,
-            notes: formData.notes.trim(),
+            name: payload.name,
+            phone: payload.phone,
+            governorate: safeGov,
+            service: safeService,
+            notes: payload.notes,
             status: 'new',
             createdAt: new Date().toISOString(),
           };
@@ -86,6 +96,20 @@ export default function ContactForm({
     }
   };
 
+  const getWhatsAppLeadLink = () => {
+    const safeGov = formData.governorate || defaultGovernorateSlug || 'الكويت';
+    const safeService = formData.service || defaultServiceSlug || 'مكافحة حشرات عامة';
+    const text = 
+      `السلام عليكم، أود تأكيد طلب المعاينة في ديمو كلين:\n` +
+      `• الاسم: ${formData.name}\n` +
+      `• الهاتف: ${formData.phone}\n` +
+      `• الخدمة: ${safeService}\n` +
+      `• المحافظة: ${safeGov}\n` +
+      (formData.notes ? `• تفاصيل الطلب: ${formData.notes}\n` : '') +
+      (leadReceipt?.id ? `• رقم تتبع الطلب: #${leadReceipt.id}` : '');
+    return `https://wa.me/96567088755?text=${encodeURIComponent(text)}`;
+  };
+
   return (
     <div className="contact-form" dir="rtl">
       <div className="form-heading">
@@ -94,23 +118,74 @@ export default function ContactForm({
       </div>
 
       {submitted ? (
-        <div className="form-notice" style={{ background: '#e8f4dc', borderColor: '#a6cc85' }} role="status">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#2d5a1e', fontWeight: 700, marginBottom: '6px' }}>
-            <CheckCircle2 size={20} />
-            <span>تم استلام طلب المعاينة بنجاح!</span>
+        <div className="form-notice" style={{ background: '#eef8eb', borderColor: '#9ecc87' }} role="status">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#27521c', fontWeight: 700, marginBottom: '6px' }}>
+            <CheckCircle2 size={22} style={{ color: '#388e3c' }} />
+            <span style={{ fontSize: '15px' }}>تم تسجيل طلب المعاينة بنجاح!</span>
           </div>
           {leadReceipt?.id && (
-            <div style={{ fontSize: '11px', color: '#3b6a25', fontWeight: 600, marginBottom: '6px' }}>
+            <div style={{ fontSize: '12px', color: '#2d5a1e', fontWeight: 700, marginBottom: '8px' }}>
               رقم تتبع الطلب: #{leadReceipt.id}
             </div>
           )}
-          <p style={{ margin: '0 0 10px', color: '#445a3a', fontSize: '13px' }}>
-            شكراً لتواصلك يا {formData.name || 'عميلنا العزيز'}. {leadReceipt?.message || 'سيقوم مسؤول خدمة العملاء في ديمو كلين بالتواصل معك على الرقم المدخل لتأكيد الموعد وإرسال الفريق الفني لمنطقتك.'}
+          <p style={{ margin: '0 0 14px', color: '#3f5637', fontSize: '13.5px', lineHeight: 1.6 }}>
+            شكراً لتواصلك يا <strong>{formData.name || 'عميلنا العزيز'}</strong>. لتسريع خروج الفريق الفني لموقعك، اضغط على الزر أدناه لتأكيد موقعك عبر واتساب فوراً:
           </p>
+
+          <a
+            href={getWhatsAppLeadLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px',
+              background: '#25D366',
+              border: 'none',
+              color: '#ffffff',
+              fontWeight: 800,
+              fontSize: '14px',
+              width: '100%',
+              padding: '13px 18px',
+              borderRadius: '10px',
+              marginBottom: '10px',
+              textDecoration: 'none',
+              boxShadow: '0 4px 14px rgba(37,211,102,0.35)',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            <MessageCircle size={20} />
+            <span>تأكيد الحجز والموقع عبر واتساب (رد فوري)</span>
+          </a>
+
+          <a
+            href={`tel:${COMPANY_INFO.phone}`}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              background: '#ffffff',
+              border: '1px solid #c2d6b7',
+              color: '#284d32',
+              fontWeight: 700,
+              fontSize: '13px',
+              width: '100%',
+              padding: '10px 16px',
+              borderRadius: '8px',
+              marginBottom: '14px',
+              textDecoration: 'none',
+            }}
+          >
+            <PhoneCall size={16} />
+            <span>اتصال مباشر بفني ديمو كلين ({COMPANY_INFO.phone})</span>
+          </a>
+
           <button
             type="button"
             className="button-primary"
-            style={{ padding: '8px 16px', fontSize: '12px' }}
+            style={{ padding: '7px 14px', fontSize: '12px', background: 'transparent', color: '#4d6945', border: '1px solid #c6dbc0' }}
             onClick={() => {
               setSubmitted(false);
               setLeadReceipt(null);

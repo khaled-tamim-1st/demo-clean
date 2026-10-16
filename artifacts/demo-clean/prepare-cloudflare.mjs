@@ -56,4 +56,11 @@ copyRecursive(publicDir, outDir);
 copyRecursive(staticDir, path.join(outDir, '_next', 'static'));
 collectAppOutputs(serverAppDir);
 
+const rootWorker = path.join(__dirname, '..', '..', 'cloudflare-worker.mjs');
+if (fs.existsSync(rootWorker)) {
+  fs.copyFileSync(rootWorker, path.join(outDir, '_worker.js'));
+  console.log('✓ Copied cloudflare-worker.mjs to artifacts/demo-clean/out/_worker.js');
+}
+
 console.log('✓ Prepared Cloudflare static assets in artifacts/demo-clean/out');
+
