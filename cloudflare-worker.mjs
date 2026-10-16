@@ -549,6 +549,12 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    // 0. Canonical 301 Redirect: www -> non-www (e.g. www.democleankw.com -> democleankw.com)
+    if (url.hostname.startsWith('www.')) {
+      url.hostname = url.hostname.replace(/^www\./, '');
+      return Response.redirect(url.toString(), 301);
+    }
+
     // 1. Handle API endpoints
     if (url.pathname.startsWith('/api/')) {
       return handleApi(request, url, env);

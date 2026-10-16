@@ -12,6 +12,16 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 31536000,
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.democleankw.com' }],
+        destination: 'https://democleankw.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
