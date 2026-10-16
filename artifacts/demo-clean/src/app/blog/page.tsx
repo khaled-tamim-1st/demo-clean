@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Clock, User, ArrowLeft, Tag, BookOpen } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     'نصائح مكافحة الحشرات الكويت',
   ],
   alternates: {
-    canonical: 'https://democlean-kuwait.com/blog',
+    canonical: 'https://democleankw.com/blog',
   },
 };
 

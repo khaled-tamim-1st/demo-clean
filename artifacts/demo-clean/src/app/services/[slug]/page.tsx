@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -46,11 +46,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: service.metaTitle,
       description: service.metaDescription,
-      url: `https://democlean-kuwait.com/services/${service.slug}`,
+      url: `https://democleankw.com/services/${service.slug}`,
       images: ['/og-image.jpg'],
     },
     alternates: {
-      canonical: `https://democlean-kuwait.com/services/${service.slug}`,
+      canonical: `https://democleankw.com/services/${service.slug}`,
     },
   };
 }
@@ -76,7 +76,7 @@ export default async function ServiceDetailPage({ params }: Props) {
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    '@id': `https://democlean-kuwait.com/services/${service.slug}#service`,
+    '@id': `https://democleankw.com/services/${service.slug}#service`,
     serviceType: service.title,
     provider: {
       '@type': 'LocalBusiness',

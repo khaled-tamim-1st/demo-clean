@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
@@ -1280,7 +1280,7 @@ export default function DashboardPage() {
                     direction: 'ltr',
                   }}
                 >
-                  https://democlean-kuwait.com/review
+                  https://democleankw.com/review
                 </code>
               </div>
 

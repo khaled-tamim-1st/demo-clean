@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Star, CheckCircle2, ShieldCheck, ArrowLeft, Quote } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     'افضل شركة رش حشرات عن تجربة',
   ],
   alternates: {
-    canonical: 'https://democlean-kuwait.com/reviews',
+    canonical: 'https://democleankw.com/reviews',
   },
 };
 

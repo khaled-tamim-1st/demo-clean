@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -33,7 +33,7 @@ export default function Header() {
       '@type': 'SiteNavigationElement',
       position: index + 1,
       name: link.label,
-      url: `https://democlean-kuwait.com${link.href}`,
+      url: `https://democleankw.com${link.href}`,
     })),
   };
 

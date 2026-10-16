@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, Bug, ShieldAlert, Rat, Sparkles, CalendarCheck, ShieldCheck, Check, Clock, Award } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     'اسعار مكافحة الحشرات بالكويت',
   ],
   alternates: {
-    canonical: 'https://democlean-kuwait.com/services',
+    canonical: 'https://democleankw.com/services',
   },
 };
 

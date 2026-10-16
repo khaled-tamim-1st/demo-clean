@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   CheckCircle2,
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     'اسعار رش النمل الابيض الكويت',
   ],
   alternates: {
-    canonical: 'https://democlean-kuwait.com/pest-control-prices',
+    canonical: 'https://democleankw.com/pest-control-prices',
   },
 };
 
@@ -62,7 +62,7 @@ export default function PricingPage() {
     provider: {
       '@type': 'LocalBusiness',
       name: COMPANY_INFO.name,
-      image: 'https://democlean-kuwait.com/logo.png',
+      image: 'https://democleankw.com/logo.png',
       telephone: COMPANY_INFO.phoneIntl,
     },
     offers: pricePackages.map(pkg => ({

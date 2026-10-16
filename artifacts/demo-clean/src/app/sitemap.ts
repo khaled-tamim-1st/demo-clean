@@ -1,11 +1,11 @@
-import type { MetadataRoute } from 'next';
+﻿import type { MetadataRoute } from 'next';
 import { servicesData } from '@/data/services';
 import { cleaningServicesData } from '@/data/cleaning';
 import { governoratesData, getAllAreasWithGov } from '@/data/locations';
 import { getLoadedArticles } from '@/data/articles';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://democlean-kuwait.com';
+  const baseUrl = 'https://democleankw.com';
   const currentDate = new Date();
 
   // Static / Core routes

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import { PhoneCall, MessageCircle, Clock, MapPin, ShieldCheck, Mail, FileText, CheckCircle2 } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     'عنوان ديمو كلين',
   ],
   alternates: {
-    canonical: 'https://democlean-kuwait.com/contact',
+    canonical: 'https://democleankw.com/contact',
   },
 };
 

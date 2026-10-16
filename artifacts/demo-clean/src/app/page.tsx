@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
 import {
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'ديمو كلين لمكافحة الحشرات بالكويت' }]
   },
   alternates: {
-    canonical: 'https://democlean-kuwait.com',
+    canonical: 'https://democleankw.com',
   }
 };
 

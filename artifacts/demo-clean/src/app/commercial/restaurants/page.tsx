@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   UtensilsCrossed,
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     'عقد مكافحة حشرات للمطاعم',
   ],
   alternates: {
-    canonical: 'https://democlean-kuwait.com/commercial/restaurants',
+    canonical: 'https://democleankw.com/commercial/restaurants',
   },
 };
 
@@ -80,7 +80,7 @@ export default function RestaurantsPestControlPage() {
       '@type': 'LocalBusiness',
       name: 'ديمو كلين لمكافحة الحشرات والقوارض',
       telephone: COMPANY_INFO.phoneIntl,
-      image: 'https://democlean-kuwait.com/logo.png',
+      image: 'https://democleankw.com/logo.png',
       priceRange: '$$',
     },
     areaServed: 'KW',

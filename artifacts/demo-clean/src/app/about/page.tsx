@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   ShieldCheck,
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     'شركة مكافحة قوارض مرخصة',
   ],
   alternates: {
-    canonical: 'https://democlean-kuwait.com/about',
+    canonical: 'https://democleankw.com/about',
   },
 };
 

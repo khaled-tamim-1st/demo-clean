@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
@@ -61,7 +61,7 @@ export default function PrivacyPolicyPage() {
               </p>
               <ul style={{ paddingRight: '20px', marginBottom: '16px' }}>
                 <li style={{ marginBottom: '8px' }}>الهاتف: 67088755</li>
-                <li style={{ marginBottom: '8px' }}>البريد الإلكتروني: info@democlean-kuwait.com</li>
+                <li style={{ marginBottom: '8px' }}>البريد الإلكتروني: info@democleankw.com</li>
               </ul>
             </div>
           </div>

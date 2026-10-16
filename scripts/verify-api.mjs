@@ -5,7 +5,7 @@ async function test() {
   const serviceRes = await fetch('http://localhost:3000/services/cockroaches');
   const serviceHtml = await serviceRes.text();
   console.log('GET /services/cockroaches status:', serviceRes.status);
-  console.log('  Has canonical tag:', serviceHtml.includes('rel="canonical" href="https://democlean-kuwait.com/services/cockroaches"'));
+  console.log('  Has canonical tag:', serviceHtml.includes('rel="canonical" href="https://democleankw.com/services/cockroaches"'));
   console.log('  Has content-sidebar-layout:', serviceHtml.includes('content-sidebar-layout'));
   console.log('  Has JSON-LD schema:', serviceHtml.includes('application/ld+json') && serviceHtml.includes('PestControl'));
 
@@ -18,7 +18,7 @@ async function test() {
   const areaRes = await fetch('http://localhost:3000/coverage/hawalli/salmiya');
   const areaHtml = await areaRes.text();
   console.log('GET /coverage/hawalli/salmiya status:', areaRes.status);
-  console.log('  Has canonical tag:', areaHtml.includes('rel="canonical" href="https://democlean-kuwait.com/coverage/hawalli/salmiya"'));
+  console.log('  Has canonical tag:', areaHtml.includes('rel="canonical" href="https://democleankw.com/coverage/hawalli/salmiya"'));
   console.log('  Has content-sidebar-layout:', areaHtml.includes('content-sidebar-layout'));
 
   // Test 3: Contact page

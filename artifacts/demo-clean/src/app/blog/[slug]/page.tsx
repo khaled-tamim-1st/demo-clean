@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Clock, User, Calendar, Tag, ArrowLeft, PhoneCall, ShieldCheck, Share2 } from 'lucide-react';
@@ -35,11 +35,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: article.publishedAt,
       modifiedTime: article.updatedAt,
       authors: [article.author.name],
-      url: `https://democlean-kuwait.com/blog/${article.slug}`,
+      url: `https://democleankw.com/blog/${article.slug}`,
       images: ['/og-image.jpg'],
     },
     alternates: {
-      canonical: `https://democlean-kuwait.com/blog/${article.slug}`,
+      canonical: `https://democleankw.com/blog/${article.slug}`,
     },
   };
 }
@@ -57,7 +57,7 @@ export default async function ArticleDetailPage({ params }: Props) {
     '@type': 'Article',
     headline: article.title,
     description: article.excerpt,
-    image: 'https://democlean-kuwait.com/og-image.jpg',
+    image: 'https://democleankw.com/og-image.jpg',
     datePublished: article.publishedAt,
     dateModified: article.updatedAt,
     author: {
@@ -70,12 +70,12 @@ export default async function ArticleDetailPage({ params }: Props) {
       name: 'ديمو كلين لمكافحة الحشرات والقوارض',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://democlean-kuwait.com/logo.webp',
+        url: 'https://democleankw.com/logo.webp',
       },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://democlean-kuwait.com/blog/${article.slug}`,
+      '@id': `https://democleankw.com/blog/${article.slug}`,
     },
   };
   const schemaList: Record<string, unknown>[] = [articleSchema];

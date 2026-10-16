@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import { ChevronLeft, Home } from 'lucide-react';
 import JsonLd from './JsonLd';
 
@@ -24,7 +24,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
       '@type': 'ListItem',
       position: index + 1,
       name: item.label,
-      item: item.href ? `https://democlean-kuwait.com${item.href}` : undefined,
+      item: item.href ? `https://democleankw.com${item.href}` : undefined,
     })),
   };
 

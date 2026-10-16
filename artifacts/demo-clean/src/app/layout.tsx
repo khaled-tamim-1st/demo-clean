@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import { IBM_Plex_Sans_Arabic } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
@@ -16,7 +16,7 @@ const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://democlean-kuwait.com'),
+  metadataBase: new URL('https://democleankw.com'),
   title: {
     default: 'ديمو كلين | شركة تنظيف وإبادة حشرات وقوارض في الكويت - خدمة 24 ساعة',
     template: '%s | ديمو كلين الكويت',
@@ -54,20 +54,20 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ar_KW',
-    url: 'https://democlean-kuwait.com',
+    url: 'https://democleankw.com',
     siteName: 'ديمو كلين لمكافحة الحشرات والقوارض بالكويت',
     title: 'ديمو كلين | شركة مكافحة حشرات وقوارض في الكويت بالضمان',
     description: 'أفضل خدمات مكافحة الآفات والقوارض في الكويت، تغطية شاملة للمحافظات الست بأساليب بيئية آمنة وضمان معتمد.',
     images: [
       {
-        url: 'https://democlean-kuwait.com/og-image.jpg',
+        url: 'https://democleankw.com/og-image.jpg',
         width: 1200,
         height: 630,
         type: 'image/jpeg',
         alt: 'ديمو كلين - مكافحة الحشرات والقوارض في الكويت',
       },
       {
-        url: 'https://democlean-kuwait.com/og-image.webp',
+        url: 'https://democleankw.com/og-image.webp',
         width: 1200,
         height: 630,
         type: 'image/webp',
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ديمو كلين | شركة مكافحة حشرات وقوارض في الكويت',
     description: 'خدمة احترافية على مدار 24 ساعة في جميع مناطق الكويت مع الضمان والمتابعة المجانية.',
-    images: ['https://democlean-kuwait.com/og-image.jpg'],
+    images: ['https://democleankw.com/og-image.jpg'],
   },
   robots: {
     index: true,
@@ -97,12 +97,12 @@ export const metadata: Metadata = {
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'PestControl',
-  '@id': 'https://democlean-kuwait.com/#organization',
+  '@id': 'https://democleankw.com/#organization',
   name: 'ديمو كلين',
   alternateName: 'Demo Clean',
-  url: 'https://democlean-kuwait.com',
-  logo: 'https://democlean-kuwait.com/logo.webp',
-  image: 'https://democlean-kuwait.com/demo-clean-identity.webp',
+  url: 'https://democleankw.com',
+  logo: 'https://democleankw.com/logo.webp',
+  image: 'https://democleankw.com/demo-clean-identity.webp',
   telephone: '+96567088755',
   priceRange: 'KWD 20 - KWD 150',
   currenciesAccepted: 'KWD',
@@ -158,17 +158,17 @@ const localBusinessSchema = {
 const webSiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  '@id': 'https://democlean-kuwait.com/#website',
-  url: 'https://democlean-kuwait.com',
+  '@id': 'https://democleankw.com/#website',
+  url: 'https://democleankw.com',
   name: 'ديمو كلين',
   publisher: {
-    '@id': 'https://democlean-kuwait.com/#organization',
+    '@id': 'https://democleankw.com/#organization',
   },
   potentialAction: {
     '@type': 'SearchAction',
     target: {
       '@type': 'EntryPoint',
-      urlTemplate: 'https://democlean-kuwait.com/search?q={search_term_string}',
+      urlTemplate: 'https://democleankw.com/search?q={search_term_string}',
     },
     'query-input': 'required name=search_term_string',
   },

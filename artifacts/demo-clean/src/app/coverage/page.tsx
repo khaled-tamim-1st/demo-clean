@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import { MapPin, Clock, ArrowLeft, ShieldCheck, Check } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     'رش حشرات العاصمة ومبارك الكبير',
   ],
   alternates: {
-    canonical: 'https://democlean-kuwait.com/coverage',
+    canonical: 'https://democleankw.com/coverage',
   },
 };
 

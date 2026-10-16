@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, HelpCircle, PhoneCall } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     'ضمان مكافحة الحشرات بالكويت',
   ],
   alternates: {
-    canonical: 'https://democlean-kuwait.com/faq',
+    canonical: 'https://democleankw.com/faq',
   },
 };
 

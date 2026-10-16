@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   Sparkles,
@@ -36,12 +36,12 @@ export const metadata: Metadata = {
     'ديمو كلين للتنظيف ومكافحة الحشرات',
   ],
   alternates: {
-    canonical: 'https://democlean-kuwait.com/cleaning-services',
+    canonical: 'https://democleankw.com/cleaning-services',
   },
   openGraph: {
     title: 'خدمات التنظيف الشامل في الكويت | ديمو كلين للتنظيف وإبادة الحشرات',
     description: 'تنظيف عميق للفلل والمنازل، غسيل كنب وسجاد، تنظيف بعد التشطيب وتنظيف المطاعم في جميع مناطق الكويت 24 ساعة.',
-    url: 'https://democlean-kuwait.com/cleaning-services',
+    url: 'https://democleankw.com/cleaning-services',
     images: ['/og-image.jpg'],
   },
 };
