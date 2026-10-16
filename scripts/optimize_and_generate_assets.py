@@ -87,26 +87,37 @@ def generate_favicons(master_logo):
     # To look gorgeous in both dark and light browser tabs and in Google Search mobile circular crop:
     # A circular or squircle white badge with the logo inside makes the favicon look crisp on ANY tab or search theme!
     
+    # Crop master_logo to actual content
+    bbox = master_logo.getbbox()
+    content = master_logo.crop(bbox)
+    shield_center_in_content = 188.5
+
     def create_favicon_canvas(size):
+        # Clean white canvas with rounded corners for smooth aesthetic on dark and light browser tabs
         canvas = Image.new('RGBA', (size, size), (0, 0, 0, 0))
         draw = ImageDraw.Draw(canvas)
         
-        # Subtle rounded white background with 1px border so it looks ultra sharp on dark mode browser tabs
-        corner_radius = int(size * 0.22)
-        pad = int(size * 0.04)
+        corner_radius = int(size * 0.18)
         draw.rounded_rectangle(
-            [(pad, pad), (size - pad - 1, size - pad - 1)],
+            [(0, 0), (size - 1, size - 1)],
             radius=corner_radius,
             fill=(255, 255, 255, 255),
-            outline=(210, 225, 210, 255),
-            width=max(1, int(size * 0.03))
         )
         
-        # Now paste the logo in the center (occupying ~72% of canvas, ensuring 100% safe area inside circle crop)
-        logo_area = int(size * 0.72)
-        scaled_logo = master_logo.resize((logo_area, logo_area), Image.Resampling.LANCZOS)
-        pos = (size - logo_area) // 2
-        canvas.paste(scaled_logo, (pos, pos), scaled_logo)
+        # Scale content so that the shield is placed in the exact optical center
+        # leaving a balanced 8% margin around the furthest element
+        max_half_width = size * 0.44
+        scale = max_half_width / (content.width - shield_center_in_content)
+        
+        new_w = int(content.width * scale)
+        new_h = int(content.height * scale)
+        scaled_content = content.resize((new_w, new_h), Image.Resampling.LANCZOS)
+        
+        # Pos_x positions the shield center at size / 2.0
+        pos_x = int(round((size / 2.0) - (shield_center_in_content * scale)))
+        pos_y = (size - new_h) // 2
+        
+        canvas.paste(scaled_content, (pos_x, pos_y), scaled_content)
         return canvas
 
     # Sizes according to Google & PWA guidelines:
