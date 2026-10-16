@@ -29,12 +29,28 @@ export interface ReviewItem {
 import { articlesData as INITIAL_ARTICLES, type ArticleItem, type ArticleFaq } from '@/data/articles';
 export type { ArticleItem, ArticleFaq };
 
-const LEADS_FILE = path.join(process.cwd(), 'data', 'leads.json');
-const REVIEWS_FILE = path.join(process.cwd(), 'data', 'reviews.json');
-const ARTICLES_FILE = path.join(process.cwd(), 'data', 'articles.json');
+function resolveDataFile(filename: string): string {
+  const cands = [
+    path.join(process.cwd(), 'data', filename),
+    path.join(process.cwd(), 'artifacts', 'demo-clean', 'data', filename),
+  ];
+  for (const c of cands) {
+    if (fs.existsSync(c)) return c;
+  }
+  const preferred = path.join(process.cwd(), 'data', filename);
+  const dir = path.dirname(preferred);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  return preferred;
+}
+
+const LEADS_FILE = resolveDataFile('leads.json');
+const REVIEWS_FILE = resolveDataFile('reviews.json');
+const ARTICLES_FILE = resolveDataFile('articles.json');
 
 function ensureDataDir() {
-  const dir = path.join(process.cwd(), 'data');
+  const dir = path.dirname(ARTICLES_FILE);
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import {
   Users,
@@ -404,6 +404,26 @@ export default function DashboardPage() {
     document.body.removeChild(link);
     setTimeout(() => setDownloadingFormat(null), 1000);
   };
+
+  // Available unique categories for filtering and forms
+  const availableCategories = useMemo(() => {
+    const defaults = [
+      'دليل الآفات',
+      'مكافحة المطابخ',
+      'مكافحة القوارض',
+      'الوقاية الموسمية',
+      'إرشادات هندسية',
+      'بق الفراش',
+      'الصراصير',
+      'النمل الأبيض',
+      'القوارض والفئران',
+      'نصائح وقائية',
+      'خدمات التنظيف',
+      'عام',
+    ];
+    const fromArticles = articles.map((a) => a.category).filter(Boolean);
+    return Array.from(new Set([...fromArticles, ...defaults]));
+  }, [articles]);
 
   // Filtered Articles
   const filteredArticles = articles.filter((art) => {
@@ -1568,12 +1588,11 @@ export default function DashboardPage() {
                     }}
                   >
                     <option value="all">جميع التصنيفات</option>
-                    <option value="بق الفراش">بق الفراش</option>
-                    <option value="الصراصير">الصراصير</option>
-                    <option value="النمل الأبيض">النمل الأبيض</option>
-                    <option value="القوارض والفئران">القوارض والفئران</option>
-                    <option value="نصائح وقائية">نصائح وقائية</option>
-                    <option value="خدمات التنظيف">خدمات التنظيف</option>
+                    {availableCategories.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -1958,13 +1977,14 @@ export default function DashboardPage() {
                       onChange={(e) => setArticleForm({ ...articleForm, category: e.target.value })}
                       style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1dad0', fontSize: '13px' }}
                     >
-                      <option value="بق الفراش">بق الفراش</option>
-                      <option value="الصراصير">الصراصير</option>
-                      <option value="النمل الأبيض">النمل الأبيض</option>
-                      <option value="القوارض والفئران">القوارض والفئران</option>
-                      <option value="نصائح وقائية">نصائح وقائية</option>
-                      <option value="خدمات التنظيف">خدمات التنظيف</option>
-                      <option value="عام">عام</option>
+                      {availableCategories.map((cat) => (
+                        <option key={cat} value={cat}>
+                          {cat}
+                        </option>
+                      ))}
+                      {!availableCategories.includes(articleForm.category) && articleForm.category && (
+                        <option value={articleForm.category}>{articleForm.category}</option>
+                      )}
                     </select>
                   </div>
                 </div>

@@ -45,12 +45,17 @@ export const articlesData: ArticleItem[] = [
 
 export function getLoadedArticles(includeDrafts = false): ArticleItem[] {
   try {
-    const filePath = path.join(process.cwd(), 'data', 'articles.json');
-    if (typeof window === 'undefined' && fs.existsSync(filePath)) {
-      const data = fs.readFileSync(filePath, 'utf-8');
-      const parsed = JSON.parse(data);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return includeDrafts ? parsed : parsed.filter((a: ArticleItem) => a.status !== 'draft');
+    const cands = [
+      path.join(process.cwd(), 'data', 'articles.json'),
+      path.join(process.cwd(), 'artifacts', 'demo-clean', 'data', 'articles.json'),
+    ];
+    for (const filePath of cands) {
+      if (typeof window === 'undefined' && fs.existsSync(filePath)) {
+        const data = fs.readFileSync(filePath, 'utf-8');
+        const parsed = JSON.parse(data);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return includeDrafts ? parsed : parsed.filter((a: ArticleItem) => a.status !== 'draft');
+        }
       }
     }
   } catch {
