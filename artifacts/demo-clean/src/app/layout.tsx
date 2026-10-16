@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { IBM_Plex_Sans_Arabic } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
@@ -61,15 +61,15 @@ export const metadata: Metadata = {
     images: [
       {
         url: 'https://democleankw.com/og-image.jpg',
-        width: 1200,
-        height: 630,
+        width: 800,
+        height: 800,
         type: 'image/jpeg',
         alt: 'ديمو كلين - مكافحة الحشرات والقوارض في الكويت',
       },
       {
         url: 'https://democleankw.com/og-image.webp',
-        width: 1200,
-        height: 630,
+        width: 800,
+        height: 800,
         type: 'image/webp',
         alt: 'ديمو كلين - مكافحة الحشرات والقوارض في الكويت',
       },

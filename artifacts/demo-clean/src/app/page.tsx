@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
 import {
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'افضل شركة مكافحة حشرات وقوارض بالكويت مرخصة | ديمو كلين',
     description: 'أفضل شركة مكافحة حشرات وقوارض في الكويت. إبادة الصراصير، البق، والفئران بمبيدات ألمانية مرخصة من وزارة الصحة. كفالة 6 شهور وخدمة 24/7.',
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'ديمو كلين لمكافحة الحشرات بالكويت' }]
+    images: [{ url: '/og-image.jpg', width: 800, height: 800, alt: 'ديمو كلين لمكافحة الحشرات بالكويت' }]
   },
   alternates: {
     canonical: 'https://democleankw.com',
