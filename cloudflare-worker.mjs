@@ -33,6 +33,38 @@ const INITIAL_LEADS = [
 
 let leadsStore = [...INITIAL_LEADS];
 let reviewsStore = [];
+let articlesStore = [];
+
+function articleToMarkdownWorker(article) {
+  const frontmatter = [
+    '---',
+    `title: "${(article.title || '').replace(/"/g, '\\"')}"`,
+    `slug: "${article.slug || ''}"`,
+    `category: "${article.category || ''}"`,
+    `publishedAt: "${article.publishedAt || ''}"`,
+    `tags: [${(article.tags || []).map((t) => `"${t}"`).join(', ')}]`,
+    `status: "${article.status || 'published'}"`,
+    '---',
+    '',
+  ].join('\n');
+
+  let body = `# ${article.title}\n\n`;
+  if (article.excerpt) body += `> ${article.excerpt}\n\n`;
+  if (article.quickSummary && article.quickSummary.length > 0) {
+    body += `### ملخص سريع وأهم النقاط:\n\n`;
+    for (const point of article.quickSummary) body += `- ${point}\n`;
+    body += '\n';
+  }
+  body += `### المحتوى:\n\n`;
+  for (const para of article.content || []) body += `${para}\n\n`;
+  if (article.faqs && article.faqs.length > 0) {
+    body += `### الأسئلة الشائعة:\n\n`;
+    for (const faq of article.faqs) {
+      body += `#### س: ${faq.question}\n\nج: ${faq.answer}\n\n`;
+    }
+  }
+  return `${frontmatter}${body}`;
+}
 
 const SECURITY_HEADERS = {
   'Cross-Origin-Opener-Policy': 'same-origin',
@@ -233,6 +265,112 @@ async function handleApi(request, url) {
       reviewsStore = reviewsStore.filter((r) => r.id !== id);
       return jsonResponse({ success: true, message: 'تم حذف التقييم بنجاح' });
     }
+  }
+
+  // Articles API
+  if (pathname === '/api/dashboard/articles') {
+    if (method === 'GET') {
+      return jsonResponse({ success: true, articles: articlesStore });
+    }
+    if (method === 'POST') {
+      try {
+        const body = await request.json();
+        const { title, content, category } = body || {};
+        if (!title || !category) {
+          return jsonResponse({ success: false, message: 'يرجى إكمال البيانات الأساسية' }, 400);
+        }
+        let slug = body.slug?.trim();
+        if (!slug) {
+          slug = title
+            .trim()
+            .toLowerCase()
+            .replace(/[^\u0621-\u064Aa-z0-9\s-]/g, '')
+            .replace(/\s+/g, '-');
+        }
+        const newArt = {
+          ...body,
+          id: `art-${Date.now()}`,
+          slug: slug || `article-${Date.now()}`,
+          title: title.trim(),
+          category: category.trim(),
+          content: Array.isArray(content) ? content : (content || '').split('\n\n').filter(Boolean),
+          status: body.status === 'draft' ? 'draft' : 'published',
+          publishedAt: body.publishedAt || new Date().toISOString().split('T')[0],
+          updatedAt: new Date().toISOString().split('T')[0],
+        };
+        articlesStore.unshift(newArt);
+        return jsonResponse({ success: true, article: newArt, message: 'تم حفظ المقال بنجاح' }, 201);
+      } catch {
+        return jsonResponse({ success: false, message: 'حدث خطأ في الخادم' }, 500);
+      }
+    }
+    if (method === 'PATCH') {
+      try {
+        const body = await request.json();
+        const { id, ...updates } = body || {};
+        if (!id) return jsonResponse({ success: false, message: 'معرف المقال مطلوب' }, 400);
+        const idx = articlesStore.findIndex((a) => a.id === id || a.slug === id);
+        if (idx === -1) return jsonResponse({ success: false, message: 'المقال غير موجود' }, 404);
+        articlesStore[idx] = { ...articlesStore[idx], ...updates, updatedAt: new Date().toISOString().split('T')[0] };
+        return jsonResponse({ success: true, article: articlesStore[idx], message: 'تم التحديث' });
+      } catch {
+        return jsonResponse({ success: false, message: 'فشل التحديث' }, 500);
+      }
+    }
+    if (method === 'DELETE') {
+      const id = searchParams.get('id');
+      if (!id) return jsonResponse({ success: false, message: 'المعرف مطلوب' }, 400);
+      articlesStore = articlesStore.filter((a) => a.id !== id && a.slug !== id);
+      return jsonResponse({ success: true, message: 'تم الحذف بنجاح' });
+    }
+  }
+
+  // Articles Export / Download
+  if (pathname === '/api/dashboard/articles/export') {
+    const id = searchParams.get('id');
+    const slug = searchParams.get('slug');
+    const format = (searchParams.get('format') || 'json').toLowerCase();
+
+    if (id || slug) {
+      const article = articlesStore.find((a) => (id && a.id === id) || (slug && a.slug === slug));
+      if (!article) return jsonResponse({ success: false, message: 'المقال غير موجود' }, 404);
+
+      if (format === 'markdown' || format === 'md') {
+        return new Response(articleToMarkdownWorker(article), {
+          headers: {
+            'Content-Type': 'text/markdown; charset=utf-8',
+            'Content-Disposition': `attachment; filename="${article.slug}.md"`,
+            ...SECURITY_HEADERS,
+          },
+        });
+      }
+      return new Response(JSON.stringify(article, null, 2), {
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'Content-Disposition': `attachment; filename="${article.slug}.json"`,
+          ...SECURITY_HEADERS,
+        },
+      });
+    }
+
+    if (format === 'markdown' || format === 'md') {
+      const md = articlesStore.map(articleToMarkdownWorker).join('\n\n---\n\n');
+      return new Response(md, {
+        headers: {
+          'Content-Type': 'text/markdown; charset=utf-8',
+          'Content-Disposition': `attachment; filename="demo-clean-all-articles.md"`,
+          ...SECURITY_HEADERS,
+        },
+      });
+    }
+
+    return new Response(JSON.stringify(articlesStore, null, 2), {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Content-Disposition': `attachment; filename="demo-clean-articles-backup.json"`,
+        ...SECURITY_HEADERS,
+      },
+    });
   }
 
   return jsonResponse({ success: false, message: 'غير موجود' }, 404);

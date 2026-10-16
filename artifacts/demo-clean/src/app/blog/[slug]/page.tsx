@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Clock, User, Calendar, Tag, ArrowLeft, PhoneCall, ShieldCheck, Share2 } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import JsonLd from '@/components/JsonLd';
-import { articlesData, getArticleBySlug, getAllArticleSlugs } from '@/data/articles';
+import { getLoadedArticles, getArticleBySlug, getAllArticleSlugs } from '@/data/articles';
 import { servicesData } from '@/data/services';
 import { COMPANY_INFO } from '@/data/company';
 
@@ -444,7 +444,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                   مقالات أخرى قد تهمك:
                 </h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  {articlesData
+                  {getLoadedArticles()
                     .filter((a) => a.slug !== article.slug)
                     .slice(0, 3)
                     .map((otherArt) => (

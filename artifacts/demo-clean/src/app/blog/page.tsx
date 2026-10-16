@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Clock, User, ArrowLeft, Tag, BookOpen } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { articlesData } from '@/data/articles';
+import { getLoadedArticles } from '@/data/articles';
 
 export const metadata: Metadata = {
   title: 'مدونة مكافحة الحشرات والآفات بالكويت | نصائح الخبراء من ديمو كلين',
@@ -21,6 +21,8 @@ export const metadata: Metadata = {
 };
 
 export default function BlogIndexPage() {
+  const articles = getLoadedArticles();
+
   return (
     <>
       <Breadcrumbs items={[{ label: 'المدونة' }]} />
@@ -36,7 +38,7 @@ export default function BlogIndexPage() {
               أدلة إرشادية ونصائح عملية يقدمها نخبة من خبراء المكافحة والصحة العامة في ديمو كلين. اكتشف أحدث طرق حماية منزلك وعائلتك من الآفات والتصدي بفعالية لتحديات الطقس الحار في الكويت باستخدام أساليب آمنة ومعتمدة.
             </p>
             <div className="page-header-meta">
-              <span><BookOpen size={16} /> {articlesData.length} أدلة تفصيلية شاملة</span>
+              <span><BookOpen size={16} /> {articles.length} أدلة تفصيلية شاملة</span>
               <span><Clock size={16} /> مقالات حديثة ومحدثة دورياً</span>
             </div>
           </div>
@@ -46,7 +48,7 @@ export default function BlogIndexPage() {
       <section className="section" style={{ background: '#f5f4ed' }} dir="rtl">
         <div className="container">
           <div className="cards-auto-grid">
-            {articlesData.map((article) => (
+            {articles.map((article) => (
               <article
                 key={article.slug}
                 style={{

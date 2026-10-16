@@ -27,9 +27,13 @@ export interface ArticleItem {
   relatedServices: string[];
   metaTitle: string;
   metaDescription: string;
+  status?: 'published' | 'draft';
   faqs?: ArticleFaq[];
   quickSummary?: string[];
 }
+
+import fs from 'fs';
+import path from 'path';
 
 export const articlesData: ArticleItem[] = [
   bedbugsArticle,
@@ -39,10 +43,29 @@ export const articlesData: ArticleItem[] = [
   rodentsArticle,
 ];
 
+export function getLoadedArticles(includeDrafts = false): ArticleItem[] {
+  try {
+    const filePath = path.join(process.cwd(), 'data', 'articles.json');
+    if (typeof window === 'undefined' && fs.existsSync(filePath)) {
+      const data = fs.readFileSync(filePath, 'utf-8');
+      const parsed = JSON.parse(data);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return includeDrafts ? parsed : parsed.filter((a: ArticleItem) => a.status !== 'draft');
+      }
+    }
+  } catch {
+    // Ignore and fallback
+  }
+  return includeDrafts ? articlesData : articlesData.filter((a) => a.status !== 'draft');
+}
+
 export function getArticleBySlug(slug: string): ArticleItem | undefined {
-  return articlesData.find((art) => art.slug === slug);
+  const all = getLoadedArticles(true);
+  return all.find((art) => art.slug === slug);
 }
 
 export function getAllArticleSlugs(): string[] {
-  return articlesData.map((art) => art.slug);
+  const all = getLoadedArticles(false);
+  return all.map((art) => art.slug);
 }
+

@@ -25,8 +25,17 @@ import {
   LogOut,
   Eye,
   EyeOff,
+  BookOpen,
+  FileText,
+  Download,
+  Edit3,
+  Share2,
+  FileDown,
+  FolderDown,
+  Tag,
+  Sparkles,
 } from 'lucide-react';
-import type { LeadItem, ReviewItem } from '@/lib/db';
+import type { LeadItem, ReviewItem, ArticleItem } from '@/lib/db';
 
 const DASHBOARD_PASSWORD = 'Aa@12345';
 const AUTH_STORAGE_KEY = 'demo_clean_admin_authed';
@@ -37,14 +46,43 @@ export default function DashboardPage() {
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const [activeTab, setActiveTab] = useState<'leads' | 'reviews'>('leads');
+  const [activeTab, setActiveTab] = useState<'leads' | 'reviews' | 'articles'>('leads');
   const [leads, setLeads] = useState<LeadItem[]>([]);
   const [reviews, setReviews] = useState<ReviewItem[]>([]);
+  const [articles, setArticles] = useState<ArticleItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'new' | 'contacted' | 'completed'>('all');
   const [reviewStatusFilter, setReviewStatusFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
   const [showAddReviewModal, setShowAddReviewModal] = useState(false);
+
+  // Articles state
+  const [articleSearchTerm, setArticleSearchTerm] = useState('');
+  const [articleCategoryFilter, setArticleCategoryFilter] = useState('all');
+  const [articleStatusFilter, setArticleStatusFilter] = useState<'all' | 'published' | 'draft'>('all');
+  const [showArticleModal, setShowArticleModal] = useState(false);
+  const [editingArticleId, setEditingArticleId] = useState<string | null>(null);
+  const [savingArticle, setSavingArticle] = useState(false);
+  const [downloadingFormat, setDownloadingFormat] = useState<string | null>(null);
+
+  const [articleForm, setArticleForm] = useState({
+    title: '',
+    slug: '',
+    category: 'بق الفراش',
+    excerpt: '',
+    content: '',
+    quickSummary: '',
+    metaTitle: '',
+    metaDescription: '',
+    tags: '',
+    status: 'published' as 'published' | 'draft',
+    authorName: 'فريق ديمو كلين',
+    authorRole: 'خبراء مكافحة الآفات والصحة العامة بالكويت',
+    faqs: [
+      { question: '', answer: '' }
+    ],
+  });
+
   // New review form state
   const [newReview, setNewReview] = useState({
     authorName: '',
@@ -61,15 +99,18 @@ export default function DashboardPage() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [leadsRes, reviewsRes] = await Promise.all([
+      const [leadsRes, reviewsRes, articlesRes] = await Promise.all([
         fetch('/api/dashboard/leads'),
         fetch('/api/dashboard/reviews'),
+        fetch('/api/dashboard/articles'),
       ]);
       const leadsData = await leadsRes.json();
       const reviewsData = await reviewsRes.json();
+      const articlesData = await articlesRes.json();
 
       if (leadsData.success) setLeads(leadsData.leads);
       if (reviewsData.success) setReviews(reviewsData.reviews);
+      if (articlesData.success) setArticles(articlesData.articles);
     } catch (err) {
       console.error('Error fetching dashboard data:', err);
     } finally {
@@ -189,6 +230,200 @@ export default function DashboardPage() {
       console.error('Error adding review:', err);
     }
   };
+
+  // ---------------------------------------------------------------
+  // Articles Handlers & Actions
+  // ---------------------------------------------------------------
+
+  const handleOpenNewArticleModal = () => {
+    setEditingArticleId(null);
+    setArticleForm({
+      title: '',
+      slug: '',
+      category: 'بق الفراش',
+      excerpt: '',
+      content: '',
+      quickSummary: '',
+      metaTitle: '',
+      metaDescription: '',
+      tags: 'مكافحة الحشرات, الكويت, نصائح وقائية',
+      status: 'published',
+      authorName: 'فريق ديمو كلين',
+      authorRole: 'خبراء مكافحة الآفات والصحة العامة بالكويت',
+      faqs: [{ question: '', answer: '' }],
+    });
+    setShowArticleModal(true);
+  };
+
+  const handleOpenEditArticleModal = (art: ArticleItem) => {
+    setEditingArticleId(art.id);
+    setArticleForm({
+      title: art.title,
+      slug: art.slug,
+      category: art.category,
+      excerpt: art.excerpt,
+      content: (art.content || []).join('\n\n'),
+      quickSummary: (art.quickSummary || []).join('\n'),
+      metaTitle: art.metaTitle || '',
+      metaDescription: art.metaDescription || '',
+      tags: (art.tags || []).join(', '),
+      status: art.status || 'published',
+      authorName: art.author?.name || 'فريق ديمو كلين',
+      authorRole: art.author?.role || 'خبراء مكافحة الآفات والصحة العامة بالكويت',
+      faqs: art.faqs && art.faqs.length > 0 ? art.faqs : [{ question: '', answer: '' }],
+    });
+    setShowArticleModal(true);
+  };
+
+  const handleSaveArticle = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingArticle(true);
+    try {
+      const paragraphs = articleForm.content
+        .split('\n\n')
+        .map((p) => p.trim())
+        .filter(Boolean);
+
+      const summaries = articleForm.quickSummary
+        .split('\n')
+        .map((s) => s.trim().replace(/^[-*•]\s*/, ''))
+        .filter(Boolean);
+
+      const tagsArray = articleForm.tags
+        .split(',')
+        .map((t) => t.trim())
+        .filter(Boolean);
+
+      const validFaqs = articleForm.faqs
+        .map((f) => ({ question: f.question.trim(), answer: f.answer.trim() }))
+        .filter((f) => f.question && f.answer);
+
+      const payload = {
+        title: articleForm.title.trim(),
+        slug: articleForm.slug.trim(),
+        category: articleForm.category.trim(),
+        excerpt: articleForm.excerpt.trim(),
+        content: paragraphs.length > 0 ? paragraphs : [articleForm.title.trim()],
+        quickSummary: summaries,
+        metaTitle: articleForm.metaTitle.trim() || `${articleForm.title.trim()} | ديمو كلين الكويت`,
+        metaDescription: articleForm.metaDescription.trim() || articleForm.excerpt.trim(),
+        tags: tagsArray,
+        status: articleForm.status,
+        author: {
+          name: articleForm.authorName.trim(),
+          role: articleForm.authorRole.trim(),
+        },
+        faqs: validFaqs,
+      };
+
+      if (editingArticleId) {
+        // Edit existing
+        const res = await fetch('/api/dashboard/articles', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: editingArticleId, ...payload }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          setArticles((prev) => prev.map((a) => (a.id === editingArticleId ? data.article : a)));
+          setShowArticleModal(false);
+        } else {
+          alert(data.message || 'فشل تعديل المقال');
+        }
+      } else {
+        // Create new
+        const res = await fetch('/api/dashboard/articles', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (data.success) {
+          setArticles((prev) => [data.article, ...prev]);
+          setShowArticleModal(false);
+        } else {
+          alert(data.message || 'فشل حفظ المقال');
+        }
+      }
+    } catch (err) {
+      console.error('Error saving article:', err);
+      alert('حدث خطأ أثناء حفظ المقال');
+    } finally {
+      setSavingArticle(false);
+    }
+  };
+
+  const handleDeleteArticle = async (id: string, title: string) => {
+    if (!confirm(`هل أنت متأكد من حذف المقال:\n"${title}"؟`)) return;
+    try {
+      const res = await fetch(`/api/dashboard/articles?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        setArticles((prev) => prev.filter((a) => a.id !== id && a.slug !== id));
+      } else {
+        alert(data.message || 'فشل الحذف');
+      }
+    } catch (err) {
+      console.error('Error deleting article:', err);
+    }
+  };
+
+  const handleToggleArticleStatus = async (art: ArticleItem) => {
+    const newStatus = art.status === 'draft' ? 'published' : 'draft';
+    try {
+      const res = await fetch('/api/dashboard/articles', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: art.id, status: newStatus }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setArticles((prev) => prev.map((a) => (a.id === art.id ? { ...a, status: newStatus } : a)));
+      }
+    } catch (err) {
+      console.error('Error toggling status:', err);
+    }
+  };
+
+  const handleDownloadSingleArticle = (art: ArticleItem, format: 'markdown' | 'json') => {
+    const link = document.createElement('a');
+    link.href = `/api/dashboard/articles/export?id=${encodeURIComponent(art.id)}&format=${format}`;
+    link.download = `${art.slug}.${format === 'markdown' ? 'md' : 'json'}`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleBulkExportArticles = (format: 'markdown' | 'json') => {
+    setDownloadingFormat(format);
+    const link = document.createElement('a');
+    link.href = `/api/dashboard/articles/export?format=${format}`;
+    link.download = `demo-clean-articles-backup.${format === 'markdown' ? 'md' : 'json'}`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => setDownloadingFormat(null), 1000);
+  };
+
+  // Filtered Articles
+  const filteredArticles = articles.filter((art) => {
+    const term = articleSearchTerm.toLowerCase();
+    const matchesSearch =
+      art.title.toLowerCase().includes(term) ||
+      art.slug.toLowerCase().includes(term) ||
+      (art.excerpt || '').toLowerCase().includes(term) ||
+      (art.category || '').toLowerCase().includes(term) ||
+      (art.tags || []).some((t) => t.toLowerCase().includes(term));
+
+    const matchesCategory = articleCategoryFilter === 'all' || art.category === articleCategoryFilter;
+    const isPub = art.status !== 'draft';
+    const matchesStatus =
+      articleStatusFilter === 'all' ||
+      (articleStatusFilter === 'published' && isPub) ||
+      (articleStatusFilter === 'draft' && !isPub);
+
+    return matchesSearch && matchesCategory && matchesStatus;
+  });
 
   // Filtered Leads
   const filteredLeads = leads.filter((lead) => {
@@ -506,10 +741,21 @@ export default function DashboardPage() {
               {reviews.length} <span style={{ fontSize: '16px', color: '#66756d', fontWeight: 600 }}>({averageRating} ★)</span>
             </div>
           </div>
+
+          <div style={{ background: '#fff', border: '1px solid #dce2d6', padding: '18px 20px', borderRadius: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#66756d', fontSize: '13px', fontWeight: 600 }}>
+              <span>مقالات المدونة (SEO)</span>
+              <BookOpen size={16} style={{ color: '#2563eb' }} />
+            </div>
+            <div style={{ fontSize: '30px', fontWeight: 800, color: '#2563eb', marginTop: '8px' }}>
+              {articles.filter((a) => a.status !== 'draft').length}{' '}
+              <span style={{ fontSize: '14px', color: '#66756d', fontWeight: 600 }}>({articles.length} إجمالي)</span>
+            </div>
+          </div>
         </div>
 
         {/* Tab Navigation */}
-        <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+        <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
           <button
             onClick={() => setActiveTab('leads')}
             style={{
@@ -551,6 +797,27 @@ export default function DashboardPage() {
           >
             <MessageSquare size={16} />
             <span>الآراء والتقييمات المعتمدة ({reviews.length})</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('articles')}
+            style={{
+              padding: '11px 22px',
+              borderRadius: '10px',
+              fontSize: '14px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              border: '1px solid',
+              background: activeTab === 'articles' ? '#204733' : '#fff',
+              color: activeTab === 'articles' ? '#fff' : '#45564e',
+              borderColor: activeTab === 'articles' ? '#204733' : '#d5dfce',
+              boxShadow: activeTab === 'articles' ? '0 4px 12px rgba(32,71,51,0.2)' : 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+          >
+            <BookOpen size={16} />
+            <span>المدونة والمقالات ({articles.length})</span>
           </button>
         </div>
 
@@ -1153,7 +1420,782 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {/* Modal: Add New Review */}
+        {/* TAB 3: ARTICLES & BLOG MANAGEMENT */}
+        {activeTab === 'articles' && (
+          <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #dce2d6', padding: '24px', boxShadow: '0 4px 14px rgba(0,0,0,0.03)' }}>
+            {/* Header with Title and Action Buttons */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '14px',
+                marginBottom: '22px',
+                paddingBottom: '18px',
+                borderBottom: '1px solid #e2e7df',
+              }}
+            >
+              <div>
+                <h2 style={{ fontSize: '18px', fontWeight: 800, color: '#17354a', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <BookOpen size={20} style={{ color: '#204733' }} />
+                  <span>إدارة مقالات المدونة والمركز المعرفي</span>
+                </h2>
+                <p style={{ margin: '4px 0 0', fontSize: '12.5px', color: '#687770' }}>
+                  تحرير المقالات، إضافة أدلة جديدة، ضبط بيانات السيو، وتنزيل المقالات بصيغتي Markdown و JSON
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                {/* Bulk Export Markdown */}
+                <button
+                  type="button"
+                  onClick={() => handleBulkExportArticles('markdown')}
+                  disabled={downloadingFormat === 'markdown'}
+                  style={{
+                    padding: '9px 15px',
+                    background: '#f4f7f1',
+                    color: '#284835',
+                    border: '1px solid #c8d8bf',
+                    borderRadius: '8px',
+                    fontSize: '12.5px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                  }}
+                  title="تنزيل كل المقالات في ملف Markdown واحد مجمع"
+                >
+                  <FileDown size={15} />
+                  <span>{downloadingFormat === 'markdown' ? 'جاري التنزيل...' : 'تصدير الكل (Markdown)'}</span>
+                </button>
+
+                {/* Bulk Export JSON Backup */}
+                <button
+                  type="button"
+                  onClick={() => handleBulkExportArticles('json')}
+                  disabled={downloadingFormat === 'json'}
+                  style={{
+                    padding: '9px 15px',
+                    background: '#f4f7f1',
+                    color: '#284835',
+                    border: '1px solid #c8d8bf',
+                    borderRadius: '8px',
+                    fontSize: '12.5px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                  }}
+                  title="تنزيل نسخة احتياطية كاملة من كل المقالات بصيغة JSON"
+                >
+                  <FolderDown size={15} />
+                  <span>{downloadingFormat === 'json' ? 'جاري الحفظ...' : 'نسخة احتياطية (JSON)'}</span>
+                </button>
+
+                {/* Create New Article */}
+                <button
+                  type="button"
+                  onClick={handleOpenNewArticleModal}
+                  style={{
+                    padding: '9px 18px',
+                    background: '#204733',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '8px',
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    boxShadow: '0 2px 8px rgba(32,71,51,0.2)',
+                  }}
+                >
+                  <Plus size={16} />
+                  <span>إنشاء مقال جديد</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Filter and Search Bar */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '14px', marginBottom: '22px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: '1 1 300px' }}>
+                <div style={{ position: 'relative', width: '100%' }}>
+                  <Search size={16} style={{ position: 'absolute', right: '12px', top: '12px', color: '#88968f' }} />
+                  <input
+                    type="text"
+                    placeholder="ابحث بالعنوان أو الرابط أو الكلمات المفتاحية..."
+                    value={articleSearchTerm}
+                    onChange={(e) => setArticleSearchTerm(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '9px 38px 9px 12px',
+                      borderRadius: '8px',
+                      border: '1px solid #d1dad0',
+                      fontSize: '13px',
+                      background: '#fafbf9',
+                    }}
+                  />
+                  {articleSearchTerm && (
+                    <button
+                      onClick={() => setArticleSearchTerm('')}
+                      style={{ position: 'absolute', left: '10px', top: '10px', background: 'transparent', border: 'none', color: '#88968f', cursor: 'pointer' }}
+                    >
+                      <X size={14} />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                {/* Category Filter */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <Filter size={14} style={{ color: '#687770' }} />
+                  <select
+                    value={articleCategoryFilter}
+                    onChange={(e) => setArticleCategoryFilter(e.target.value)}
+                    style={{
+                      padding: '8px 12px',
+                      borderRadius: '8px',
+                      border: '1px solid #d1dad0',
+                      fontSize: '12.5px',
+                      background: '#fff',
+                      color: '#34453e',
+                      fontWeight: 600,
+                    }}
+                  >
+                    <option value="all">جميع التصنيفات</option>
+                    <option value="بق الفراش">بق الفراش</option>
+                    <option value="الصراصير">الصراصير</option>
+                    <option value="النمل الأبيض">النمل الأبيض</option>
+                    <option value="القوارض والفئران">القوارض والفئران</option>
+                    <option value="نصائح وقائية">نصائح وقائية</option>
+                    <option value="خدمات التنظيف">خدمات التنظيف</option>
+                  </select>
+                </div>
+
+                {/* Status Filter */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: '#f5f7f3', padding: '3px', borderRadius: '8px', border: '1px solid #d8e2d4' }}>
+                  {(['all', 'published', 'draft'] as const).map((st) => (
+                    <button
+                      key={st}
+                      type="button"
+                      onClick={() => setArticleStatusFilter(st)}
+                      style={{
+                        padding: '6px 12px',
+                        borderRadius: '6px',
+                        border: 'none',
+                        fontSize: '12px',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        background: articleStatusFilter === st ? '#204733' : 'transparent',
+                        color: articleStatusFilter === st ? '#fff' : '#52635a',
+                      }}
+                    >
+                      {st === 'all' ? 'الكل' : st === 'published' ? 'المنشورة' : 'المسودات'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Articles List / Grid */}
+            {loading ? (
+              <div style={{ textAlign: 'center', padding: '60px 20px', color: '#687770', fontSize: '14px' }}>
+                جاري تحميل المقالات...
+              </div>
+            ) : filteredArticles.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '60px 20px', color: '#687770', background: '#fafbf9', borderRadius: '10px', border: '1px dashed #d1dad0' }}>
+                <BookOpen size={36} style={{ color: '#97a69e', marginBottom: '10px' }} />
+                <div style={{ fontSize: '15px', fontWeight: 700, color: '#31443c' }}>لا توجد مقالات مطابقة</div>
+                <div style={{ fontSize: '12px', color: '#7a8c82', marginTop: '4px' }}>جرب تغيير شروط البحث أو الفلتر أو أضف مقالاً جديداً</div>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                {filteredArticles.map((art) => {
+                  const isPublished = art.status !== 'draft';
+                  const parasCount = (art.content || []).length;
+                  const faqsCount = (art.faqs || []).length;
+
+                  return (
+                    <div
+                      key={art.id || art.slug}
+                      style={{
+                        border: '1px solid #e1e6de',
+                        borderRadius: '12px',
+                        padding: '18px 20px',
+                        background: isPublished ? '#fff' : '#fafbfa',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '12px',
+                        transition: 'box-shadow 0.2s',
+                      }}
+                    >
+                      {/* Top Bar of Article Card */}
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                          <span
+                            style={{
+                              padding: '3px 9px',
+                              borderRadius: '6px',
+                              fontSize: '11px',
+                              fontWeight: 800,
+                              background: isPublished ? '#e8f5e9' : '#f1f5f9',
+                              color: isPublished ? '#2e7d32' : '#64748b',
+                              border: `1px solid ${isPublished ? '#c8e6c9' : '#cbd5e1'}`,
+                            }}
+                          >
+                            {isPublished ? '● منشور بالموقع' : '○ مسودة (غير معروض)'}
+                          </span>
+
+                          <span
+                            style={{
+                              padding: '3px 9px',
+                              borderRadius: '6px',
+                              fontSize: '11px',
+                              fontWeight: 700,
+                              background: '#f0f4ec',
+                              color: '#385542',
+                              border: '1px solid #d5dfce',
+                            }}
+                          >
+                            {art.category}
+                          </span>
+
+                          <span style={{ fontSize: '11.5px', color: '#88988e' }}>
+                            تاريخ النشر: {art.publishedAt}
+                          </span>
+                        </div>
+
+                        {/* Direct Article Link */}
+                        <Link
+                          href={`/blog/${art.slug}`}
+                          target="_blank"
+                          style={{
+                            fontSize: '12px',
+                            color: '#2563eb',
+                            textDecoration: 'none',
+                            fontWeight: 700,
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                          }}
+                        >
+                          <span>عرض المقال في الموقع</span>
+                          <ExternalLink size={13} />
+                        </Link>
+                      </div>
+
+                      {/* Title & Slug */}
+                      <div>
+                        <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#17354a', margin: '0 0 4px', lineHeight: 1.4 }}>
+                          {art.title}
+                        </h3>
+                        <div style={{ fontSize: '11.5px', color: '#687770', direction: 'ltr', textAlign: 'right', fontFamily: 'monospace' }}>
+                          /blog/{art.slug}
+                        </div>
+                      </div>
+
+                      {/* Excerpt */}
+                      {art.excerpt && (
+                        <p style={{ fontSize: '13px', color: '#495a52', margin: 0, lineHeight: 1.6 }}>
+                          {art.excerpt}
+                        </p>
+                      )}
+
+                      {/* Meta Pills (Reading time, paragraphs, FAQs) */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap', fontSize: '11.5px', color: '#66776f', borderTop: '1px dashed #e5ebe2', paddingTop: '10px' }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                          <Clock size={13} style={{ color: '#204733' }} />
+                          <span>{art.readingTimeMinutes || 3} دقائق قراءة</span>
+                        </span>
+
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                          <FileText size={13} style={{ color: '#204733' }} />
+                          <span>{parasCount} فقرات</span>
+                        </span>
+
+                        {faqsCount > 0 && (
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                            <Sparkles size={13} style={{ color: '#d97706' }} />
+                            <span>{faqsCount} أسئلة شائعة (FAQ Schema)</span>
+                          </span>
+                        )}
+
+                        {art.tags && art.tags.length > 0 && (
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                            <Tag size={13} style={{ color: '#687770' }} />
+                            <span>{art.tags.slice(0, 3).join('، ')}</span>
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Actions Toolbar */}
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          flexWrap: 'wrap',
+                          gap: '10px',
+                          borderTop: '1px solid #edf2ea',
+                          paddingTop: '12px',
+                        }}
+                      >
+                        {/* Download Options (Markdown / JSON) */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ fontSize: '12px', fontWeight: 700, color: '#385542' }}>
+                            تنزيل المقال:
+                          </span>
+
+                          <button
+                            type="button"
+                            onClick={() => handleDownloadSingleArticle(art, 'markdown')}
+                            style={{
+                              padding: '5px 10px',
+                              background: '#eef5ec',
+                              color: '#1b442d',
+                              border: '1px solid #c9dec1',
+                              borderRadius: '6px',
+                              fontSize: '11.5px',
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                            }}
+                            title="تنزيل المقال بملف Markdown مع بيانات الـ Frontmatter"
+                          >
+                            <FileDown size={13} />
+                            <span>Markdown (.md)</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => handleDownloadSingleArticle(art, 'json')}
+                            style={{
+                              padding: '5px 10px',
+                              background: '#f3f4f6',
+                              color: '#374151',
+                              border: '1px solid #d1d5db',
+                              borderRadius: '6px',
+                              fontSize: '11.5px',
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                            }}
+                            title="تنزيل كائن المقال كملف JSON"
+                          >
+                            <Download size={13} />
+                            <span>JSON (.json)</span>
+                          </button>
+                        </div>
+
+                        {/* Management Actions */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <button
+                            type="button"
+                            onClick={() => handleOpenEditArticleModal(art)}
+                            style={{
+                              padding: '6px 14px',
+                              background: '#204733',
+                              color: '#fff',
+                              border: 'none',
+                              borderRadius: '6px',
+                              fontSize: '12px',
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '5px',
+                            }}
+                          >
+                            <Edit3 size={13} />
+                            <span>تعديل</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => handleToggleArticleStatus(art)}
+                            style={{
+                              padding: '6px 12px',
+                              background: isPublished ? '#fff' : '#e8f5e9',
+                              color: isPublished ? '#475569' : '#2e7d32',
+                              border: `1px solid ${isPublished ? '#cbd5e1' : '#c8e6c9'}`,
+                              borderRadius: '6px',
+                              fontSize: '12px',
+                              fontWeight: 600,
+                              cursor: 'pointer',
+                            }}
+                          >
+                            {isPublished ? 'تحويل لمسودة' : 'نشر الآن'}
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteArticle(art.id, art.title)}
+                            style={{
+                              padding: '6px 10px',
+                              background: '#fee2e2',
+                              color: '#dc2626',
+                              border: '1px solid #fecaca',
+                              borderRadius: '6px',
+                              fontSize: '12px',
+                              cursor: 'pointer',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                            }}
+                            title="حذف المقال"
+                          >
+                            <Trash2 size={13} />
+                            <span>حذف</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Modal: Add / Edit Article */}
+        {showArticleModal && (
+          <div
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(0,0,0,0.5)',
+              display: 'grid',
+              placeItems: 'center',
+              zIndex: 9999,
+              padding: '20px',
+              overflowY: 'auto',
+            }}
+          >
+            <div
+              style={{
+                background: '#fff',
+                width: '100%',
+                maxWidth: '750px',
+                maxHeight: '90vh',
+                overflowY: 'auto',
+                borderRadius: '14px',
+                padding: '26px',
+                border: '1px solid #dce2d6',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px', borderBottom: '1px solid #edf1ea', paddingBottom: '14px' }}>
+                <div>
+                  <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 800, color: '#17354a' }}>
+                    {editingArticleId ? 'تعديل المقال' : 'إنشاء مقال جديد للمدونة'}
+                  </h3>
+                  <p style={{ margin: '3px 0 0', fontSize: '12px', color: '#687770' }}>
+                    أدخل محتوى المقال وتفاصيل الـ SEO، وسيتم تحديث المدونة وتوليد ملف المقال فوراً
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowArticleModal(false)}
+                  style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#687770' }}
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <form onSubmit={handleSaveArticle} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {/* Title */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: '#204733', marginBottom: '6px' }}>
+                    عنوان المقال الرئيسي: *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="مثال: الدليل الشامل لمكافحة بق الفراش في الكويت 2026"
+                    value={articleForm.title}
+                    onChange={(e) => {
+                      const newTitle = e.target.value;
+                      setArticleForm((prev) => ({
+                        ...prev,
+                        title: newTitle,
+                        slug: prev.slug || newTitle.trim().toLowerCase().replace(/[^\u0621-\u064Aa-z0-9\s-]/g, '').replace(/\s+/g, '-'),
+                      }));
+                    }}
+                    style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1dad0', fontSize: '13.5px', fontWeight: 600 }}
+                  />
+                </div>
+
+                {/* Slug & Category */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: '#45564e', marginBottom: '6px' }}>
+                      الرابط الدائم (Slug):
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="complete-guide-bedbugs-kuwait"
+                      value={articleForm.slug}
+                      onChange={(e) => setArticleForm({ ...articleForm, slug: e.target.value })}
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1dad0', fontSize: '12.5px', direction: 'ltr', textAlign: 'right' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: '#45564e', marginBottom: '6px' }}>
+                      التصنيف: *
+                    </label>
+                    <select
+                      value={articleForm.category}
+                      onChange={(e) => setArticleForm({ ...articleForm, category: e.target.value })}
+                      style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1dad0', fontSize: '13px' }}
+                    >
+                      <option value="بق الفراش">بق الفراش</option>
+                      <option value="الصراصير">الصراصير</option>
+                      <option value="النمل الأبيض">النمل الأبيض</option>
+                      <option value="القوارض والفئران">القوارض والفئران</option>
+                      <option value="نصائح وقائية">نصائح وقائية</option>
+                      <option value="خدمات التنظيف">خدمات التنظيف</option>
+                      <option value="عام">عام</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Excerpt */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: '#45564e', marginBottom: '6px' }}>
+                    المقتطف الموجز (Excerpt):
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder="فقرة تعريفية سريعة تظهر في بطاقة المقال وفي نتائج البحث..."
+                    value={articleForm.excerpt}
+                    onChange={(e) => setArticleForm({ ...articleForm, excerpt: e.target.value })}
+                    style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1dad0', fontSize: '13px', resize: 'vertical' }}
+                  />
+                </div>
+
+                {/* Content Paragraphs */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: '#204733', marginBottom: '4px' }}>
+                    محتوى المقال (افصل بين كل فقرة بسطر فارغ): *
+                  </label>
+                  <textarea
+                    required
+                    rows={8}
+                    placeholder="اكتب فقرات المقال هنا بالتفصيل...&#10;&#10;الفقرة الثانية تبدأ بعد سطر فارغ لتنظيم العرض...&#10;&#10;الفقرة الثالثة..."
+                    value={articleForm.content}
+                    onChange={(e) => setArticleForm({ ...articleForm, content: e.target.value })}
+                    style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #d1dad0', fontSize: '13px', lineHeight: 1.6, resize: 'vertical' }}
+                  />
+                </div>
+
+                {/* Quick Summary Points */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: '#45564e', marginBottom: '4px' }}>
+                    أهم النقاط السريعة (اكتب كل نقطة في سطر منفصل):
+                  </label>
+                  <textarea
+                    rows={3}
+                    placeholder="معالجة بق الفراش تتطلب حرارة تتجاوز 50 درجة مئوية&#10;الجل الألماني يقضي على بيوض الصراصير نهائياً&#10;الفحص المبكر للنمل الأبيض يوفر آلاف الدنانير"
+                    value={articleForm.quickSummary}
+                    onChange={(e) => setArticleForm({ ...articleForm, quickSummary: e.target.value })}
+                    style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1dad0', fontSize: '12.5px', resize: 'vertical' }}
+                  />
+                </div>
+
+                {/* SEO Fields Accordion / Box */}
+                <div style={{ background: '#f6f9f4', border: '1px solid #dbe5d8', padding: '14px', borderRadius: '10px' }}>
+                  <div style={{ fontSize: '13px', fontWeight: 800, color: '#183827', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Sparkles size={15} style={{ color: '#2e7d32' }} />
+                    <span>إعدادات تحسين محركات البحث (SEO & Google Meta)</span>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 700, color: '#43544c', marginBottom: '4px' }}>
+                        عنوان الـ Meta (Google Title):
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="اتركه فارغاً للاعتماد على عنوان المقال"
+                        value={articleForm.metaTitle}
+                        onChange={(e) => setArticleForm({ ...articleForm, metaTitle: e.target.value })}
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: '1px solid #ccd8c8', fontSize: '12px' }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 700, color: '#43544c', marginBottom: '4px' }}>
+                        الوسوم (مفصولة بفواصل):
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="بق الفراش، مكافحة حشرات، الكويت"
+                        value={articleForm.tags}
+                        onChange={(e) => setArticleForm({ ...articleForm, tags: e.target.value })}
+                        style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: '1px solid #ccd8c8', fontSize: '12px' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 700, color: '#43544c', marginBottom: '4px' }}>
+                      وصف الـ Meta (Google Description):
+                    </label>
+                    <textarea
+                      rows={2}
+                      placeholder="الوصف الذي يظهر أسفل العنوان في صفحة نتائج بحث جوجل..."
+                      value={articleForm.metaDescription}
+                      onChange={(e) => setArticleForm({ ...articleForm, metaDescription: e.target.value })}
+                      style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: '1px solid #ccd8c8', fontSize: '12px', resize: 'vertical' }}
+                    />
+                  </div>
+                </div>
+
+                {/* FAQ Builder */}
+                <div style={{ background: '#fdfdfb', border: '1px solid #e1e7dc', padding: '14px', borderRadius: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                    <div style={{ fontSize: '13px', fontWeight: 800, color: '#17354a' }}>
+                      الأسئلة الشائعة حول الموضوع (FAQ Schema)
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setArticleForm((prev) => ({
+                          ...prev,
+                          faqs: [...prev.faqs, { question: '', answer: '' }],
+                        }))
+                      }
+                      style={{
+                        padding: '4px 10px',
+                        background: '#eef5ec',
+                        color: '#204733',
+                        border: '1px solid #c9dec1',
+                        borderRadius: '6px',
+                        fontSize: '11.5px',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                      }}
+                    >
+                      <Plus size={13} />
+                      <span>إضافة سؤال</span>
+                    </button>
+                  </div>
+
+                  {articleForm.faqs.map((faq, index) => (
+                    <div key={index} style={{ marginBottom: '10px', padding: '10px', background: '#fff', borderRadius: '8px', border: '1px solid #e8ece5' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                        <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#566a60' }}>
+                          السؤال #{index + 1}
+                        </span>
+                        {articleForm.faqs.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setArticleForm((prev) => ({
+                                ...prev,
+                                faqs: prev.faqs.filter((_, i) => i !== index),
+                              }))
+                            }
+                            style={{ background: 'transparent', border: 'none', color: '#dc2626', cursor: 'pointer', fontSize: '11px' }}
+                          >
+                            حذف السؤال
+                          </button>
+                        )}
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="نص السؤال (مثال: هل المبيدات المستخدمة آمنة للأطفال؟)"
+                        value={faq.question}
+                        onChange={(e) => {
+                          const updated = [...articleForm.faqs];
+                          updated[index].question = e.target.value;
+                          setArticleForm({ ...articleForm, faqs: updated });
+                        }}
+                        style={{ width: '100%', padding: '7px 10px', borderRadius: '6px', border: '1px solid #d5dfce', fontSize: '12px', marginBottom: '6px' }}
+                      />
+                      <textarea
+                        rows={2}
+                        placeholder="إجابة السؤال الوافية..."
+                        value={faq.answer}
+                        onChange={(e) => {
+                          const updated = [...articleForm.faqs];
+                          updated[index].answer = e.target.value;
+                          setArticleForm({ ...articleForm, faqs: updated });
+                        }}
+                        style={{ width: '100%', padding: '7px 10px', borderRadius: '6px', border: '1px solid #d5dfce', fontSize: '12px', resize: 'vertical' }}
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Status Selection */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: '#45564e', marginBottom: '6px' }}>
+                    حالة النشر:
+                  </label>
+                  <select
+                    value={articleForm.status}
+                    onChange={(e) => setArticleForm({ ...articleForm, status: e.target.value as 'published' | 'draft' })}
+                    style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1dad0', fontSize: '13px' }}
+                  >
+                    <option value="published">منشور فوراً في الموقع</option>
+                    <option value="draft">حفظ كمسودة (مخفي عن الزوار)</option>
+                  </select>
+                </div>
+
+                {/* Modal Actions */}
+                <div style={{ display: 'flex', gap: '10px', marginTop: '10px', borderTop: '1px solid #edf1ea', paddingTop: '16px' }}>
+                  <button
+                    type="submit"
+                    disabled={savingArticle}
+                    style={{
+                      flex: 1,
+                      padding: '12px',
+                      background: '#204733',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontSize: '13.5px',
+                      fontWeight: 800,
+                      cursor: savingArticle ? 'wait' : 'pointer',
+                    }}
+                  >
+                    {savingArticle ? 'جاري الحفظ...' : editingArticleId ? 'حفظ التعديلات' : 'نشر المقال'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowArticleModal(false)}
+                    style={{
+                      padding: '12px 24px',
+                      background: '#f1f5ec',
+                      border: '1px solid #cad8bf',
+                      borderRadius: '8px',
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      color: '#495b51',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    إلغاء
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
         {showAddReviewModal && (
           <div
             style={{

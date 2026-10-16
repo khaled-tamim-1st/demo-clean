@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { servicesData } from '@/data/services';
 import { cleaningServicesData } from '@/data/cleaning';
 import { governoratesData, getAllAreasWithGov } from '@/data/locations';
-import { articlesData } from '@/data/articles';
+import { getLoadedArticles } from '@/data/articles';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://democlean-kuwait.com';
@@ -111,7 +111,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   // Blog articles
-  const articleRoutes: MetadataRoute.Sitemap = articlesData.map((article) => ({
+  const articleRoutes: MetadataRoute.Sitemap = getLoadedArticles().map((article) => ({
     url: `${baseUrl}/blog/${article.slug}`,
     lastModified: new Date(article.updatedAt || article.publishedAt),
     changeFrequency: 'monthly',

@@ -26,8 +26,12 @@ export interface ReviewItem {
   status?: 'approved' | 'pending' | 'rejected';
 }
 
+import { articlesData as INITIAL_ARTICLES, type ArticleItem, type ArticleFaq } from '@/data/articles';
+export type { ArticleItem, ArticleFaq };
+
 const LEADS_FILE = path.join(process.cwd(), 'data', 'leads.json');
 const REVIEWS_FILE = path.join(process.cwd(), 'data', 'reviews.json');
+const ARTICLES_FILE = path.join(process.cwd(), 'data', 'articles.json');
 
 function ensureDataDir() {
   const dir = path.join(process.cwd(), 'data');
@@ -203,4 +207,120 @@ export function deleteReview(id: string): boolean {
 export function getPublishedReviews(): ReviewItem[] {
   const all = getReviews();
   return all.filter((r) => r.status === 'approved' || (!r.status && r.verified));
+}
+
+// ------------------------------------------------------------------
+// Articles Database Operations
+// ------------------------------------------------------------------
+
+export function getArticles(includeDrafts = false): ArticleItem[] {
+  ensureDataDir();
+  try {
+    if (!fs.existsSync(ARTICLES_FILE)) {
+      // Seed with initial articles
+      fs.writeFileSync(ARTICLES_FILE, JSON.stringify(INITIAL_ARTICLES, null, 2), 'utf-8');
+      return includeDrafts ? INITIAL_ARTICLES : INITIAL_ARTICLES.filter((a) => a.status !== 'draft');
+    }
+    const data = fs.readFileSync(ARTICLES_FILE, 'utf-8');
+    const parsed = JSON.parse(data);
+    const articles: ArticleItem[] = Array.isArray(parsed) && parsed.length > 0 ? parsed : INITIAL_ARTICLES;
+    return includeDrafts ? articles : articles.filter((a) => a.status !== 'draft');
+  } catch (err) {
+    console.error('Error reading articles:', err);
+    return includeDrafts ? INITIAL_ARTICLES : INITIAL_ARTICLES.filter((a) => a.status !== 'draft');
+  }
+}
+
+export function getArticleBySlug(slug: string): ArticleItem | undefined {
+  const articles = getArticles(true);
+  return articles.find((a) => a.slug === slug);
+}
+
+export function saveArticle(article: Partial<ArticleItem>): ArticleItem {
+  ensureDataDir();
+  const articles = getArticles(true);
+  const now = new Date().toISOString().split('T')[0];
+
+  const totalWords = (article.content || []).join(' ').split(/\s+/).length;
+  const autoReadingTime = Math.max(2, Math.ceil(totalWords / 150));
+
+  const newArticle: ArticleItem = {
+    id: article.id || `art-${Date.now()}`,
+    slug: article.slug || `article-${Date.now()}`,
+    title: article.title || 'مقال جديد بدون عنوان',
+    excerpt: article.excerpt || '',
+    content: article.content || [],
+    category: article.category || 'نصائح عامة',
+    author: {
+      name: article.author?.name || 'فريق ديمو كلين',
+      role: article.author?.role || 'خبراء مكافحة الآفات والصحة العامة',
+    },
+    publishedAt: article.publishedAt || now,
+    updatedAt: now,
+    readingTimeMinutes: article.readingTimeMinutes || autoReadingTime,
+    tags: article.tags || [],
+    relatedServices: article.relatedServices || ['cockroaches', 'bedbugs'],
+    metaTitle: article.metaTitle || `${article.title || 'مقال'} | ديمو كلين الكويت`,
+    metaDescription: article.metaDescription || article.excerpt || '',
+    status: article.status || 'published',
+    quickSummary: article.quickSummary || [],
+    faqs: article.faqs || [],
+  };
+
+  // Prepend to top of articles list
+  articles.unshift(newArticle);
+
+  try {
+    fs.writeFileSync(ARTICLES_FILE, JSON.stringify(articles, null, 2), 'utf-8');
+  } catch (err) {
+    console.error('Error saving article:', err);
+  }
+
+  return newArticle;
+}
+
+export function updateArticle(id: string, updates: Partial<ArticleItem>): ArticleItem | null {
+  ensureDataDir();
+  const articles = getArticles(true);
+  const index = articles.findIndex((a) => a.id === id || a.slug === id);
+  if (index === -1) return null;
+
+  const current = articles[index];
+  const totalWords = (updates.content || current.content || []).join(' ').split(/\s+/).length;
+  const autoReadingTime = Math.max(2, Math.ceil(totalWords / 150));
+
+  const updated: ArticleItem = {
+    ...current,
+    ...updates,
+    id: current.id, // Preserve ID
+    updatedAt: new Date().toISOString().split('T')[0],
+    readingTimeMinutes: updates.readingTimeMinutes || autoReadingTime,
+    author: {
+      ...current.author,
+      ...(updates.author || {}),
+    },
+  };
+
+  articles[index] = updated;
+
+  try {
+    fs.writeFileSync(ARTICLES_FILE, JSON.stringify(articles, null, 2), 'utf-8');
+    return updated;
+  } catch (err) {
+    console.error('Error updating article:', err);
+    return null;
+  }
+}
+
+export function deleteArticle(id: string): boolean {
+  ensureDataDir();
+  const articles = getArticles(true);
+  const filtered = articles.filter((a) => a.id !== id && a.slug !== id);
+  try {
+    fs.writeFileSync(ARTICLES_FILE, JSON.stringify(filtered, null, 2), 'utf-8');
+    return true;
+  } catch (err) {
+    console.error('Error deleting article:', err);
+    return false;
+  }
 }
