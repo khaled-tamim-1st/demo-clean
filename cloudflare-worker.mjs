@@ -549,9 +549,15 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // 0. Canonical 301 Redirect: www -> non-www (e.g. www.democleankw.com -> democleankw.com)
-    if (url.hostname.startsWith('www.')) {
-      url.hostname = url.hostname.replace(/^www\./, '');
+    // 0. Force HTTPS & Canonical 301 Redirect (HTTP -> HTTPS & www -> non-www)
+    const isHttp = url.protocol === 'http:' || request.headers.get('x-forwarded-proto') === 'http';
+    const isWww = url.hostname.startsWith('www.');
+
+    if (isHttp || isWww) {
+      url.protocol = 'https:';
+      if (isWww) {
+        url.hostname = url.hostname.replace(/^www\./, '');
+      }
       return Response.redirect(url.toString(), 301);
     }
 
