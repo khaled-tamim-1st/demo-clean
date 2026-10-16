@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: 'خدمات التنظيف الشامل في الكويت | ديمو كلين للتنظيف وإبادة الحشرات',
     description: 'تنظيف عميق للفلل والمنازل، غسيل كنب وسجاد، تنظيف بعد التشطيب وتنظيف المطاعم في جميع مناطق الكويت 24 ساعة.',
     url: 'https://democlean-kuwait.com/cleaning-services',
-    images: ['/demo-clean-identity.jpg'],
+    images: ['/og-image.jpg'],
   },
 };
 

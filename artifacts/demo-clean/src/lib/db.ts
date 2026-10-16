@@ -27,7 +27,8 @@ export interface ReviewItem {
 }
 
 import { articlesData as INITIAL_ARTICLES, type ArticleItem, type ArticleFaq } from '@/data/articles';
-export type { ArticleItem, ArticleFaq };
+import { defaultPricePackages as INITIAL_PRICES, type PricePackageItem } from '@/data/prices';
+export type { ArticleItem, ArticleFaq, PricePackageItem };
 
 function resolveDataFile(filename: string): string {
   const cands = [
@@ -48,6 +49,7 @@ function resolveDataFile(filename: string): string {
 const LEADS_FILE = resolveDataFile('leads.json');
 const REVIEWS_FILE = resolveDataFile('reviews.json');
 const ARTICLES_FILE = resolveDataFile('articles.json');
+const PRICES_FILE = resolveDataFile('prices.json');
 
 function ensureDataDir() {
   const dir = path.dirname(ARTICLES_FILE);
@@ -337,6 +339,131 @@ export function deleteArticle(id: string): boolean {
     return true;
   } catch (err) {
     console.error('Error deleting article:', err);
+    return false;
+  }
+}
+
+// ------------------------------------------------------------------
+// Price Packages Database Operations
+// ------------------------------------------------------------------
+
+export function getPricePackages(includeHidden = false): PricePackageItem[] {
+  ensureDataDir();
+  try {
+    if (!fs.existsSync(PRICES_FILE)) {
+      fs.writeFileSync(PRICES_FILE, JSON.stringify(INITIAL_PRICES, null, 2), 'utf-8');
+      const sorted = [...INITIAL_PRICES].sort((a, b) => (a.order || 0) - (b.order || 0));
+      return includeHidden ? sorted : sorted.filter((p) => p.status !== 'hidden');
+    }
+    const data = fs.readFileSync(PRICES_FILE, 'utf-8');
+    const parsed = JSON.parse(data);
+    const list: PricePackageItem[] = Array.isArray(parsed) && parsed.length > 0 ? parsed : INITIAL_PRICES;
+    const sorted = [...list].sort((a, b) => (a.order || 0) - (b.order || 0));
+    return includeHidden ? sorted : sorted.filter((p) => p.status !== 'hidden');
+  } catch (err) {
+    console.error('Error reading prices:', err);
+    const sorted = [...INITIAL_PRICES].sort((a, b) => (a.order || 0) - (b.order || 0));
+    return includeHidden ? sorted : sorted.filter((p) => p.status !== 'hidden');
+  }
+}
+
+export function savePricePackage(pkg: Partial<PricePackageItem>): PricePackageItem {
+  ensureDataDir();
+  const prices = getPricePackages(true);
+  const now = new Date().toISOString().split('T')[0];
+
+  const newPkg: PricePackageItem = {
+    id: pkg.id || `pkg-${Date.now()}`,
+    slug: pkg.slug || 'pest-control',
+    title: pkg.title || 'باقة مكافحة جديدة',
+    subtitle: pkg.subtitle || '',
+    price: String(pkg.price || '25'),
+    unit: pkg.unit || 'دينار كويتي (يبدأ من)',
+    currency: pkg.currency || 'KWD',
+    badge: pkg.badge || '',
+    popular: Boolean(pkg.popular),
+    order: pkg.order ?? prices.length + 1,
+    status: pkg.status === 'hidden' ? 'hidden' : 'active',
+    features: Array.isArray(pkg.features) ? pkg.features.filter(Boolean) : [],
+    warrantyMonths: Number(pkg.warrantyMonths) || 6,
+    updatedAt: now,
+  };
+
+  prices.push(newPkg);
+
+  try {
+    fs.writeFileSync(PRICES_FILE, JSON.stringify(prices, null, 2), 'utf-8');
+  } catch (err) {
+    console.error('Error saving price package:', err);
+  }
+
+  return newPkg;
+}
+
+export function updatePricePackage(id: string, updates: Partial<PricePackageItem>): PricePackageItem | null {
+  ensureDataDir();
+  const prices = getPricePackages(true);
+  const index = prices.findIndex((p) => p.id === id);
+  if (index === -1) return null;
+
+  const current = prices[index];
+  const updated: PricePackageItem = {
+    ...current,
+    ...updates,
+    id: current.id, // Preserve id
+    features: updates.features ? updates.features.filter(Boolean) : current.features,
+    updatedAt: new Date().toISOString().split('T')[0],
+  };
+
+  prices[index] = updated;
+
+  try {
+    fs.writeFileSync(PRICES_FILE, JSON.stringify(prices, null, 2), 'utf-8');
+    return updated;
+  } catch (err) {
+    console.error('Error updating price package:', err);
+    return null;
+  }
+}
+
+export function deletePricePackage(id: string): boolean {
+  ensureDataDir();
+  const prices = getPricePackages(true);
+  const filtered = prices.filter((p) => p.id !== id);
+  try {
+    fs.writeFileSync(PRICES_FILE, JSON.stringify(filtered, null, 2), 'utf-8');
+    return true;
+  } catch (err) {
+    console.error('Error deleting price package:', err);
+    return false;
+  }
+}
+
+export function reorderPricePackages(ids: string[]): boolean {
+  ensureDataDir();
+  const prices = getPricePackages(true);
+  const reordered: PricePackageItem[] = [];
+
+  ids.forEach((id, index) => {
+    const found = prices.find((p) => p.id === id);
+    if (found) {
+      found.order = index + 1;
+      reordered.push(found);
+    }
+  });
+
+  prices.forEach((p) => {
+    if (!reordered.find((r) => r.id === p.id)) {
+      p.order = reordered.length + 1;
+      reordered.push(p);
+    }
+  });
+
+  try {
+    fs.writeFileSync(PRICES_FILE, JSON.stringify(reordered, null, 2), 'utf-8');
+    return true;
+  } catch (err) {
+    console.error('Error reordering price packages:', err);
     return false;
   }
 }

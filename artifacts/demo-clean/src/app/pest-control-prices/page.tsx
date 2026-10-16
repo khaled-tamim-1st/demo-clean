@@ -15,6 +15,7 @@ import {
 import Breadcrumbs from '@/components/Breadcrumbs';
 import JsonLd from '@/components/JsonLd';
 import { COMPANY_INFO } from '@/data/company';
+import { getLoadedPrices } from '@/data/prices';
 
 export const metadata: Metadata = {
   title: 'اسعار مكافحة الحشرات في الكويت 2026 | تكلفة رش الصراصير والبق',
@@ -31,73 +32,6 @@ export const metadata: Metadata = {
     canonical: 'https://democlean-kuwait.com/pest-control-prices',
   },
 };
-
-const pricePackages = [
-  {
-    title: 'مكافحة الصراصير بالمطبخ',
-    subtitle: 'جل أدفايون الأمريكي وجل بوسيدون الكوري',
-    price: '20',
-    unit: 'دينار كويتي (يبدأ من)',
-    badge: 'الأكثر طلباً',
-    popular: true,
-    features: [
-      'استخدام جل أدفايون وبوسيدون بدون إفراغ الخزائن',
-      'معالجة فتحات الصرف وغرف التفتيش',
-      'آمن 100% على الأطفال والحيوانات الأليفة',
-      'بدون رائحة وبدون مغادرة المنزل',
-      'كفالة خطية 6 شهور (إعادة رش مجاني)',
-    ],
-    slug: 'cockroaches',
-  },
-  {
-    title: 'مكافحة بق الفراش الشاملة',
-    subtitle: 'بروتوكول مزدوج: بخار حراري ومبيدات دقيقة',
-    price: '35',
-    unit: 'دينار كويتي (للغرفة)',
-    badge: 'إبادة تامة للبيوض',
-    popular: false,
-    features: [
-      'معالجة مزدوجة بالبخار 180 درجة مئوية',
-      'إبادة فورية للبق واليرقات والبيوض الدقيقة',
-      'لا داعي لرمي المراتب أو تبديل الأثاث',
-      'مبيدات صحة عامة (تمبرد إس سي) معتمدة',
-      'كفالة 6 شهور ومتابعة مجانية بعد 14 يوم',
-    ],
-    slug: 'bedbugs',
-  },
-  {
-    title: 'مكافحة القوارض والبيرعصي',
-    subtitle: 'محطات طعوم آمنة وسد منافذ التسلل',
-    price: '25',
-    unit: 'دينار كويتي (يبدأ من)',
-    badge: 'بدون روائح كريهة',
-    popular: false,
-    features: [
-      'طعوم تسبب جفاف القوارض وخروجها للهواء',
-      'محطات طعوم مغلقة آمنة (Tamper-Resistant)',
-      'مكافحة البيرعصي (الوزغ)، العقارب، والแมง',
-      'إغلاق الفجوات الهندسية والمناور',
-      'كفالة 6 شهور على الفاعلية',
-    ],
-    slug: 'rodents',
-  },
-  {
-    title: 'مكافحة النمل الأبيض (الأرضة)',
-    subtitle: 'حقن هندسي للأبواب ورش الدفان',
-    price: '50',
-    unit: 'دينار كويتي (يبدأ من)',
-    badge: 'حماية الأثاث والأبواب',
-    popular: false,
-    features: [
-      'حقن دقيق بدون تكسير للسيراميك والباركيه',
-      'مبيدات بايفليكس مرخصة تنهي المستعمرة',
-      'حماية الأبواب والمكتبات وقواطع المنازل',
-      'معالجة قسائم البناء قبل صب الخرسانة',
-      'كفالة تصل لـ 10 سنوات (حسب المعالجة)',
-    ],
-    slug: 'termites',
-  },
-];
 
 const pricingFaqs = [
   {
@@ -119,6 +53,7 @@ const pricingFaqs = [
 ];
 
 export default function PricingPage() {
+  const pricePackages = getLoadedPrices(false);
   const schemaData = {
     '@context': 'https://schema.org',
     '@type': 'Service',

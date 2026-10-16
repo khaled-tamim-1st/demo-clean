@@ -40,11 +40,15 @@ export const metadata: Metadata = {
   publisher: 'ديمو كلين',
   icons: {
     icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+      { url: '/favicon-192x192.png', sizes: '192x192', type: 'image/png' },
       { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.webp', type: 'image/webp' },
-      { url: '/favicon.png', type: 'image/png' },
     ],
-    apple: '/favicon.png',
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
     shortcut: '/favicon.ico',
   },
   openGraph: {
@@ -56,9 +60,17 @@ export const metadata: Metadata = {
     description: 'أفضل خدمات مكافحة الآفات والقوارض في الكويت، تغطية شاملة للمحافظات الست بأساليب بيئية آمنة وضمان معتمد.',
     images: [
       {
-        url: 'https://democlean-kuwait.com/logo.webp',
-        width: 500,
-        height: 500,
+        url: 'https://democlean-kuwait.com/og-image.jpg',
+        width: 1200,
+        height: 630,
+        type: 'image/jpeg',
+        alt: 'ديمو كلين - مكافحة الحشرات والقوارض في الكويت',
+      },
+      {
+        url: 'https://democlean-kuwait.com/og-image.webp',
+        width: 1200,
+        height: 630,
+        type: 'image/webp',
         alt: 'ديمو كلين - مكافحة الحشرات والقوارض في الكويت',
       },
     ],
@@ -67,7 +79,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ديمو كلين | شركة مكافحة حشرات وقوارض في الكويت',
     description: 'خدمة احترافية على مدار 24 ساعة في جميع مناطق الكويت مع الضمان والمتابعة المجانية.',
-    images: ['/demo-clean-identity.webp'],
+    images: ['https://democlean-kuwait.com/og-image.jpg'],
   },
   robots: {
     index: true,

@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: service.metaTitle,
       description: service.metaDescription,
       url: `https://democlean-kuwait.com/cleaning-services/${service.slug}`,
-      images: ['/demo-clean-identity.jpg'],
+      images: ['/og-image.jpg'],
     },
     alternates: {
       canonical: `https://democlean-kuwait.com/cleaning-services/${service.slug}`,

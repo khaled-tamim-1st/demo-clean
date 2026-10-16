@@ -11,24 +11,28 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: '#55833c',
     icons: [
       {
-        src: '/favicon.webp',
-        sizes: '192x192',
-        type: 'image/webp',
-      },
-      {
-        src: '/favicon.png',
+        src: '/favicon-192x192.png',
         sizes: '192x192',
         type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/favicon-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'any',
       },
       {
         src: '/logo.webp',
         sizes: '512x512',
         type: 'image/webp',
+        purpose: 'maskable',
       },
       {
         src: '/logo.png',
         sizes: '512x512',
         type: 'image/png',
+        purpose: 'maskable',
       },
     ],
   };

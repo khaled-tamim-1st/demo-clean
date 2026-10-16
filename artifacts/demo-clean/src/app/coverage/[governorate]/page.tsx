@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: gov.metaTitle,
       description: gov.metaDescription,
       url: `https://democlean-kuwait.com/coverage/${gov.slug}`,
-      images: ['/demo-clean-identity.jpg'],
+      images: ['/og-image.jpg'],
     },
     alternates: {
       canonical: `https://democlean-kuwait.com/coverage/${gov.slug}`,
@@ -69,7 +69,7 @@ export default async function GovernorateDetailPage({ params }: Props) {
     name: `ديمو كلين - ${gov.name}`,
     description: gov.description,
     telephone: COMPANY_INFO.phoneIntl,
-    image: 'https://democlean-kuwait.com/demo-clean-identity.jpg',
+    image: 'https://democlean-kuwait.com/og-image.jpg',
     priceRange: 'KWD 20 - KWD 150',
     address: {
       '@type': 'PostalAddress',

@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       modifiedTime: article.updatedAt,
       authors: [article.author.name],
       url: `https://democlean-kuwait.com/blog/${article.slug}`,
-      images: ['/demo-clean-identity.jpg'],
+      images: ['/og-image.jpg'],
     },
     alternates: {
       canonical: `https://democlean-kuwait.com/blog/${article.slug}`,
@@ -57,7 +57,7 @@ export default async function ArticleDetailPage({ params }: Props) {
     '@type': 'Article',
     headline: article.title,
     description: article.excerpt,
-    image: 'https://democlean-kuwait.com/demo-clean-identity.jpg',
+    image: 'https://democlean-kuwait.com/og-image.jpg',
     datePublished: article.publishedAt,
     dateModified: article.updatedAt,
     author: {
@@ -70,7 +70,7 @@ export default async function ArticleDetailPage({ params }: Props) {
       name: 'ديمو كلين لمكافحة الحشرات والقوارض',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://democlean-kuwait.com/demo-clean-identity.jpg',
+        url: 'https://democlean-kuwait.com/logo.webp',
       },
     },
     mainEntityOfPage: {
