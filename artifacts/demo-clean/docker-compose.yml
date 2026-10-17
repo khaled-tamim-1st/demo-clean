@@ -5,13 +5,64 @@ services:
       dockerfile: Dockerfile
     container_name: democlean_app
     restart: unless-stopped
+
+    # 1. Port Hardening: Bind ONLY to loopback 127.0.0.1 (Blocks external internet scanners)
+    # Accessible ONLY through server's local Nginx reverse proxy
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
+
     environment:
       - NODE_ENV=production
       - PORT=3000
+      - HOSTNAME=0.0.0.0
+      - NEXT_TELEMETRY_DISABLED=1
+
+    # 2. Filesystem Immutability: Read-Only Root Filesystem
+    # Completely prevents writing any malware, scripts, or binaries to disk
+    read_only: true
+
+    # 3. Privilege Escalation Prevention
+    security_opt:
+      - no-new-privileges:true
+
+    # 4. Linux Kernel Capabilities Drop (Zero-Trust)
+    # Drops all capabilities including CAP_NET_RAW (blocks DoS/SYN floods), CAP_SYS_ADMIN, etc.
+    cap_drop:
+      - ALL
+
+    # 5. Non-executable RAM-based Temporary Directories
+    # Even if an attacker places a script in /tmp, the kernel refuses execution (noexec)
+    tmpfs:
+      - /tmp:size=64M,noexec,nosuid,nodev
+      - /run:size=16M,noexec,nosuid,nodev
+
+    # 6. Persistent & Isolated Storage Volumes
+    volumes:
+      - democlean_data:/app/data
+      - democlean_cache:/app/.next/cache
+
+    # 7. Hardware Quotas (Anti-Cryptominer & Anti-DoS)
+    # Capped strictly so it can never hijack server CPU or RAM
+    deploy:
+      resources:
+        limits:
+          cpus: '0.80'
+          memory: 1024M
+        reservations:
+          cpus: '0.20'
+          memory: 256M
+
+    # Process limit prevents fork-bombs and parallel miner threads
+    pids_limit: 100
+
     networks:
       - web_network
+
+volumes:
+  democlean_data:
+    name: democlean_data
+  democlean_cache:
+    name: democlean_cache
 
 networks:
   web_network:
