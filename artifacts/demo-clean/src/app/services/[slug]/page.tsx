@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -40,11 +40,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: service.metaTitle,
+    title: `شركة ${service.title} بالكويت`,
     description: service.metaDescription,
     keywords: service.metaKeywords,
     openGraph: {
-      title: service.metaTitle,
+      title: `شركة ${service.title} بالكويت | ديمو كلين`,
       description: service.metaDescription,
       url: `https://democleankw.com/services/${service.slug}`,
       images: ['/og-image.jpg'],
@@ -375,7 +375,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #edf0e6' }}>
                 <h5 style={{ fontSize: '13px', fontWeight: 700, margin: '0 0 8px', color: '#18354b' }}>تغطية الخدمة حسب المحافظة:</h5>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                  <Link href="/coverage/al-asimah" style={{ fontSize: '11px', background: '#f0f3eb', color: '#44662d', padding: '4px 8px', borderRadius: '4px', textDecoration: 'none' }}>العاصمة</Link>
+                  <Link href="/coverage/capital" style={{ fontSize: '11px', background: '#f0f3eb', color: '#44662d', padding: '4px 8px', borderRadius: '4px', textDecoration: 'none' }}>العاصمة</Link>
                   <Link href="/coverage/hawalli" style={{ fontSize: '11px', background: '#f0f3eb', color: '#44662d', padding: '4px 8px', borderRadius: '4px', textDecoration: 'none' }}>حولي</Link>
                   <Link href="/coverage/farwaniya" style={{ fontSize: '11px', background: '#f0f3eb', color: '#44662d', padding: '4px 8px', borderRadius: '4px', textDecoration: 'none' }}>الفروانية</Link>
                   <Link href="/coverage/mubarak-al-kabeer" style={{ fontSize: '11px', background: '#f0f3eb', color: '#44662d', padding: '4px 8px', borderRadius: '4px', textDecoration: 'none' }}>مبارك الكبير</Link>

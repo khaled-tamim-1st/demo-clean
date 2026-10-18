@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Clock, User, Calendar, Tag, ArrowLeft, PhoneCall, ShieldCheck, Share2 } from 'lucide-react';
@@ -24,12 +24,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: 'المقال غير موجود' };
   }
 
+  const cleanTitle = article.metaTitle.replace(/\s*\|\s*ديمو كلين.*$/, '').trim();
+
   return {
-    title: article.metaTitle,
+    title: cleanTitle,
     description: article.metaDescription,
     keywords: article.tags,
     openGraph: {
-      title: article.metaTitle,
+      title: `${cleanTitle} | ديمو كلين`,
       description: article.metaDescription,
       type: 'article',
       publishedTime: article.publishedAt,

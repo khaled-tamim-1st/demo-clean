@@ -1,11 +1,11 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Clock, User, ArrowLeft, Tag, BookOpen } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getLoadedArticles } from '@/data/articles';
 
 export const metadata: Metadata = {
-  title: 'مدونة مكافحة الحشرات والآفات بالكويت | نصائح الخبراء من ديمو كلين',
+  title: 'مدونة مكافحة الحشرات والآفات بالكويت',
   description: 'مقالات وأدلة علمية متخصصة للقضاء على بق الفراش، الصراصير، النمل الأبيض، والقوارض في الكويت. نصائح وقائية لحماية المنازل من حرارة الصيف.',
   keywords: [
     'مدونة مكافحة الحشرات',
@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: 'https://democleankw.com/blog',
+  },
+  openGraph: {
+    title: 'مدونة مكافحة الحشرات والآفات بالكويت | ديمو كلين',
+    description: 'مقالات وأدلة علمية متخصصة للقضاء على بق الفراش، الصراصير، النمل الأبيض، والقوارض في الكويت.',
+    url: 'https://democleankw.com/blog',
+    type: 'website',
+    images: ['/og-image.jpg'],
   },
 };
 

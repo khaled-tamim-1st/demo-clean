@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, HelpCircle, PhoneCall } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -6,8 +6,8 @@ import FaqAccordion from '@/components/FaqAccordion';
 import { COMPANY_INFO } from '@/data/company';
 
 export const metadata: Metadata = {
-  title: 'الأسئلة الشائعة حول مكافحة الحشرات والقوارض في الكويت | ديمو كلين',
-  description: 'إجابات تفصيلية وشاملة عن أسعار رش الحشرات في الكويت، مدة الضمان، أمان المبيدات على الأطفال الرضع، وكيفية التحضير لزيارة الفريق الفني بمعايير وزارة الصحة.',
+  title: 'الأسئلة الشائعة حول مكافحة الحشرات',
+  description: 'إجابات تفصيلية وشاملة عن أسعار رش الحشرات في الكويت، مدة الضمان، وأمان المبيدات على الأطفال بمعايير وزارة الصحة. اتصل بنا 67088755.',
   keywords: [
     'اسئلة شائعة مكافحة حشرات',
     'اسعار مكافحة الحشرات الكويت',
@@ -16,6 +16,13 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: 'https://democleankw.com/faq',
+  },
+  openGraph: {
+    title: 'الأسئلة الشائعة حول مكافحة الحشرات | ديمو كلين',
+    description: 'إجابات تفصيلية وشاملة عن أسعار رش الحشرات في الكويت ومدة الضمان وأمان المبيدات.',
+    url: 'https://democleankw.com/faq',
+    type: 'website',
+    images: ['/og-image.jpg'],
   },
 };
 

@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   ShieldCheck,
@@ -16,8 +16,8 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { COMPANY_INFO } from '@/data/company';
 
 export const metadata: Metadata = {
-  title: 'عن ديمو كلين | افضل شركة مكافحة حشرات مرخصة في الكويت',
-  description: 'تعرف على ديمو كلين، الشركة الرائدة في مكافحة الآفات في الكويت. خبراء معتمدون، مبيدات مرخصة من وزارة الصحة آمنة للأطفال، وضمان حقيقي للقضاء على الحشرات.',
+  title: 'من نحن - شركة ديمو كلين الرائدة بالكويت',
+  description: 'تعرف على ديمو كلين، الشركة الرائدة في مكافحة الآفات والتنظيف في الكويت. خبراء معتمدون ومبيدات مرخصة من وزارة الصحة وضمان حقيقي معتمد.',
   keywords: [
     'عن ديمو كلين',
     'شركة مكافحة حشرات معتمدة الكويت',
@@ -26,6 +26,13 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: 'https://democleankw.com/about',
+  },
+  openGraph: {
+    title: 'عن ديمو كلين | ريادة مكافحة الحشرات والتنظيف بالكويت',
+    description: 'تعرف على ديمو كلين، الشركة الرائدة في مكافحة الآفات والتنظيف في الكويت بمبيدات مرخصة من وزارة الصحة وضمان خطي معتمد.',
+    url: 'https://democleankw.com/about',
+    type: 'website',
+    images: ['/og-image.jpg'],
   },
 };
 

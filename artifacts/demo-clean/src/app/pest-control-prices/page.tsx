@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   CheckCircle2,
@@ -18,8 +18,8 @@ import { COMPANY_INFO } from '@/data/company';
 import { getLoadedPrices } from '@/data/prices';
 
 export const metadata: Metadata = {
-  title: 'اسعار مكافحة الحشرات في الكويت 2026 | تكلفة رش الصراصير والبق',
-  description: 'كم سعر رش الصراصير أو تكلفة مكافحة بق الفراش في الكويت؟ اكتشف قائمة أسعار ديمو كلين الشفافة بدءاً من 20 د.ك، مع كفالة 6 شهور خطية وبدون رسوم خفية. ترخيص وزارة الصحة.',
+  title: 'اسعار مكافحة الحشرات في الكويت 2026',
+  description: 'قائمة اسعار مكافحة الحشرات في الكويت من ديمو كلين تبدأ من 20 د.ك، رش صراصير وبق الفراش مع كفالة 6 شهور خطية ومبيدات معتمدة. اتصل 67088755.',
   keywords: [
     'اسعار مكافحة الحشرات في الكويت',
     'كم سعر رش الصراصير',
@@ -30,6 +30,13 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: 'https://democleankw.com/pest-control-prices',
+  },
+  openGraph: {
+    title: 'اسعار مكافحة الحشرات في الكويت 2026 | ديمو كلين',
+    description: 'قائمة اسعار مكافحة الحشرات في الكويت من ديمو كلين تبدأ من 20 د.ك، رش صراصير وبق الفراش مع كفالة 6 شهور خطية ومبيدات معتمدة.',
+    url: 'https://democleankw.com/pest-control-prices',
+    type: 'website',
+    images: ['/og-image.jpg'],
   },
 };
 
@@ -61,9 +68,17 @@ export default function PricingPage() {
     description: 'تكلفة مكافحة الحشرات والقوارض في الكويت تبدأ من 20 د.ك لجل الصراصير و35 د.ك للبق مع كفالة 6 شهور.',
     provider: {
       '@type': 'LocalBusiness',
+      '@id': 'https://democleankw.com/#organization',
       name: COMPANY_INFO.name,
-      image: 'https://democleankw.com/logo.png',
+      image: 'https://democleankw.com/demo-clean-identity.webp',
       telephone: COMPANY_INFO.phoneIntl,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'مدينة الكويت، شارع الشهداء، برج التجارية',
+        addressLocality: 'مدينة الكويت',
+        addressRegion: 'العاصمة',
+        addressCountry: 'KW',
+      },
     },
     offers: pricePackages.map(pkg => ({
       '@type': 'Offer',

@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -47,11 +47,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: service.metaTitle,
+    title: `${service.title} بالكويت`,
     description: service.metaDescription,
     keywords: service.metaKeywords,
     openGraph: {
-      title: service.metaTitle,
+      title: `${service.title} بالكويت | ديمو كلين`,
       description: service.metaDescription,
       url: `https://democleankw.com/cleaning-services/${service.slug}`,
       images: ['/og-image.jpg'],

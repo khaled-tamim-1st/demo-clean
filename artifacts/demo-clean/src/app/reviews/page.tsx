@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Star, CheckCircle2, ShieldCheck, ArrowLeft, Quote } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -7,7 +7,7 @@ import { reviewsData, reviewsStats, getApprovedReviews } from '@/data/reviews';
 import ReviewsPageDynamic from '@/components/ReviewsPageDynamic';
 
 export const metadata: Metadata = {
-  title: 'آراء وتقييمات عملاء ديمو كلين لمكافحة الحشرات في الكويت',
+  title: 'آراء وتقييمات العملاء بالكويت',
   description: 'اطلع على تقييمات وتجارب عملاء ديمو كلين الحقيقية في مكافحة الصراصير، بق الفراش، النمل الأبيض، والقوارض بمختلف محافظات الكويت.',
   keywords: [
     'تقييمات ديمو كلين',
@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: 'https://democleankw.com/reviews',
+  },
+  openGraph: {
+    title: 'آراء وتقييمات عملاء ديمو كلين بالكويت',
+    description: 'اطلع على تجارب عملاء ديمو كلين الموثقة في مكافحة الحشرات والقوارض في جميع محافظات الكويت.',
+    url: 'https://democleankw.com/reviews',
+    type: 'website',
+    images: ['/og-image.jpg'],
   },
 };
 
@@ -29,7 +36,17 @@ export default function ReviewsPage() {
   const aggregateRatingSchema = {
     '@context': 'https://schema.org',
     '@type': 'PestControl',
+    '@id': 'https://democleankw.com/#organization',
     name: 'ديمو كلين لمكافحة الحشرات والقوارض',
+    telephone: '+96567088755',
+    image: 'https://democleankw.com/demo-clean-identity.webp',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'مدينة الكويت، شارع الشهداء، برج التجارية',
+      addressLocality: 'مدينة الكويت',
+      addressRegion: 'العاصمة',
+      addressCountry: 'KW',
+    },
     ...(reviews.length > 0 ? {
       aggregateRating: {
         '@type': 'AggregateRating',

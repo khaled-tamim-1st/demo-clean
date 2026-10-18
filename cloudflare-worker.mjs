@@ -561,6 +561,12 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
 
+    // Canonical redirect for legacy /coverage/al-asimah -> /coverage/capital
+    if (url.pathname === '/coverage/al-asimah' || url.pathname === '/coverage/al-asimah/') {
+      url.pathname = '/coverage/capital';
+      return Response.redirect(url.toString(), 301);
+    }
+
     // 1. Handle API endpoints
     if (url.pathname.startsWith('/api/')) {
       return handleApi(request, url, env);

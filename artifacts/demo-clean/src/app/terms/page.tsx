@@ -3,8 +3,18 @@ import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 export const metadata: Metadata = {
-  title: 'الشروط والأحكام | ديمو كلين لمكافحة الحشرات',
-  description: 'الشروط والأحكام لشركة ديمو كلين لمكافحة الحشرات والقوارض في الكويت. القواعد المنظمة لاستخدام خدماتنا وموقعنا الإلكتروني.',
+  title: 'الشروط والأحكام',
+  description: 'الشروط والأحكام لشركة ديمو كلين لمكافحة الحشرات والقوارض في الكويت. القواعد والضوابط المنظمة لتقديم خدماتنا وضمان الكفالة المعتمد.',
+  alternates: {
+    canonical: 'https://democleankw.com/terms',
+  },
+  openGraph: {
+    title: 'الشروط والأحكام | ديمو كلين الكويت',
+    description: 'تعرف على الشروط والأحكام وسياسات الضمان والخدمة في ديمو كلين الكويت.',
+    url: 'https://democleankw.com/terms',
+    type: 'website',
+    images: ['/og-image.jpg'],
+  },
 };
 
 export default function TermsPage() {

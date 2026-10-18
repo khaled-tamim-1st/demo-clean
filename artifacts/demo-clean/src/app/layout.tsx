@@ -18,10 +18,10 @@ const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
 export const metadata: Metadata = {
   metadataBase: new URL('https://democleankw.com'),
   title: {
-    default: 'ديمو كلين | شركة تنظيف وإبادة حشرات وقوارض في الكويت - خدمة 24 ساعة',
-    template: '%s | ديمو كلين الكويت',
+    default: 'ديمو كلين | شركة تنظيف ومكافحة حشرات بالكويت',
+    template: '%s | ديمو كلين',
   },
-  description: 'شركة ديمو كلين للتنظيف وإبادة الحشرات والقوارض في جميع محافظات الكويت. خدمات تنظيف منازل وفلل، غسيل كنب وسجاد بالبخار، تنظيف بعد التشطيب، ومكافحة الصراصير وبق الفراش والنمل بمعدات إيطالية ومبيدات معتمدة من وزارة الصحة.',
+  description: 'شركة ديمو كلين لخدمات التنظيف الشامل ومكافحة الحشرات والقوارض في الكويت. تنظيف منازل وفلل وغسيل كنب بالبخار وإبادة فورية بضمان معتمد على مدار 24 ساعة.',
   keywords: [
     'شركة تنظيف الكويت',
     'ديمو كلين للتنظيف ومكافحة الحشرات',
@@ -107,7 +107,6 @@ const localBusinessSchema = {
   priceRange: 'KWD 20 - KWD 150',
   currenciesAccepted: 'KWD',
   paymentAccepted: 'Cash, K-Net, Credit Card',
-  license: '14620/2025',
   description: 'شركة ديمو كلين (Demo Clean) - ترخيص رقم 14620/2025 وسجل تجاري 532627. متخصصة في خدمات التنظيف الشامل، تنظيف الفلل والمنازل، غسيل الكنب والسجاد بالبخار، ومكافحة الحشرات، الصراصير، بق الفراش، النمل الأبيض، القوارض، والتعقيم في الكويت 24 ساعة.',
   knowsAbout: [
     'تنظيف المنازل والفلل الشامل وجلي الرخام',
@@ -128,6 +127,7 @@ const localBusinessSchema = {
   ],
   address: {
     '@type': 'PostalAddress',
+    streetAddress: 'مدينة الكويت، شارع الشهداء، برج التجارية',
     addressLocality: 'مدينة الكويت',
     addressRegion: 'العاصمة',
     addressCountry: 'KW',
@@ -163,14 +163,6 @@ const webSiteSchema = {
   name: 'ديمو كلين',
   publisher: {
     '@id': 'https://democleankw.com/#organization',
-  },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: 'https://democleankw.com/search?q={search_term_string}',
-    },
-    'query-input': 'required name=search_term_string',
   },
 };
 

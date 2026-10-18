@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   UtensilsCrossed,
@@ -19,8 +19,8 @@ import ContactForm from '@/components/ContactForm';
 import { COMPANY_INFO } from '@/data/company';
 
 export const metadata: Metadata = {
-  title: 'مكافحة حشرات المطاعم والكافيهات الكويت | عقود وشهادة للبلدية',
-  description: 'عقود سنوية لمكافحة حشرات المطاعم والكافيهات في الكويت. نوفر شهادة رش حشرات للبلدية وهيئة الغذاء، إجراءات متوافقة مع HACCP، جل ألماني بدون إغلاق المطبخ.',
+  title: 'مكافحة حشرات المطاعم والكافيهات بالكويت',
+  description: 'عقود سنوية لمكافحة حشرات المطاعم والكافيهات في الكويت. شهادة رش رسمية للبلدية وهيئة الغذاء، إجراءات HACCP وجل ألماني بدون إغلاق. اتصل 67088755.',
   keywords: [
     'مكافحة حشرات المطاعم الكويت',
     'شهادة رش حشرات للبلدية',
@@ -31,6 +31,13 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: 'https://democleankw.com/commercial/restaurants',
+  },
+  openGraph: {
+    title: 'مكافحة حشرات المطاعم والكافيهات بالكويت | ديمو كلين',
+    description: 'عقود سنوية لمكافحة حشرات المطاعم والكافيهات في الكويت مع شهادة رش للبلدية وهيئة الغذاء بدون إغلاق المطبخ.',
+    url: 'https://democleankw.com/commercial/restaurants',
+    type: 'website',
+    images: ['/og-image.jpg'],
   },
 };
 
@@ -78,10 +85,18 @@ export default function RestaurantsPestControlPage() {
     name: 'مكافحة حشرات المطاعم والكافيهات في الكويت (عقود سنوية)',
     provider: {
       '@type': 'LocalBusiness',
+      '@id': 'https://democleankw.com/#organization',
       name: 'ديمو كلين لمكافحة الحشرات والقوارض',
       telephone: COMPANY_INFO.phoneIntl,
-      image: 'https://democleankw.com/logo.png',
+      image: 'https://democleankw.com/demo-clean-identity.webp',
       priceRange: '$$',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'مدينة الكويت، شارع الشهداء، برج التجارية',
+        addressLocality: 'مدينة الكويت',
+        addressRegion: 'العاصمة',
+        addressCountry: 'KW',
+      },
     },
     areaServed: 'KW',
     description: 'عقود مكافحة حشرات المطاعم والكافيهات وإصدار شهادة رش حشرات لبلدية الكويت وهيئة الغذاء والتغذية. حلول معتمدة لضمان سلامة الغذاء.',

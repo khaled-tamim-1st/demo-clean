@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: gov.metaTitle,
+    title: `مكافحة حشرات محافظة ${gov.name}`,
     description: gov.metaDescription,
     keywords: [
       `مكافحة حشرات ${gov.name}`,
@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ...gov.areas.map((a) => `مكافحة حشرات ${a.name}`),
     ],
     openGraph: {
-      title: gov.metaTitle,
+      title: `مكافحة حشرات محافظة ${gov.name} | ديمو كلين`,
       description: gov.metaDescription,
       url: `https://democleankw.com/coverage/${gov.slug}`,
       images: ['/og-image.jpg'],

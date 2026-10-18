@@ -1,12 +1,12 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { MapPin, Clock, ArrowLeft, ShieldCheck, Check } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { governoratesData } from '@/data/locations';
 
 export const metadata: Metadata = {
-  title: 'مناطق تغطية مكافحة الحشرات في الكويت | استجابة طوارئ خلال 30 دقيقة',
-  description: 'دليل مناطق تغطية شركة ديمو كلين (ترخيص رقم 14620/2025) لمكافحة الحشرات في الكويت. نغطي العاصمة، حولي، الفروانية، مبارك الكبير، الأحمدي، والجهراء بأسطول متكامل وتلبية خلال 30 دقيقة. اتصل الآن.',
+  title: 'مناطق تغطية مكافحة الحشرات بالكويت',
+  description: 'دليل مناطق تغطية ديمو كلين لمكافحة الحشرات في الكويت. نغطي العاصمة، حولي، الفروانية، الأحمدي، مبارك الكبير، والجهراء خلال 30 دقيقة بمبيدات معتمدة.',
   keywords: [
     'مكافحة حشرات الكويت',
     'مكافحة حشرات حولي',
@@ -18,6 +18,13 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: 'https://democleankw.com/coverage',
+  },
+  openGraph: {
+    title: 'مناطق تغطية مكافحة الحشرات بالكويت | ديمو كلين',
+    description: 'تغطية شاملة لكافة محافظات ومناطق الكويت لمكافحة الآفات والحشرات على مدار 24 ساعة.',
+    url: 'https://democleankw.com/coverage',
+    type: 'website',
+    images: ['/og-image.jpg'],
   },
 };
 

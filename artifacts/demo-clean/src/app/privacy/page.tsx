@@ -1,10 +1,20 @@
-﻿import React from 'react';
+import React from 'react';
 import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 export const metadata: Metadata = {
-  title: 'سياسة الخصوصية | ديمو كلين لمكافحة الحشرات',
-  description: 'سياسة الخصوصية لشركة ديمو كلين لمكافحة الحشرات والقوارض في الكويت. تعرف على كيفية جمعنا واستخدامنا وحمايتنا لبياناتك الشخصية.',
+  title: 'سياسة الخصوصية',
+  description: 'سياسة الخصوصية لشركة ديمو كلين لمكافحة الحشرات والقوارض في الكويت. تعرف على كيفية جمع وحماية بياناتك الشخصية وفق المعايير المعتمدة.',
+  alternates: {
+    canonical: 'https://democleankw.com/privacy',
+  },
+  openGraph: {
+    title: 'سياسة الخصوصية | ديمو كلين الكويت',
+    description: 'تعرف على سياسة الخصوصية وحماية البيانات في ديمو كلين الكويت.',
+    url: 'https://democleankw.com/privacy',
+    type: 'website',
+    images: ['/og-image.jpg'],
+  },
 };
 
 export default function PrivacyPolicyPage() {

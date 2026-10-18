@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   Sparkles,
@@ -24,8 +24,8 @@ import { cleaningServicesData } from '@/data/cleaning';
 import { COMPANY_INFO } from '@/data/company';
 
 export const metadata: Metadata = {
-  title: 'خدمات التنظيف الشامل في الكويت | شركة ديمو كلين للتنظيف وإبادة الحشرات',
-  description: 'خدمات تنظيف منازل وفلل، تنظيف بعد التشطيب والبناء، غسيل كنب وسجاد بالبخار، وتنظيف مطاعم وواجهات بالكويت بأحدث المعدات الإيطالية ومواد آمنة 100%. اتصل 67088755.',
+  title: 'خدمات التنظيف الشامل للمنازل والفلل',
+  description: 'خدمات تنظيف منازل وفلل، تنظيف بعد التشطيب، غسيل كنب وسجاد بالبخار، وتنظيف مطاعم بالكويت بأحدث المعدات الإيطالية ومواد آمنة 100%. اتصل 67088755.',
   keywords: [
     'شركة تنظيف الكويت',
     'تنظيف منازل وفلل بالكويت',

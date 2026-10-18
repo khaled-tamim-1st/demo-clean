@@ -20,6 +20,11 @@ const nextConfig = {
         destination: 'https://democleankw.com/:path*',
         permanent: true,
       },
+      {
+        source: '/coverage/al-asimah',
+        destination: '/coverage/capital',
+        permanent: true,
+      },
     ];
   },
   async headers() {

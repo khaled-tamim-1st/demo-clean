@@ -1,12 +1,12 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, Bug, ShieldAlert, Rat, Sparkles, CalendarCheck, ShieldCheck, Check, Clock, Award } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { servicesData } from '@/data/services';
 
 export const metadata: Metadata = {
-  title: 'شركة مكافحة حشرات الكويت | أفضل خدمات ابادة وضمان خطي - ديمو كلين',
-  description: 'دليل خدمات ديمو كلين الكويت (ترخيص 14620/2025): مكافحة الصراصير بالجل، علاج بق الفراش بالتبخير والحرارة 180°C، مكافحة النمل الابيض حقن الارضة، وصيد الفئران والقوارض. نصلك خلال 30 دقيقة.',
+  title: 'خدمات مكافحة الحشرات والقوارض بالكويت',
+  description: 'دليل خدمات ديمو كلين لمكافحة الحشرات بالكويت: مكافحة الصراصير بالجل، علاج بق الفراش بالحرارة، مكافحة النمل الأبيض، وصيد الفئران بكفالة خطية 6 شهور.',
   keywords: [
     'شركة مكافحة حشرات الكويت',
     'مكافحة الصراصير الكويت بالجل',
@@ -18,6 +18,13 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: 'https://democleankw.com/services',
+  },
+  openGraph: {
+    title: 'خدمات مكافحة الحشرات والقوارض بالكويت | ديمو كلين',
+    description: 'دليل خدمات مكافحة الآفات والحشرات من ديمو كلين الكويت مع كفالة 6 شهور ومبيدات مرخصة من وزارة الصحة.',
+    url: 'https://democleankw.com/services',
+    type: 'website',
+    images: ['/og-image.jpg'],
   },
 };
 

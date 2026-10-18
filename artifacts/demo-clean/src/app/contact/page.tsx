@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { PhoneCall, MessageCircle, Clock, MapPin, ShieldCheck, Mail, FileText, CheckCircle2 } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -7,7 +7,7 @@ import JsonLd from '@/components/JsonLd';
 import { COMPANY_INFO } from '@/data/company';
 
 export const metadata: Metadata = {
-  title: 'رقم مكافحة حشرات الكويت | حجز موعد معاينة فورية - ديمو كلين',
+  title: 'اتصل بنا | حجز موعد مكافحة وتنظيف',
   description: 'اتصل الآن بـ ديمو كلين على رقم مكافحة حشرات الكويت. طوارئ 24/7 لكافة المحافظات، استجابة خلال 30 دقيقة، ومعاينة مجانية للمنازل والشركات.',
   keywords: [
     'رقم مكافحة حشرات الكويت',
@@ -18,6 +18,13 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: 'https://democleankw.com/contact',
+  },
+  openGraph: {
+    title: 'اتصل بنا | ديمو كلين لمكافحة الحشرات والتنظيف بالكويت',
+    description: 'تواصل مع فريق ديمو كلين في الكويت لحجز خدمات مكافحة الآفات والتنظيف الشامل على مدار 24 ساعة.',
+    url: 'https://democleankw.com/contact',
+    type: 'website',
+    images: ['/og-image.jpg'],
   },
 };
 
@@ -33,6 +40,7 @@ export default function ContactPage() {
       telephone: COMPANY_INFO.phoneIntl,
       address: {
         '@type': 'PostalAddress',
+        streetAddress: 'مدينة الكويت، شارع الشهداء، برج التجارية',
         addressLocality: 'مدينة الكويت',
         addressRegion: 'العاصمة',
         addressCountry: 'KW',

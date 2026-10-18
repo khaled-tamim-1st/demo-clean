@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -29,8 +29,9 @@ export default function Header() {
   const navSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
+    name: 'قائمة التصفح الرئيسية',
     itemListElement: navLinks.map((link, index) => ({
-      '@type': 'SiteNavigationElement',
+      '@type': 'ListItem',
       position: index + 1,
       name: link.label,
       url: `https://democleankw.com${link.href}`,

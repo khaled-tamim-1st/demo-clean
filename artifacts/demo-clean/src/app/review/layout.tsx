@@ -1,10 +1,17 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'شاركنا تجربتك | تقييم خدمات ديمو كلين لمكافحة الحشرات',
-  description: 'شاركنا رأيك في خدمات ديمو كلين لمكافحة الحشرات والقوارض في الكويت. نعتز بتقييمك ونسعى دائماً لتقديم الأفضل لعملائنا.',
+  title: 'شاركنا تقييمك ورأيك بالخدمة',
+  description: 'شاركنا رأيك في خدمات ديمو كلين لمكافحة الحشرات والتنظيف في الكويت لنستمر في تقديم أعلى معايير الجودة والكفالة.',
   alternates: {
     canonical: 'https://democleankw.com/review',
+  },
+  openGraph: {
+    title: 'شاركنا تقييمك ورأيك بالخدمة | ديمو كلين الكويت',
+    description: 'شاركنا رأيك في خدمات ديمو كلين لمكافحة الحشرات والتنظيف في الكويت.',
+    url: 'https://democleankw.com/review',
+    type: 'website',
+    images: ['/og-image.jpg'],
   },
 };
 
