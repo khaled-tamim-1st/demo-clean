@@ -143,7 +143,7 @@ async function handleApi(request, url, env) {
   }
 
   if (pathname === '/api/reviews') {
-    if (method === 'GET') {
+    if (method === 'GET' || method === 'HEAD') {
       reviewsStore = await getKv(env, 'reviewsStore', reviewsStore);
       const approved = reviewsStore.filter((r) => r.status === 'approved');
       return jsonResponse({
@@ -192,7 +192,7 @@ async function handleApi(request, url, env) {
   }
 
   if (pathname === '/api/dashboard/leads') {
-    if (method === 'GET') {
+    if (method === 'GET' || method === 'HEAD') {
       leadsStore = await getKv(env, 'leadsStore', leadsStore);
       return jsonResponse({
         success: true,
@@ -256,7 +256,7 @@ async function handleApi(request, url, env) {
   }
 
   if (pathname === '/api/dashboard/reviews') {
-    if (method === 'GET') {
+    if (method === 'GET' || method === 'HEAD') {
       reviewsStore = await getKv(env, 'reviewsStore', reviewsStore);
       return jsonResponse({ success: true, reviews: reviewsStore });
     }
@@ -322,7 +322,7 @@ async function handleApi(request, url, env) {
 
   // Articles API
   if (pathname === '/api/dashboard/articles') {
-    if (method === 'GET') {
+    if (method === 'GET' || method === 'HEAD') {
       return jsonResponse({ success: true, articles: articlesStore });
     }
     if (method === 'POST') {
@@ -428,7 +428,7 @@ async function handleApi(request, url, env) {
 
   // Prices API
   if (pathname === '/api/dashboard/prices') {
-    if (method === 'GET') {
+    if (method === 'GET' || method === 'HEAD') {
       const storedPrices = await getKv(env, 'pricesStore', null);
       if (storedPrices) {
         return jsonResponse({ success: true, prices: storedPrices });
