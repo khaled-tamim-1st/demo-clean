@@ -6,134 +6,156 @@ import { getLoadedArticles } from '@/data/articles';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://democleankw.com';
-  const currentDate = new Date();
+  const defaultOgImage = `${baseUrl}/og-image.jpg`;
+  const brandIdentityImage = `${baseUrl}/demo-clean-identity.webp`;
+
+  // Content release & major update milestones (Realistic lastmod dates)
+  const siteLaunchDate = new Date('2026-10-01T08:00:00Z');
+  const servicesUpdateDate = new Date('2026-10-12T10:00:00Z');
+  const cleaningUpdateDate = new Date('2026-10-14T10:00:00Z');
+  const pricingUpdateDate = new Date('2026-10-15T12:00:00Z');
+  const coverageUpdateDate = new Date('2026-10-08T09:00:00Z');
+  const latestSiteAuditDate = new Date('2026-10-18T14:00:00Z');
 
   // Static / Core routes
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}`,
-      lastModified: currentDate,
+      lastModified: latestSiteAuditDate,
       changeFrequency: 'daily',
       priority: 1.0,
+      images: [defaultOgImage, brandIdentityImage],
     },
     {
       url: `${baseUrl}/services`,
-      lastModified: currentDate,
+      lastModified: servicesUpdateDate,
       changeFrequency: 'weekly',
       priority: 0.9,
+      images: [defaultOgImage],
     },
     {
       url: `${baseUrl}/cleaning-services`,
-      lastModified: currentDate,
+      lastModified: cleaningUpdateDate,
       changeFrequency: 'weekly',
-      priority: 0.95,
+      priority: 0.9,
+      images: [defaultOgImage],
     },
     {
       url: `${baseUrl}/pest-control-prices`,
-      lastModified: currentDate,
+      lastModified: pricingUpdateDate,
       changeFrequency: 'weekly',
-      priority: 0.95,
+      priority: 0.9,
+      images: [defaultOgImage],
     },
     {
       url: `${baseUrl}/commercial/restaurants`,
-      lastModified: currentDate,
+      lastModified: servicesUpdateDate,
       changeFrequency: 'weekly',
-      priority: 0.9,
+      priority: 0.85,
+      images: [defaultOgImage],
     },
     {
       url: `${baseUrl}/coverage`,
-      lastModified: currentDate,
+      lastModified: coverageUpdateDate,
       changeFrequency: 'weekly',
       priority: 0.8,
+      images: [defaultOgImage],
     },
     {
       url: `${baseUrl}/blog`,
-      lastModified: currentDate,
+      lastModified: latestSiteAuditDate,
       changeFrequency: 'weekly',
       priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.7,
+      images: [defaultOgImage],
     },
     {
       url: `${baseUrl}/reviews`,
-      lastModified: currentDate,
+      lastModified: latestSiteAuditDate,
       changeFrequency: 'weekly',
-      priority: 0.7,
+      priority: 0.75,
+      images: [brandIdentityImage],
+    },
+    {
+      url: `${baseUrl}/about`,
+      lastModified: siteLaunchDate,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+      images: [brandIdentityImage],
     },
     {
       url: `${baseUrl}/faq`,
-      lastModified: currentDate,
+      lastModified: servicesUpdateDate,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: siteLaunchDate,
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/contact`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
       url: `${baseUrl}/privacy`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.5,
+      lastModified: siteLaunchDate,
+      changeFrequency: 'yearly',
+      priority: 0.3,
     },
     {
       url: `${baseUrl}/terms`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.5,
+      lastModified: siteLaunchDate,
+      changeFrequency: 'yearly',
+      priority: 0.3,
     },
     {
       url: `${baseUrl}/review`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.5,
+      lastModified: siteLaunchDate,
+      changeFrequency: 'yearly',
+      priority: 0.3,
     },
   ];
 
-  // 6 Services
+  // 7 Pest Control Services
   const serviceRoutes: MetadataRoute.Sitemap = servicesData.map((svc) => ({
     url: `${baseUrl}/services/${svc.slug}`,
-    lastModified: currentDate,
+    lastModified: servicesUpdateDate,
     changeFrequency: 'weekly',
-    priority: 0.9,
+    priority: 0.85,
+    images: [defaultOgImage],
   }));
 
-  // Cleaning Services
+  // 4 Cleaning Services
   const cleaningRoutes: MetadataRoute.Sitemap = cleaningServicesData.map((svc) => ({
     url: `${baseUrl}/cleaning-services/${svc.slug}`,
-    lastModified: currentDate,
+    lastModified: cleaningUpdateDate,
     changeFrequency: 'weekly',
-    priority: 0.9,
+    priority: 0.85,
+    images: [defaultOgImage],
   }));
 
   // 6 Governorates
   const governorateRoutes: MetadataRoute.Sitemap = governoratesData.map((gov) => ({
     url: `${baseUrl}/coverage/${gov.slug}`,
-    lastModified: currentDate,
-    changeFrequency: 'weekly',
-    priority: 0.8,
+    lastModified: coverageUpdateDate,
+    changeFrequency: 'monthly',
+    priority: 0.75,
+    images: [defaultOgImage],
   }));
 
-  // All Area pages
+  // 22 Area pages
   const areaRoutes: MetadataRoute.Sitemap = getAllAreasWithGov().map(({ govSlug, areaSlug }) => ({
     url: `${baseUrl}/coverage/${govSlug}/${areaSlug}`,
-    lastModified: currentDate,
-    changeFrequency: 'weekly',
+    lastModified: coverageUpdateDate,
+    changeFrequency: 'monthly',
     priority: 0.7,
   }));
 
-  // Blog articles
+  // 5 Blog articles
   const articleRoutes: MetadataRoute.Sitemap = getLoadedArticles().map((article) => ({
     url: `${baseUrl}/blog/${article.slug}`,
     lastModified: new Date(article.updatedAt || article.publishedAt),
     changeFrequency: 'monthly',
     priority: 0.7,
+    images: [defaultOgImage],
   }));
 
   return [
