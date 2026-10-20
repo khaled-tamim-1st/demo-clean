@@ -50,6 +50,7 @@ const SECURITY_HEADERS = {
 };
 
 const TELEGRAM_BOT_TOKEN = '8831150430:AAEBlt_dCYxXgcFRsTUgYHQ-fBXar9oEATU';
+const DEFAULT_TELEGRAM_CHAT_ID = '-5284629423';
 
 function escapeHtml(text) {
   if (text === undefined || text === null) return '';
@@ -63,7 +64,7 @@ function escapeHtml(text) {
 async function sendTelegramNotification(env, htmlText) {
   try {
     const token = env?.TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN;
-    const chatId = env?.TELEGRAM_CHAT_ID || await getKv(env, 'TELEGRAM_CHAT_ID', null);
+    const chatId = env?.TELEGRAM_CHAT_ID || await getKv(env, 'TELEGRAM_CHAT_ID', DEFAULT_TELEGRAM_CHAT_ID);
     if (!chatId) {
       console.warn('Telegram notification skipped: TELEGRAM_CHAT_ID not configured yet');
       return false;

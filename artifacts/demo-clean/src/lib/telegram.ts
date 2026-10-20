@@ -1,4 +1,5 @@
 export const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8831150430:AAEBlt_dCYxXgcFRsTUgYHQ-fBXar9oEATU';
+export const DEFAULT_TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '-5284629423';
 
 export function escapeHtml(text?: string | number | null): string {
   if (text === undefined || text === null) return '';
@@ -12,7 +13,7 @@ export function escapeHtml(text?: string | number | null): string {
 export async function sendTelegramAlert(htmlText: string, chatIdOverride?: string | number): Promise<boolean> {
   try {
     const token = TELEGRAM_BOT_TOKEN;
-    const chatId = chatIdOverride || process.env.TELEGRAM_CHAT_ID;
+    const chatId = chatIdOverride || DEFAULT_TELEGRAM_CHAT_ID;
     if (!chatId) {
       console.warn('Telegram notification skipped: TELEGRAM_CHAT_ID not configured');
       return false;
