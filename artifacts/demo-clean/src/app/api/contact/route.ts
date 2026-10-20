@@ -37,7 +37,24 @@ export async function POST(request: Request) {
       notes: notes?.trim() || '',
     });
 
-    // 2. Also forward to backend api-server in background if reachable
+    // 2. Send instant Telegram Notification to admin / group
+    try {
+      const { sendTelegramAlert, formatLeadMessage } = await import('@/lib/telegram');
+      await sendTelegramAlert(
+        formatLeadMessage({
+          name: name.trim(),
+          phone: cleanPhone,
+          governorate: safeGov,
+          service: safeService,
+          notes: notes?.trim() || '',
+          source: 'نموذج المعاينة بالموقع',
+        })
+      );
+    } catch (telegramErr) {
+      console.warn('Telegram alert error in contact route:', telegramErr);
+    }
+
+    // 3. Also forward to backend api-server in background if reachable
     const apiServerUrl = process.env.API_SERVER_URL || 'http://localhost:3001/api/contact';
     try {
       await fetch(apiServerUrl, {

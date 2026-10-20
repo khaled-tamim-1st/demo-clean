@@ -49,6 +49,43 @@ const SECURITY_HEADERS = {
   'Referrer-Policy': 'strict-origin-when-cross-origin',
 };
 
+const TELEGRAM_BOT_TOKEN = '8831150430:AAEBlt_dCYxXgcFRsTUgYHQ-fBXar9oEATU';
+
+function escapeHtml(text) {
+  if (text === undefined || text === null) return '';
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+async function sendTelegramNotification(env, htmlText) {
+  try {
+    const token = env?.TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN;
+    const chatId = env?.TELEGRAM_CHAT_ID || await getKv(env, 'TELEGRAM_CHAT_ID', null);
+    if (!chatId) {
+      console.warn('Telegram notification skipped: TELEGRAM_CHAT_ID not configured yet');
+      return false;
+    }
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: htmlText,
+        parse_mode: 'HTML',
+        disable_web_page_preview: true,
+      }),
+    });
+    const result = await res.json();
+    return Boolean(result.ok);
+  } catch (err) {
+    console.error('Telegram notification error:', err);
+    return false;
+  }
+}
+
 function jsonResponse(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -129,6 +166,24 @@ async function handleApi(request, url, env) {
       leadsStore.unshift(newLead);
       await setKv(env, 'leadsStore', leadsStore);
 
+      // Send Telegram notification
+      const kuwaitPhone = cleanPhone.startsWith('965') ? cleanPhone : `965${cleanPhone}`;
+      const leadMsg = [
+        `🚨 <b>طلب معاينة وحجز جديد!</b>`,
+        ``,
+        `👤 <b>الاسم:</b> ${escapeHtml(name.trim())}`,
+        `📞 <b>الهاتف:</b> <code>${cleanPhone}</code>`,
+        `💬 <b>واتساب:</b> <a href="https://wa.me/${kuwaitPhone}">محادثة واتساب مباشرة</a>`,
+        `📍 <b>المحافظة:</b> ${escapeHtml(safeGov)}`,
+        `🛠 <b>الخدمة:</b> ${escapeHtml(safeService)}`,
+        notes?.trim() ? `📝 <b>الملاحظات:</b> ${escapeHtml(notes.trim())}` : null,
+        `⏰ <b>الوقت:</b> ${new Date().toLocaleString('ar-KW', { timeZone: 'Asia/Kuwait' })}`,
+      ]
+        .filter(Boolean)
+        .join('\n');
+
+      sendTelegramNotification(env, leadMsg);
+
       return jsonResponse(
         {
           success: true,
@@ -180,6 +235,21 @@ async function handleApi(request, url, env) {
         reviewsStore.unshift(newRev);
         await setKv(env, 'reviewsStore', reviewsStore);
 
+        // Send Telegram notification
+        const stars = '⭐'.repeat(Math.min(5, Math.max(1, Number(rating) || 5)));
+        const revMsg = [
+          `🌟 <b>تقييم جديد من الموقع!</b>`,
+          ``,
+          `👤 <b>الاسم:</b> ${escapeHtml(authorName.trim())}`,
+          `⭐️ <b>التقييم:</b> ${stars} (${newRev.rating}/5)`,
+          `🛠 <b>الخدمة:</b> ${escapeHtml(serviceName)}`,
+          `📍 <b>المنطقة:</b> ${escapeHtml(governorateName || 'الكويت')} - ${escapeHtml(areaName || 'عام')}`,
+          `💬 <b>الرأي:</b> <i>"${escapeHtml(comment.trim())}"</i>`,
+          `⏰ <b>الوقت:</b> ${new Date().toLocaleString('ar-KW', { timeZone: 'Asia/Kuwait' })}`,
+        ].join('\n');
+
+        sendTelegramNotification(env, revMsg);
+
         return jsonResponse({
           success: true,
           review: newRev,
@@ -220,6 +290,24 @@ async function handleApi(request, url, env) {
         };
         leadsStore.unshift(newLead);
         await setKv(env, 'leadsStore', leadsStore);
+
+        // Send Telegram notification for manual lead
+        const kuwaitPhone = newLead.phone.startsWith('965') ? newLead.phone : `965${newLead.phone}`;
+        const manLeadMsg = [
+          `📋 <b>طلب حجز جديد (تم إدخاله من لوحة التحكم)</b>`,
+          ``,
+          `👤 <b>الاسم:</b> ${escapeHtml(name.trim())}`,
+          `📞 <b>الهاتف:</b> <code>${newLead.phone}</code>`,
+          `💬 <b>واتساب:</b> <a href="https://wa.me/${kuwaitPhone}">محادثة مباشرة</a>`,
+          `📍 <b>المحافظة:</b> ${escapeHtml(governorate || 'الكويت')}`,
+          `🛠 <b>الخدمة:</b> ${escapeHtml(service || 'مكافحة حشرات عامة')}`,
+          notes?.trim() ? `📝 <b>الملاحظات:</b> ${escapeHtml(notes.trim())}` : null,
+          `⏰ <b>الوقت:</b> ${new Date().toLocaleString('ar-KW', { timeZone: 'Asia/Kuwait' })}`,
+        ]
+          .filter(Boolean)
+          .join('\n');
+
+        sendTelegramNotification(env, manLeadMsg);
         return jsonResponse({ success: true, lead: newLead, message: 'تم تسجيل الطلب بنجاح' }, 201);
       } catch {
         return jsonResponse({ success: false, message: 'فشل إضافة الطلب' }, 500);
@@ -285,6 +373,21 @@ async function handleApi(request, url, env) {
         };
         reviewsStore.unshift(newRev);
         await setKv(env, 'reviewsStore', reviewsStore);
+
+        // Send Telegram notification
+        const stars = '⭐'.repeat(Math.min(5, Math.max(1, Number(rating) || 5)));
+        const revMsg = [
+          `🌟 <b>تقييم جديد من الموقع!</b>`,
+          ``,
+          `👤 <b>الاسم:</b> ${escapeHtml(authorName.trim())}`,
+          `⭐️ <b>التقييم:</b> ${stars} (${newRev.rating}/5)`,
+          `🛠 <b>الخدمة:</b> ${escapeHtml(serviceName)}`,
+          `📍 <b>المنطقة:</b> ${escapeHtml(governorateName || 'الكويت')} - ${escapeHtml(areaName || 'عام')}`,
+          `💬 <b>الرأي:</b> <i>"${escapeHtml(comment.trim())}"</i>`,
+          `⏰ <b>الوقت:</b> ${new Date().toLocaleString('ar-KW', { timeZone: 'Asia/Kuwait' })}`,
+        ].join('\n');
+
+        sendTelegramNotification(env, revMsg);
         return jsonResponse({ success: true, review: newRev, message: 'تمت إضافة التقييم بنجاح' }, 201);
       } catch {
         return jsonResponse({ success: false, message: 'فشل إضافة التقييم' }, 500);
@@ -539,6 +642,83 @@ async function handleApi(request, url, env) {
       } catch {
         return jsonResponse({ success: false, message: 'فشل حفظ الأسعار' }, 500);
       }
+    }
+  }
+
+  // Telegram Integration Status & Sync API
+  if (pathname === '/api/telegram/status') {
+    const configuredChatId = await getKv(env, 'TELEGRAM_CHAT_ID', env?.TELEGRAM_CHAT_ID || null);
+    return jsonResponse({
+      success: true,
+      bot: '@democlean_assistant_bot',
+      connected: Boolean(configuredChatId),
+      chatId: configuredChatId ? String(configuredChatId) : null,
+    });
+  }
+
+  if (pathname === '/api/telegram/sync') {
+    const token = env?.TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN;
+    try {
+      const tgRes = await fetch(`https://api.telegram.org/bot${token}/getUpdates?offset=-5`);
+      const tgData = await tgRes.json();
+      if (!tgData.ok) {
+        return jsonResponse(
+          { success: false, message: 'فشل الاتصال بخوادم تيليجرام: ' + (tgData.description || '') },
+          500
+        );
+      }
+      const results = tgData.result || [];
+      if (results.length === 0) {
+        return jsonResponse(
+          {
+            success: false,
+            message: 'لم يتم العثور على أي رسائل جديدة. يرجى فتح البوت @democlean_assistant_bot والضغط على Start أو إرسال رسالة أولاً.',
+          },
+          404
+        );
+      }
+
+      const latest = results[results.length - 1];
+      const chat = latest.message?.chat || latest.my_chat_member?.chat || latest.channel_post?.chat;
+      if (!chat || !chat.id) {
+        return jsonResponse({ success: false, message: 'تعذر استخراج معرف المحادثة من الرسالة الأخيرة' }, 400);
+      }
+
+      const chatId = String(chat.id);
+      const chatTitle = chat.title || [chat.first_name, chat.last_name].filter(Boolean).join(' ') || chat.username || 'مستخدم تليجرام';
+
+      await setKv(env, 'TELEGRAM_CHAT_ID', chatId);
+
+      const testMsg = [
+        `✅ <b>تم ربط إشعارات ديمو كلين بنجاح!</b>`,
+        ``,
+        `👤 <b>المستلم:</b> ${escapeHtml(chatTitle)} (<code>${chatId}</code>)`,
+        `🛎 <b>الخدمات المفعلة:</b>`,
+        `• إشعارات طلبات المعاينة والحجوزات الفورية 🚨`,
+        `• إشعارات تقييمات وآراء العملاء الجديدة ⭐`,
+        `• الطلبات المسجلة من لوحة التحكم 📋`,
+        ``,
+        `⚡ <i>النظام متصل وجاهز للعمل على مدار الساعة!</i>`,
+      ].join('\n');
+
+      await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: testMsg,
+          parse_mode: 'HTML',
+        }),
+      });
+
+      return jsonResponse({
+        success: true,
+        chatId,
+        chatTitle,
+        message: `تم ربط البوت بنجاح مع (${chatTitle}) وتم إرسال رسالة ترحيبية وتأكيدية!`,
+      });
+    } catch (err) {
+      return jsonResponse({ success: false, message: 'حدث خطأ أثناء مزامنة تيليجرام' }, 500);
     }
   }
 

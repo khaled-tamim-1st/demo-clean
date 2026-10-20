@@ -31,6 +31,24 @@ export async function POST(request: Request) {
       date: new Date().toISOString().split('T')[0],
     });
 
+    // Send instant Telegram Notification for new review
+    try {
+      const { sendTelegramAlert, formatReviewMessage } = await import('@/lib/telegram');
+      await sendTelegramAlert(
+        formatReviewMessage({
+          authorName: authorName.trim(),
+          rating: Number(rating) || 5,
+          serviceName: serviceName || 'مكافحة حشرات',
+          governorateName,
+          areaName,
+          comment: comment.trim(),
+          source: 'موقع ديمو كلين',
+        })
+      );
+    } catch (telegramErr) {
+      console.warn('Telegram alert error in reviews route:', telegramErr);
+    }
+
     return NextResponse.json({
       success: true,
       review: newRev,

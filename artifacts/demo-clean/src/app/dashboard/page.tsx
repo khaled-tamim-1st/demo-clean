@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
@@ -58,6 +58,9 @@ export default function DashboardPage() {
 
   // Manual Lead & KV State
   const [isKvActive, setIsKvActive] = useState<boolean | null>(null);
+  const [telegramStatus, setTelegramStatus] = useState<{ connected: boolean; chatId: string | null } | null>(null);
+  const [syncingTelegram, setSyncingTelegram] = useState(false);
+  const [syncResultMsg, setSyncResultMsg] = useState('');
   const [showManualLeadModal, setShowManualLeadModal] = useState(false);
   const [manualLeadForm, setManualLeadForm] = useState({
     name: '',
@@ -112,14 +115,21 @@ export default function DashboardPage() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [leadsRes, reviewsRes, articlesRes] = await Promise.all([
+      const [leadsRes, reviewsRes, articlesRes, tgRes] = await Promise.all([
         fetch('/api/dashboard/leads'),
         fetch('/api/dashboard/reviews'),
         fetch('/api/dashboard/articles'),
+        fetch('/api/telegram/status').catch(() => null),
       ]);
       const leadsData = await leadsRes.json();
       const reviewsData = await reviewsRes.json();
       const articlesData = await articlesRes.json();
+      if (tgRes && tgRes.ok) {
+        const tgData = await tgRes.json();
+        if (tgData.success) {
+          setTelegramStatus({ connected: tgData.connected, chatId: tgData.chatId });
+        }
+      }
 
       if (leadsData.success) {
         setIsKvActive(leadsData.kvActive ?? null);
@@ -149,6 +159,25 @@ export default function DashboardPage() {
       console.error('Error fetching dashboard data:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSyncTelegram = async () => {
+    setSyncingTelegram(true);
+    setSyncResultMsg('');
+    try {
+      const res = await fetch('/api/telegram/sync');
+      const data = await res.json();
+      if (data.success) {
+        setTelegramStatus({ connected: true, chatId: data.chatId });
+        setSyncResultMsg(`✅ ${data.message}`);
+      } else {
+        setSyncResultMsg(`⚠️ ${data.message}`);
+      }
+    } catch {
+      setSyncResultMsg('❌ فشل الاتصال بالخادم لمزامنة تيليجرام');
+    } finally {
+      setSyncingTelegram(false);
     }
   };
 
@@ -909,6 +938,127 @@ export default function DashboardPage() {
               {articles.filter((a) => a.status !== 'draft').length}{' '}
               <span style={{ fontSize: '14px', color: '#66756d', fontWeight: 600 }}>({articles.length} إجمالي)</span>
             </div>
+          </div>
+        </div>
+
+        {/* Telegram Notifications Integration Banner */}
+        <div
+          style={{
+            background: telegramStatus?.connected ? '#f0fdf4' : '#f8fafc',
+            border: `1px solid ${telegramStatus?.connected ? '#bbf7d0' : '#cbd5e1'}`,
+            borderRadius: '12px',
+            padding: '16px 20px',
+            marginBottom: '22px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '14px',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <div
+              style={{
+                width: '42px',
+                height: '42px',
+                borderRadius: '10px',
+                background: '#229ED9',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#fff',
+                flexShrink: 0,
+              }}
+            >
+              <MessageSquare size={22} />
+            </div>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                <span style={{ fontWeight: 800, color: '#1e293b', fontSize: '15px' }}>
+                  إشعارات تيليجرام الفورية
+                </span>
+                {telegramStatus?.connected ? (
+                  <span
+                    style={{
+                      background: '#dcfce7',
+                      color: '#15803d',
+                      fontSize: '11px',
+                      padding: '3px 9px',
+                      borderRadius: '12px',
+                      fontWeight: 700,
+                    }}
+                  >
+                    متصل بنجاح (Chat ID: {telegramStatus.chatId})
+                  </span>
+                ) : (
+                  <span
+                    style={{
+                      background: '#fee2e2',
+                      color: '#991b1b',
+                      fontSize: '11px',
+                      padding: '3px 9px',
+                      borderRadius: '12px',
+                      fontWeight: 700,
+                    }}
+                  >
+                    في انتظار التفعيل
+                  </span>
+                )}
+              </div>
+              <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '13px' }}>
+                {telegramStatus?.connected
+                  ? 'البوت متصل وجاهز لإرسال إشعارات فورية بكل طلبات الحجز والمعاينة وتقييمات العملاء.'
+                  : 'لتفعيل البوت: اضغط فتح البوت ثم Start في تليجرام، ثم اضغط مزامنة وتفعيل.'}
+              </p>
+              {syncResultMsg && (
+                <div style={{ marginTop: '6px', fontSize: '13px', fontWeight: 600 }}>
+                  {syncResultMsg}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+            <a
+              href="https://t.me/democlean_assistant_bot"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '9px 15px',
+                background: '#229ED9',
+                color: '#fff',
+                borderRadius: '8px',
+                fontSize: '13px',
+                fontWeight: 700,
+                textDecoration: 'none',
+              }}
+            >
+              <span>فتح البوت @democlean_assistant_bot</span>
+              <ExternalLink size={14} />
+            </a>
+            <button
+              onClick={handleSyncTelegram}
+              disabled={syncingTelegram}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '9px 15px',
+                background: '#fff',
+                color: '#0f172a',
+                border: '1px solid #cbd5e1',
+                borderRadius: '8px',
+                fontSize: '13px',
+                fontWeight: 700,
+                cursor: syncingTelegram ? 'not-allowed' : 'pointer',
+              }}
+            >
+              <RefreshCw size={14} className={syncingTelegram ? 'animate-spin' : ''} />
+              <span>{syncingTelegram ? 'جاري الفحص...' : 'مزامنة وتفعيل'}</span>
+            </button>
           </div>
         </div>
 
