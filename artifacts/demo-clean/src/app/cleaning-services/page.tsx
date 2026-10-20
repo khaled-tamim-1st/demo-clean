@@ -103,7 +103,7 @@ export default function CleaningServicesPage() {
       </section>
 
       {/* Services Grid */}
-      <section className="section" style={{ background: '#f5f4ed' }} dir="rtl">
+      <section className="section" style={{ background: '#f0f7fe' }} dir="rtl">
         <div className="container">
           <div className="section-head text-center" style={{ marginBottom: '40px' }}>
             <span className="eyebrow">أقسام التنظيف المتخصصة</span>
@@ -290,7 +290,7 @@ export default function CleaningServicesPage() {
       </section>
 
       {/* Booking Form Section */}
-      <section className="section" style={{ background: '#f5f4ed' }} dir="rtl">
+      <section className="section" style={{ background: '#f0f7fe' }} dir="rtl">
         <div className="container" style={{ maxWidth: '780px' }}>
           <div className="section-head text-center" style={{ marginBottom: '30px' }}>
             <span className="eyebrow">حجز موعد مباشر</span>

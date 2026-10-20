@@ -111,7 +111,7 @@ export default function ReviewsPage() {
         </div>
       </section>
 
-      <section className="section" style={{ background: '#f6f5ef' }} dir="rtl">
+      <section className="section" style={{ background: '#f0f7fe' }} dir="rtl">
         <div className="container">
 
           <ReviewsPageDynamic initialReviews={reviews} />

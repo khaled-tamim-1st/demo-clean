@@ -53,7 +53,7 @@ export default function CoveragePage() {
       </section>
 
       {/* Governorates Coverage */}
-      <section className="section" style={{ background: '#f5f4ed' }} dir="rtl">
+      <section className="section" style={{ background: '#f0f7fe' }} dir="rtl">
         <div className="container">
 
           {/* Grid of all 6 Governorates */}

@@ -114,7 +114,7 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section className="section" style={{ background: '#f6f5ef' }} dir="rtl">
+      <section className="section" style={{ background: '#f0f7fe' }} dir="rtl">
         <div className="container">
           <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 40px' }}>
             <span className="eyebrow">الباقات السكنية</span>

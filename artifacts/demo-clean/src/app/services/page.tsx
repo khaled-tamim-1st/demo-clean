@@ -63,7 +63,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="section" style={{ background: '#f5f4ed' }} dir="rtl">
+      <section className="section" style={{ background: '#f0f7fe' }} dir="rtl">
         <div className="container">
           <div className="services-grid-6">
             {servicesData.map((svc, index) => (

@@ -61,7 +61,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section" style={{ background: '#f6f5ef' }} dir="rtl">
+      <section className="section" style={{ background: '#f0f7fe' }} dir="rtl">
         <div className="container">
           {/* Story & Philosophy */}
           <div className="two-col-layout" style={{ alignItems: 'center', marginBottom: '56px' }}>

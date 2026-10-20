@@ -28,19 +28,19 @@
 }
 
 :root {
-  --background: 45 35% 96%;
+  --background: 206 65% 98.5%;
   --foreground: 206 45% 18%;
-  --border: 42 20% 85%;
-  --input: 42 20% 85%;
-  --card: 45 34% 98%;
+  --border: 206 32% 88%;
+  --input: 206 32% 88%;
+  --card: 0 0% 100%;
   --card-foreground: 206 45% 18%;
   --primary: 205 53% 25%;
-  --primary-foreground: 45 35% 96%;
+  --primary-foreground: 0 0% 100%;
   --secondary: 101 48% 46%;
-  --secondary-foreground: 45 35% 96%;
-  --muted: 45 20% 91%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 206 45% 95%;
   --muted-foreground: 206 18% 44%;
-  --accent: 101 45% 92%;
+  --accent: 206 50% 92%;
   --accent-foreground: 206 45% 18%;
   --ring: 101 48% 46%;
   --app-font-sans: 'IBM Plex Sans Arabic', 'DM Sans', sans-serif;

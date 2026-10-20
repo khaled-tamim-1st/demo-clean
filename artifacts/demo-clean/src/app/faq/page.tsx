@@ -83,7 +83,7 @@ export default function FaqPage() {
         </div>
       </section>
 
-      <section className="section" style={{ background: '#f6f5ef' }} dir="rtl">
+      <section className="section" style={{ background: '#f0f7fe' }} dir="rtl">
         <div className="container" style={{ maxWidth: '860px' }}>
           <div style={{ background: '#fff', padding: '36px', borderRadius: '12px', border: '1px solid #e1e3da', marginBottom: '36px' }}>
             <FaqAccordion items={fullFaqList} includeSchema={true} />

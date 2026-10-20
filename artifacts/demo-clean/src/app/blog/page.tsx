@@ -52,7 +52,7 @@ export default function BlogIndexPage() {
         </div>
       </section>
 
-      <section className="section" style={{ background: '#f5f4ed' }} dir="rtl">
+      <section className="section" style={{ background: '#f0f7fe' }} dir="rtl">
         <div className="container">
           <div className="cards-auto-grid">
             {articles.map((article) => (

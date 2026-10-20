@@ -77,7 +77,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="section" style={{ background: '#f6f5ef' }} dir="rtl">
+      <section className="section" style={{ background: '#f0f7fe' }} dir="rtl">
         <div className="container two-col-layout">
           <div>
             <span className="eyebrow">قنوات الاتصال المباشر</span>
