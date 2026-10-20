@@ -37,7 +37,7 @@ export default function BlogIndexPage() {
       <section className="page-header" dir="rtl">
         <div className="container">
           <div className="page-header-content">
-            <span className="eyebrow" style={{ color: '#b2d488' }}>
+            <span className="eyebrow" style={{ color: '#bee58f' }}>
               معرفة وتوعية بيئية
             </span>
             <h1>المركز المعرفي لمكافحة الآفات في الكويت</h1>
@@ -88,7 +88,7 @@ export default function BlogIndexPage() {
                   </div>
                 </div>
 
-                <h2 style={{ fontSize: '19px', fontWeight: 700, margin: 0, color: '#173449', lineHeight: 1.45 }}>
+                <h2 style={{ fontSize: '19px', fontWeight: 700, margin: 0, color: '#1b3f5a', lineHeight: 1.45 }}>
                   <Link
                     href={`/blog/${article.slug}`}
                     style={{ textDecoration: 'none', color: 'inherit' }}
@@ -120,7 +120,7 @@ export default function BlogIndexPage() {
 
                 <div style={{ marginTop: 'auto', paddingTop: '16px', borderTop: '1px solid #edf0e6', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: '#687771' }}>
-                    <User size={13} style={{ color: '#578740' }} />
+                    <User size={13} style={{ color: '#559a35' }} />
                     <span>{article.author.name}</span>
                   </div>
                   <Link

@@ -97,7 +97,7 @@ export default async function GovernorateDetailPage({ params }: Props) {
       <section className="page-header" dir="rtl">
         <div className="container">
           <div className="page-header-content">
-            <span className="eyebrow" style={{ color: '#b2d488' }}>
+            <span className="eyebrow" style={{ color: '#bee58f' }}>
               محافظة {gov.name} · استجابة سريعة
             </span>
             <h1>{gov.title}</h1>
@@ -113,7 +113,7 @@ export default async function GovernorateDetailPage({ params }: Props) {
               <a
                 href={COMPANY_INFO.phoneTel}
                 className="button-primary"
-                style={{ background: '#a9cd7d', color: '#18354b', borderColor: '#a9cd7d' }}
+                style={{ background: '#b5dd84', color: '#1e4663', borderColor: '#b5dd84' }}
               >
                 <PhoneCall size={16} />
                 <span>اتصل بطوارئ {gov.name}: {COMPANY_INFO.phone}</span>
@@ -142,7 +142,7 @@ export default async function GovernorateDetailPage({ params }: Props) {
             {/* Overview */}
             <div style={{ background: '#fff', padding: '32px', borderRadius: '10px', border: '1px solid #e2e4db', marginBottom: '28px' }}>
               <span className="eyebrow">عن تغطية المحافظة</span>
-              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 16px', color: '#173449' }}>
+              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 16px', color: '#1b3f5a' }}>
                 خدمات مكافحة الآفات في {gov.name}
               </h2>
               <p style={{ color: '#546363', lineHeight: 2.1, fontSize: '15px', margin: 0 }}>
@@ -151,7 +151,7 @@ export default async function GovernorateDetailPage({ params }: Props) {
 
               {/* Contextual Services Links */}
               <div style={{ marginTop: '24px' }}>
-                <h3 style={{ fontSize: '16px', fontWeight: 700, margin: '0 0 12px', color: '#173449' }}>أبرز الخدمات التي نقدمها في {gov.name}:</h3>
+                <h3 style={{ fontSize: '16px', fontWeight: 700, margin: '0 0 12px', color: '#1b3f5a' }}>أبرز الخدمات التي نقدمها في {gov.name}:</h3>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                   {servicesData.slice(0, 5).map((s) => (
                     <Link key={s.slug} href={`/services/${s.slug}`} style={{ background: '#f5f7f2', padding: '8px 16px', borderRadius: '20px', fontSize: '13px', color: '#385527', textDecoration: 'none', border: '1px solid #dce4d3', fontWeight: 600 }}>
@@ -171,7 +171,7 @@ export default async function GovernorateDetailPage({ params }: Props) {
             {/* Common Pests in Governorate */}
             <div style={{ background: '#fff', padding: '32px', borderRadius: '10px', border: '1px solid #e2e4db', marginBottom: '28px' }}>
               <span className="eyebrow">تحديات بيئية وجغرافية</span>
-              <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 16px', color: '#173449' }}>
+              <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 16px', color: '#1b3f5a' }}>
                 أكثر الآفات شيوعاً في محافظة {gov.name}
               </h2>
               <div style={{ display: 'grid', gap: '12px' }}>
@@ -187,7 +187,7 @@ export default async function GovernorateDetailPage({ params }: Props) {
             {/* Areas List */}
             <div style={{ background: '#fff', padding: '32px', borderRadius: '10px', border: '1px solid #e2e4db' }}>
               <span className="eyebrow">دليل المناطق والأحياء</span>
-              <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 20px', color: '#173449' }}>
+              <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 20px', color: '#1b3f5a' }}>
                 مناطق محافظة {gov.name} المشمولة بالخدمة
               </h2>
 
@@ -206,10 +206,10 @@ export default async function GovernorateDetailPage({ params }: Props) {
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <h3 style={{ fontSize: '16px', fontWeight: 700, margin: 0, color: '#18354b' }}>
+                      <h3 style={{ fontSize: '16px', fontWeight: 700, margin: 0, color: '#1e4663' }}>
                         منطقة {area.name}
                       </h3>
-                      <span style={{ fontSize: '11px', color: '#537d3a', fontWeight: 600 }}>
+                      <span style={{ fontSize: '11px', color: '#559a35', fontWeight: 600 }}>
                         {area.responseTime}
                       </span>
                     </div>
@@ -246,7 +246,7 @@ export default async function GovernorateDetailPage({ params }: Props) {
                 border: '1px solid #e2e4db',
               }}
             >
-              <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 14px', color: '#18354b' }}>
+              <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 14px', color: '#1e4663' }}>
                 الخدمات المتوفرة في {gov.name}:
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -268,7 +268,7 @@ export default async function GovernorateDetailPage({ params }: Props) {
                     }}
                   >
                     <span>{s.title}</span>
-                    <span style={{ fontSize: '11px', color: '#54883a' }}>{s.priceStartingFrom}</span>
+                    <span style={{ fontSize: '11px', color: '#559a35' }}>{s.priceStartingFrom}</span>
                   </Link>
                 ))}
               </div>

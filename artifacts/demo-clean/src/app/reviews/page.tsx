@@ -80,7 +80,7 @@ export default function ReviewsPage() {
       <section className="page-header" dir="rtl">
         <div className="container">
           <div className="page-header-content">
-            <span className="eyebrow" style={{ color: '#b2d488' }}>
+            <span className="eyebrow" style={{ color: '#bee58f' }}>
               دليل اجتماعي موثق
             </span>
             <h1>آراء وتقييمات عملاء ديمو كلين في الكويت</h1>
@@ -91,7 +91,7 @@ export default function ReviewsPage() {
               <Link
                 href="/review"
                 style={{
-                  background: '#b2d488',
+                  background: '#bee58f',
                   color: '#122e20',
                   padding: '10px 22px',
                   borderRadius: '8px',
@@ -118,7 +118,7 @@ export default function ReviewsPage() {
 
           {/* Bottom Action */}
           <div style={{ textAlign: 'center', marginTop: '48px' }}>
-            <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#18354b', marginBottom: '10px' }}>
+            <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#1e4663', marginBottom: '10px' }}>
               انضم إلى آلاف العملاء الراضين في الكويت
             </h3>
             <p style={{ color: '#687771', fontSize: '14px', marginBottom: '20px' }}>

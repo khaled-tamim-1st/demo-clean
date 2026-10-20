@@ -116,10 +116,10 @@ export default async function ServiceDetailPage({ params }: Props) {
         <div className="container">
           <div className="page-header-content">
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(169, 205, 125, 0.2)', color: '#b2d488', display: 'grid', placeItems: 'center' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(169, 205, 125, 0.2)', color: '#bee58f', display: 'grid', placeItems: 'center' }}>
                 {serviceIcons[service.slug] || <ShieldCheck size={28} />}
               </div>
-              <span className="eyebrow" style={{ color: '#b2d488' }}>
+              <span className="eyebrow" style={{ color: '#bee58f' }}>
                 {service.badge} · كفالة معتمدة
               </span>
             </div>
@@ -148,7 +148,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               <a
                 href={COMPANY_INFO.phoneTel}
                 className="button-primary"
-                style={{ background: '#a9cd7d', color: '#18354b', borderColor: '#a9cd7d' }}
+                style={{ background: '#b5dd84', color: '#1e4663', borderColor: '#b5dd84' }}
               >
                 <PhoneCall size={16} />
                 <span>حجز الخدمة هاتفياً ({COMPANY_INFO.phone})</span>
@@ -177,7 +177,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             {/* Description */}
             <div style={{ background: '#fff', padding: '32px', borderRadius: '10px', border: '1px solid #e2e4db', marginBottom: '28px' }}>
               <span className="eyebrow">عن الخدمة ومواصفاتها</span>
-              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 16px', color: '#173449' }}>
+              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 16px', color: '#1b3f5a' }}>
                 نظرة شاملة على بروتوكول {service.title}
               </h2>
               <p style={{ color: '#546363', lineHeight: 2.1, fontSize: '15px', margin: 0 }}>
@@ -186,7 +186,7 @@ export default async function ServiceDetailPage({ params }: Props) {
 
               {/* Pests Covered */}
               <div style={{ marginTop: '24px', paddingTop: '20px', borderTop: '1px solid #edf0e6' }}>
-                <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#19364c', marginBottom: '12px' }}>
+                <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#1e4663', marginBottom: '12px' }}>
                   الآفات والأنواع المستهدفة بالمعالجة:
                 </h3>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -195,7 +195,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                       key={i}
                       style={{
                         background: '#edf3e6',
-                        color: '#426c2b',
+                        color: '#4a8232',
                         padding: '6px 14px',
                         borderRadius: '999px',
                         fontSize: '12px',
@@ -213,13 +213,13 @@ export default async function ServiceDetailPage({ params }: Props) {
             {/* Features */}
             <div style={{ background: '#fff', padding: '32px', borderRadius: '10px', border: '1px solid #e2e4db', marginBottom: '28px' }}>
               <span className="eyebrow">لماذا ديمو كلين؟</span>
-              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 18px', color: '#173449' }}>
+              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 18px', color: '#1b3f5a' }}>
                 مزايا وتفرد معالجة {service.title}
               </h2>
               <div style={{ display: 'grid', gap: '14px' }}>
                 {service.features.map((feat, i) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                    <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#e5efd8', color: '#55833c', display: 'grid', placeItems: 'center', flex: 'none', marginTop: '2px' }}>
+                    <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#e5efd8', color: '#559a35', display: 'grid', placeItems: 'center', flex: 'none', marginTop: '2px' }}>
                       <Check size={13} />
                     </div>
                     <span style={{ fontSize: '14px', color: '#536361', lineHeight: 1.8 }}>{feat}</span>
@@ -231,7 +231,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             {/* 4-Step Process */}
             <div style={{ background: '#fff', padding: '32px', borderRadius: '10px', border: '1px solid #e2e4db', marginBottom: '28px' }}>
               <span className="eyebrow">مراحل التنفيذ</span>
-              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 20px', color: '#173449' }}>
+              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 20px', color: '#1b3f5a' }}>
                 كيف ننفذ الخدمة خطوة بخطوة؟
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -252,8 +252,8 @@ export default async function ServiceDetailPage({ params }: Props) {
                       style={{
                         width: '40px',
                         height: '40px',
-                        background: '#19364c',
-                        color: '#a9cd7d',
+                        background: '#1e4663',
+                        color: '#b5dd84',
                         borderRadius: '50%',
                         display: 'grid',
                         placeItems: 'center',
@@ -264,7 +264,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                       {p.step}
                     </div>
                     <div>
-                      <h3 style={{ fontSize: '16px', fontWeight: 700, margin: '0 0 6px', color: '#18354b' }}>
+                      <h3 style={{ fontSize: '16px', fontWeight: 700, margin: '0 0 6px', color: '#1e4663' }}>
                         {p.title}
                       </h3>
                       <p style={{ margin: 0, fontSize: '13px', color: '#687774', lineHeight: 1.85 }}>
@@ -279,7 +279,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             {/* Guarantee Box */}
             <div
               style={{
-                background: 'linear-gradient(135deg, #18354b 0%, #20455f 100%)',
+                background: 'linear-gradient(135deg, #1e4663 0%, #20455f 100%)',
                 color: '#f5f3ec',
                 padding: '28px',
                 borderRadius: '10px',
@@ -295,7 +295,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   height: '56px',
                   borderRadius: '50%',
                   background: 'rgba(169,205,125,.2)',
-                  color: '#a9cd7d',
+                  color: '#b5dd84',
                   display: 'grid',
                   placeItems: 'center',
                   flex: 'none',
@@ -304,7 +304,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ShieldCheck size={32} />
               </div>
               <div>
-                <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 6px', color: '#a9cd7d' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 6px', color: '#b5dd84' }}>
                   شهادة الضمان المعتمدة
                 </h3>
                 <p style={{ margin: 0, fontSize: '13px', lineHeight: 1.8, color: 'rgba(245,243,236,.85)' }}>
@@ -316,7 +316,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             {/* Service FAQs */}
             <div style={{ background: '#fff', padding: '32px', borderRadius: '10px', border: '1px solid #e2e4db' }}>
               <span className="eyebrow">إجابات الخبراء</span>
-              <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 20px', color: '#173449' }}>
+              <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 20px', color: '#1b3f5a' }}>
                 أسئلة شائعة حول {service.title}
               </h2>
               <FaqAccordion items={service.faqs} includeSchema={true} />
@@ -326,13 +326,13 @@ export default async function ServiceDetailPage({ params }: Props) {
             {articlesData.filter((a) => a.relatedServices.includes(service.slug)).length > 0 && (
               <div style={{ background: '#fff', padding: '32px', borderRadius: '10px', border: '1px solid #e2e4db', marginTop: '28px' }}>
                 <span className="eyebrow">المدونة والإرشادات</span>
-                <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 20px', color: '#173449' }}>
+                <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 20px', color: '#1b3f5a' }}>
                   مقالات ذات صلة بخدمة {service.title}
                 </h2>
                 <div style={{ display: 'grid', gap: '16px', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' }}>
                   {articlesData.filter((a) => a.relatedServices.includes(service.slug)).map((article) => (
                     <Link key={article.slug} href={`/blog/${article.slug}`} style={{ display: 'block', padding: '16px', background: '#f9fafa', borderRadius: '8px', textDecoration: 'none', border: '1px solid #e5e8dc' }}>
-                      <h3 style={{ fontSize: '15px', color: '#18354b', margin: '0 0 8px', fontWeight: 700, lineHeight: 1.5 }}>{article.title}</h3>
+                      <h3 style={{ fontSize: '15px', color: '#1e4663', margin: '0 0 8px', fontWeight: 700, lineHeight: 1.5 }}>{article.title}</h3>
                       <p style={{ margin: 0, fontSize: '12px', color: '#687774', lineHeight: 1.6 }}>{article.excerpt.substring(0, 80)}...</p>
                     </Link>
                   ))}
@@ -356,13 +356,13 @@ export default async function ServiceDetailPage({ params }: Props) {
                 border: '1px solid #e2e4db',
               }}
             >
-              <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 12px', color: '#18354b' }}>
+              <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 12px', color: '#1e4663' }}>
                 المنشآت والمواقع التي نخدمها:
               </h4>
               <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 18px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {service.targetLocations.map((loc, i) => (
                   <li key={i} style={{ fontSize: '13px', color: '#5c6966', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <MapPin size={14} style={{ color: '#578740' }} />
+                    <MapPin size={14} style={{ color: '#559a35' }} />
                     <span>{loc}</span>
                   </li>
                 ))}
@@ -373,7 +373,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </Link>
               
               <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #edf0e6' }}>
-                <h5 style={{ fontSize: '13px', fontWeight: 700, margin: '0 0 8px', color: '#18354b' }}>تغطية الخدمة حسب المحافظة:</h5>
+                <h5 style={{ fontSize: '13px', fontWeight: 700, margin: '0 0 8px', color: '#1e4663' }}>تغطية الخدمة حسب المحافظة:</h5>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                   <Link href="/coverage/capital" style={{ fontSize: '11px', background: '#f0f3eb', color: '#44662d', padding: '4px 8px', borderRadius: '4px', textDecoration: 'none' }}>العاصمة</Link>
                   <Link href="/coverage/hawalli" style={{ fontSize: '11px', background: '#f0f3eb', color: '#44662d', padding: '4px 8px', borderRadius: '4px', textDecoration: 'none' }}>حولي</Link>
@@ -395,7 +395,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 border: '1px solid #e2e4db',
               }}
             >
-              <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 14px', color: '#18354b' }}>
+              <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 14px', color: '#1e4663' }}>
                 خدمات مكافحة أخرى:
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -420,7 +420,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                       }}
                     >
                       <span>{otherSvc.title}</span>
-                      <ArrowLeft size={14} style={{ color: '#578740' }} />
+                      <ArrowLeft size={14} style={{ color: '#559a35' }} />
                     </Link>
                   ))}
               </div>

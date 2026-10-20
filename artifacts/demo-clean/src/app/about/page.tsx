@@ -44,7 +44,7 @@ export default function AboutPage() {
       <section className="page-header" dir="rtl">
         <div className="container">
           <div className="page-header-content">
-            <span className="eyebrow" style={{ color: '#b2d488' }}>
+            <span className="eyebrow" style={{ color: '#bee58f' }}>
               ريادة وخبرة معتمدة
             </span>
             <h1>عن شركة ديمو كلين لمكافحة الحشرات بالكويت</h1>
@@ -87,16 +87,16 @@ export default function AboutPage() {
                 boxShadow: '0 16px 36px rgba(0,0,0,.04)',
               }}
             >
-              <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 18px', color: '#18354b' }}>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 18px', color: '#1e4663' }}>
                 ركائز العمل الأساسية في ديمو كلين:
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div style={{ display: 'flex', gap: '12px' }}>
-                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#e5efd8', color: '#55833c', display: 'grid', placeItems: 'center', flex: 'none' }}>
+                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#e5efd8', color: '#559a35', display: 'grid', placeItems: 'center', flex: 'none' }}>
                     <ShieldCheck size={16} />
                   </div>
                   <div>
-                    <strong style={{ fontSize: '14px', color: '#17354a' }}>الأمان الصحي والبيئي أولاً:</strong>
+                    <strong style={{ fontSize: '14px', color: '#1b3f5a' }}>الأمان الصحي والبيئي أولاً:</strong>
                     <div style={{ fontSize: '12px', color: '#687771', marginTop: '2px' }}>
                       لا نستخدم أي مادة دون التحقق من مطابقتها لاشتراطات وزارة الصحة الكويتية ومنظمة الصحة العالمية (WHO).
                     </div>
@@ -104,11 +104,11 @@ export default function AboutPage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '12px' }}>
-                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#e5efd8', color: '#55833c', display: 'grid', placeItems: 'center', flex: 'none' }}>
+                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#e5efd8', color: '#559a35', display: 'grid', placeItems: 'center', flex: 'none' }}>
                     <Award size={16} />
                   </div>
                   <div>
-                    <strong style={{ fontSize: '14px', color: '#17354a' }}>الضمان الحقيقي والالتزام:</strong>
+                    <strong style={{ fontSize: '14px', color: '#1b3f5a' }}>الضمان الحقيقي والالتزام:</strong>
                     <div style={{ fontSize: '12px', color: '#687771', marginTop: '2px' }}>
                       كل خدمة تصدر معها شهادة كفالة خطية؛ وفي حال ظهور أي آفة خلال مدة الضمان نتحرك لإعادة الرش مجاناً خلال 24 ساعة.
                     </div>
@@ -116,11 +116,11 @@ export default function AboutPage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '12px' }}>
-                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#e5efd8', color: '#55833c', display: 'grid', placeItems: 'center', flex: 'none' }}>
+                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#e5efd8', color: '#559a35', display: 'grid', placeItems: 'center', flex: 'none' }}>
                     <Users size={16} />
                   </div>
                   <div>
-                    <strong style={{ fontSize: '14px', color: '#17354a' }}>طواقم فنية مؤهلة:</strong>
+                    <strong style={{ fontSize: '14px', color: '#1b3f5a' }}>طواقم فنية مؤهلة:</strong>
                     <div style={{ fontSize: '12px', color: '#687771', marginTop: '2px' }}>
                       فنيون مدربون على أعلى مستوى يلتزمون بالزي الرسمي، النظافة، وأدق تعليمات خصوصية المنازل الكويتية.
                     </div>
@@ -138,24 +138,24 @@ export default function AboutPage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
               <div style={{ background: '#fff', padding: '24px', borderRadius: '10px', border: '1px solid #e1e3da', textAlign: 'center' }}>
-                <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#f1f5eb', color: '#55833c', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+                <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#f1f5eb', color: '#559a35', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
                   <Award size={24} />
                 </div>
-                <h4 style={{ fontSize: '16px', color: '#18354b', marginBottom: '8px' }}>ترخيص وزارة الصحة</h4>
+                <h4 style={{ fontSize: '16px', color: '#1e4663', marginBottom: '8px' }}>ترخيص وزارة الصحة</h4>
                 <p style={{ fontSize: '13px', color: '#687771', margin: 0 }}>جميع مبيداتنا مسجلة ومعتمدة من قبل إدارة التسجيل والمراقبة الطبية بوزارة الصحة الكويتية.</p>
               </div>
               <div style={{ background: '#fff', padding: '24px', borderRadius: '10px', border: '1px solid #e1e3da', textAlign: 'center' }}>
-                <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#f1f5eb', color: '#55833c', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+                <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#f1f5eb', color: '#559a35', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
                   <ShieldCheck size={24} />
                 </div>
-                <h4 style={{ fontSize: '16px', color: '#18354b', marginBottom: '8px' }}>شركة مرخصة رسمياً</h4>
+                <h4 style={{ fontSize: '16px', color: '#1e4663', marginBottom: '8px' }}>شركة مرخصة رسمياً</h4>
                 <p style={{ fontSize: '13px', color: '#687771', margin: 0 }}>نعمل بشكل قانوني بترخيص رقم {COMPANY_INFO.licenseNumber} وسجل تجاري رقم {COMPANY_INFO.commercialRegister}.</p>
               </div>
               <div style={{ background: '#fff', padding: '24px', borderRadius: '10px', border: '1px solid #e1e3da', textAlign: 'center' }}>
-                <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#f1f5eb', color: '#55833c', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+                <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#f1f5eb', color: '#559a35', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
                   <CheckCircle2 size={24} />
                 </div>
-                <h4 style={{ fontSize: '16px', color: '#18354b', marginBottom: '8px' }}>وكلاء مبيدات عالمية</h4>
+                <h4 style={{ fontSize: '16px', color: '#1e4663', marginBottom: '8px' }}>وكلاء مبيدات عالمية</h4>
                 <p style={{ fontSize: '13px', color: '#687771', margin: 0 }}>نستخدم منتجات أصلية (أمريكية وألمانية) مثبتة الفعالية وغير ضارة بالصحة العامة.</p>
               </div>
             </div>
@@ -165,7 +165,7 @@ export default function AboutPage() {
           <div
             className="stats-four-grid"
             style={{
-              background: '#18354b',
+              background: '#1e4663',
               color: '#fff',
               padding: '40px',
               borderRadius: '12px',
@@ -174,26 +174,26 @@ export default function AboutPage() {
             }}
           >
             <div>
-              <div style={{ fontSize: '36px', fontWeight: 800, color: '#a9cd7d' }}>+5,200</div>
+              <div style={{ fontSize: '36px', fontWeight: 800, color: '#b5dd84' }}>+5,200</div>
               <div style={{ fontSize: '13px', color: 'rgba(255,255,255,.8)', marginTop: '4px' }}>منزل ومنشأة تم حمايتها</div>
             </div>
             <div>
-              <div style={{ fontSize: '36px', fontWeight: 800, color: '#a9cd7d' }}>6</div>
+              <div style={{ fontSize: '36px', fontWeight: 800, color: '#b5dd84' }}>6</div>
               <div style={{ fontSize: '13px', color: 'rgba(255,255,255,.8)', marginTop: '4px' }}>محافظات مغطاة بالكامل</div>
             </div>
             <div>
-              <div style={{ fontSize: '36px', fontWeight: 800, color: '#a9cd7d' }}>99%</div>
+              <div style={{ fontSize: '36px', fontWeight: 800, color: '#b5dd84' }}>99%</div>
               <div style={{ fontSize: '13px', color: 'rgba(255,255,255,.8)', marginTop: '4px' }}>نسبة رضا العملاء</div>
             </div>
             <div>
-              <div style={{ fontSize: '36px', fontWeight: 800, color: '#a9cd7d' }}>24/7</div>
+              <div style={{ fontSize: '36px', fontWeight: 800, color: '#b5dd84' }}>24/7</div>
               <div style={{ fontSize: '13px', color: 'rgba(255,255,255,.8)', marginTop: '4px' }}>طوارئ واستجابة سريعة</div>
             </div>
           </div>
 
           {/* CTA Section */}
           <div style={{ textAlign: 'center' }}>
-            <h2 style={{ fontSize: '24px', fontWeight: 700, color: '#18354b', marginBottom: '12px' }}>
+            <h2 style={{ fontSize: '24px', fontWeight: 700, color: '#1e4663', marginBottom: '12px' }}>
               مستعدون لحماية منزلك أو منشأتك اليوم
             </h2>
             <p style={{ color: '#677470', fontSize: '15px', maxWidth: '520px', margin: '0 auto 24px' }}>

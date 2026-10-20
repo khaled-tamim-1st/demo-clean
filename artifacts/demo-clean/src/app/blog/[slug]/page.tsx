@@ -103,7 +103,7 @@ export default async function ArticleDetailPage({ params }: Props) {
   const formatInline = (text: string) => {
     return text
       .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color: #436d2b; text-decoration: underline; font-weight: 700;">$1</a>')
-      .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #18354b;">$1</strong>')
+      .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #1e4663;">$1</strong>')
       .replace(/\*([^*]+)\*/g, '<em>$1</em>');
   };
 
@@ -123,7 +123,7 @@ export default async function ArticleDetailPage({ params }: Props) {
         <header className="page-header">
           <div className="container">
             <div className="page-header-content" style={{ maxWidth: '860px' }}>
-              <span className="eyebrow" style={{ color: '#b2d488' }}>
+              <span className="eyebrow" style={{ color: '#bee58f' }}>
                 {article.category} · إرشادات عملية
               </span>
               <h1 style={{ fontSize: 'clamp(26px, 3.8vw, 40px)', lineHeight: 1.35 }}>
@@ -163,7 +163,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                   <div
                     style={{
                       background: '#f3f8ee',
-                      border: '2px solid #b2d488',
+                      border: '2px solid #bee58f',
                       borderRadius: '10px',
                       padding: '24px',
                       marginBottom: '32px',
@@ -171,7 +171,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
                       <ShieldCheck size={22} style={{ color: '#436d2b' }} />
-                      <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 800, color: '#18354b' }}>
+                      <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 800, color: '#1e4663' }}>
                         الخلاصة السريعة من خبراء ديمو كلين (إجابة حاسمة وموجزة):
                       </h3>
                     </div>
@@ -191,10 +191,10 @@ export default async function ArticleDetailPage({ params }: Props) {
                         style={{
                           fontSize: '24px',
                           fontWeight: 800,
-                          color: '#18354b',
+                          color: '#1e4663',
                           marginTop: '36px',
                           marginBottom: '16px',
-                          borderRight: '4px solid #a9cd7d',
+                          borderRight: '4px solid #b5dd84',
                           paddingRight: '12px',
                         }}
                       >
@@ -209,7 +209,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                         style={{
                           fontSize: '20px',
                           fontWeight: 700,
-                          color: '#18354b',
+                          color: '#1e4663',
                           marginTop: '26px',
                           marginBottom: '12px',
                         }}
@@ -257,7 +257,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                       >
                         <span
                           style={{
-                            background: '#18354b',
+                            background: '#1e4663',
                             color: '#fff',
                             borderRadius: '50%',
                             minWidth: '24px',
@@ -290,7 +290,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                 {/* Interactive FAQ Section with Schema */}
                 {article.faqs && article.faqs.length > 0 && (
                   <div style={{ marginTop: '48px', paddingTop: '32px', borderTop: '2px dashed #e2e4db' }}>
-                    <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#18354b', marginBottom: '20px' }}>
+                    <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#1e4663', marginBottom: '20px' }}>
                       الأسئلة الأكثر شيوعاً وإجابات الخبراء (PAA & GEO)
                     </h2>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -305,7 +305,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                             cursor: 'pointer',
                           }}
                         >
-                          <summary style={{ fontWeight: 700, color: '#18354b', fontSize: '16px', outline: 'none' }}>
+                          <summary style={{ fontWeight: 700, color: '#1e4663', fontSize: '16px', outline: 'none' }}>
                             {faq.question}
                           </summary>
                           <p style={{ margin: '12px 0 0 0', color: '#44514f', lineHeight: 1.9, fontSize: '15px' }} dangerouslySetInnerHTML={{ __html: formatInline(faq.answer) }} />
@@ -318,7 +318,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                 {/* Author Box for E-E-A-T */}
                 <div style={{ marginTop: '40px', padding: '24px', background: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '12px' }}>
-                    <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: '#b2d488', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#18354b', fontSize: '24px', fontWeight: 'bold' }}>
+                    <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: '#bee58f', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1e4663', fontSize: '24px', fontWeight: 'bold' }}>
                       {article.author.name.charAt(0)}
                     </div>
                     <div>
@@ -333,7 +333,7 @@ export default async function ArticleDetailPage({ params }: Props) {
 
                 {/* Tags */}
                 <div style={{ marginTop: '36px', paddingTop: '22px', borderTop: '1px solid #edf0e6' }}>
-                  <div style={{ fontSize: '13px', fontWeight: 700, color: '#18354b', marginBottom: '10px' }}>
+                  <div style={{ fontSize: '13px', fontWeight: 700, color: '#1e4663', marginBottom: '10px' }}>
                     وسوم الموضوع:
                   </div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -360,7 +360,7 @@ export default async function ArticleDetailPage({ params }: Props) {
               <div
                 style={{
                   marginTop: '28px',
-                  background: 'linear-gradient(135deg, #18354b 0%, #20455f 100%)',
+                  background: 'linear-gradient(135deg, #1e4663 0%, #20455f 100%)',
                   color: '#fff',
                   padding: '30px',
                   borderRadius: '10px',
@@ -372,7 +372,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                 }}
               >
                 <div>
-                  <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 6px', color: '#a9cd7d' }}>
+                  <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 6px', color: '#b5dd84' }}>
                     هل تواجه هذه المشكلة في منزلك الآن؟
                   </h3>
                   <p style={{ margin: 0, fontSize: '13px', color: 'rgba(255,255,255,.8)' }}>
@@ -382,7 +382,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                 <a
                   href={COMPANY_INFO.phoneTel}
                   className="button-primary"
-                  style={{ background: '#a9cd7d', color: '#18354b', borderColor: '#a9cd7d' }}
+                  style={{ background: '#b5dd84', color: '#1e4663', borderColor: '#b5dd84' }}
                 >
                   <PhoneCall size={15} />
                   <span>اتصل بالخبير: {COMPANY_INFO.phone}</span>
@@ -403,7 +403,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                     marginBottom: '24px',
                   }}
                 >
-                  <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 14px', color: '#18354b' }}>
+                  <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 14px', color: '#1e4663' }}>
                     خدمات مكافحة مرتبطة بهذا المقال:
                   </h4>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -426,7 +426,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                         }}
                       >
                         <span>{svc.title}</span>
-                        <ArrowLeft size={14} style={{ color: '#54883a' }} />
+                        <ArrowLeft size={14} style={{ color: '#559a35' }} />
                       </Link>
                     ))}
                   </div>
@@ -442,7 +442,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                   border: '1px solid #e2e4db',
                 }}
               >
-                <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 14px', color: '#18354b' }}>
+                <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 14px', color: '#1e4663' }}>
                   مقالات أخرى قد تهمك:
                 </h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -455,7 +455,7 @@ export default async function ArticleDetailPage({ params }: Props) {
                         href={`/blog/${otherArt.slug}`}
                         style={{
                           textDecoration: 'none',
-                          color: '#19364c',
+                          color: '#1e4663',
                           fontSize: '13px',
                           lineHeight: 1.6,
                           fontWeight: 600,

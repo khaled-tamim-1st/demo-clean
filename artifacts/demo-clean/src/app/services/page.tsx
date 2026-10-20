@@ -46,7 +46,7 @@ export default function ServicesPage() {
       <section className="page-header" dir="rtl">
         <div className="container">
           <div className="page-header-content">
-            <span className="eyebrow" style={{ color: '#b2d488' }}>شركة معتمدة بوزارة الصحة - ترخيص رقم 14620/2025</span>
+            <span className="eyebrow" style={{ color: '#bee58f' }}>شركة معتمدة بوزارة الصحة - ترخيص رقم 14620/2025</span>
             <h1>خدمات مكافحة الحشرات والقوارض في الكويت</h1>
             <p>
               في ديمو كلين نطبق بروتوكولات الإدارة المتكاملة للآفات (IPM) المعتمدة عالمياً. 
@@ -87,7 +87,7 @@ export default function ServicesPage() {
                   <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
                     {svc.features.slice(0, 3).map((f, i) => (
                       <li key={i} style={{ fontSize: '12px', color: '#63706c', display: 'flex', alignItems: 'flex-start', gap: '6px' }}>
-                        <Check size={13} style={{ color: '#578740', flex: 'none', marginTop: '2px' }} />
+                        <Check size={13} style={{ color: '#559a35', flex: 'none', marginTop: '2px' }} />
                         <span>{f}</span>
                       </li>
                     ))}

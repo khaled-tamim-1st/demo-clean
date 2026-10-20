@@ -64,7 +64,7 @@ export default function ReviewsPageDynamic({ initialReviews = [] }: ReviewsPageD
         }}
       >
         <div style={{ fontSize: '40px', marginBottom: '12px' }}>⭐</div>
-        <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#18354b', margin: '0 0 8px' }}>
+        <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#1e4663', margin: '0 0 8px' }}>
           شاركنا تجربتك الأولى مع ديمو كلين
         </h3>
         <p style={{ fontSize: '14px', color: '#667770', lineHeight: 1.8, marginBottom: '22px' }}>
@@ -96,7 +96,7 @@ export default function ReviewsPageDynamic({ initialReviews = [] }: ReviewsPageD
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
-              <h3 style={{ fontSize: '17px', fontWeight: 700, margin: 0, color: '#18354b' }}>
+              <h3 style={{ fontSize: '17px', fontWeight: 700, margin: 0, color: '#1e4663' }}>
                 {rev.authorName}
               </h3>
               <span style={{ fontSize: '12px', color: '#778680', marginTop: '2px', display: 'block' }}>
@@ -153,7 +153,7 @@ export default function ReviewsPageDynamic({ initialReviews = [] }: ReviewsPageD
                   alignItems: 'center',
                   gap: '5px',
                   fontSize: '11px',
-                  color: '#204733',
+                  color: '#296142',
                   background: '#f0f5ee',
                   padding: '4px 8px',
                   borderRadius: '4px',

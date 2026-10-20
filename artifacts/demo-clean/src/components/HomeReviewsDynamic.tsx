@@ -64,7 +64,7 @@ export default function HomeReviewsDynamic({ initialReviews = [] }: HomeReviewsD
         }}
       >
         <div style={{ fontSize: '32px', marginBottom: '10px' }}>⭐</div>
-        <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#18354b', margin: '0 0 6px' }}>
+        <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#1e4663', margin: '0 0 6px' }}>
           رأي عملائنا هو فخرنا وشهادتنا
         </h3>
         <p style={{ fontSize: '13px', color: '#687770', margin: '0 0 18px', lineHeight: 1.7 }}>
@@ -96,7 +96,7 @@ export default function HomeReviewsDynamic({ initialReviews = [] }: HomeReviewsD
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <strong style={{ fontSize: '15px', color: '#18354b' }}>{review.authorName}</strong>
+                <strong style={{ fontSize: '15px', color: '#1e4663' }}>{review.authorName}</strong>
                 <div style={{ fontSize: '11px', color: '#4a5550', marginTop: '2px' }}>
                   {review.governorateName} — {review.areaName}
                 </div>
@@ -152,7 +152,7 @@ export default function HomeReviewsDynamic({ initialReviews = [] }: HomeReviewsD
                     alignItems: 'center',
                     gap: '4px',
                     fontSize: '10.5px',
-                    color: '#204733',
+                    color: '#296142',
                     background: '#f0f5ee',
                     padding: '2px 7px',
                     borderRadius: '4px',

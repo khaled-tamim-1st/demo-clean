@@ -115,7 +115,7 @@ export default function RestaurantsPestControlPage() {
       <section className="page-header" dir="rtl">
         <div className="container">
           <div className="page-header-content">
-            <span className="eyebrow" style={{ color: '#b2d488' }}>
+            <span className="eyebrow" style={{ color: '#bee58f' }}>
               عقود B2B معتمدة • ترخيص صحة رقم 14620/2025
             </span>
             <h1>مكافحة حشرات المطاعم في الكويت (شهادات البلدية)</h1>
@@ -137,7 +137,7 @@ export default function RestaurantsPestControlPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', marginBottom: '50px' }}>
             <div>
               <span className="eyebrow">إجراءات مكافحة حشرات المطاعم المتكاملة (IPM)</span>
-              <h2 style={{ fontSize: '26px', fontWeight: 900, color: '#17354a', margin: '8px 0 16px' }}>
+              <h2 style={{ fontSize: '26px', fontWeight: 900, color: '#1b3f5a', margin: '8px 0 16px' }}>
                 لا مخاطرة مع صحة زبائنك ومخالفات هيئة الغذاء
               </h2>
               <p style={{ color: '#55655d', fontSize: '14.5px', lineHeight: 1.8, marginBottom: '16px' }}>
@@ -149,25 +149,25 @@ export default function RestaurantsPestControlPage() {
             </div>
 
             <div style={{ background: '#fff', borderRadius: '14px', border: '1px solid #dce2d6', padding: '28px', boxShadow: '0 4px 16px rgba(0,0,0,0.03)' }}>
-              <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#17354a', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <FileCheck2 size={20} color="#204733" />
+              <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#1b3f5a', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <FileCheck2 size={20} color="#296142" />
                 <span>ماذا يشمل العقد السنوي لمطعمك؟</span>
               </h3>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13.5px', color: '#45564e' }}>
-                  <CheckCircle2 size={16} color="#204733" />
+                  <CheckCircle2 size={16} color="#296142" />
                   <span>إصدار شهادة رش حشرات للبلدية وتقارير فنية دورية (Logbook)</span>
                 </li>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13.5px', color: '#45564e' }}>
-                  <CheckCircle2 size={16} color="#204733" />
+                  <CheckCircle2 size={16} color="#296142" />
                   <span>تأمين محطات طعوم للقوارض حول مسارات القمامة والمخازن</span>
                 </li>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13.5px', color: '#45564e' }}>
-                  <CheckCircle2 size={16} color="#204733" />
+                  <CheckCircle2 size={16} color="#296142" />
                   <span>معالجة آمنة للصراصير الألمانية في الأفران وماكينات الإسبريسو</span>
                 </li>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13.5px', color: '#45564e' }}>
-                  <CheckCircle2 size={16} color="#204733" />
+                  <CheckCircle2 size={16} color="#296142" />
                   <span>استجابة لحالات الطوارئ (SLA) خلال 30 دقيقة على مدار الساعة</span>
                 </li>
               </ul>
@@ -202,7 +202,7 @@ export default function RestaurantsPestControlPage() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     padding: '11px 14px',
-                    background: '#204733',
+                    background: '#296142',
                     color: '#fff',
                     borderRadius: '8px',
                     textDecoration: 'none',
@@ -232,7 +232,7 @@ export default function RestaurantsPestControlPage() {
                     height: '38px',
                     borderRadius: '8px',
                     background: '#eef5ea',
-                    color: '#204733',
+                    color: '#296142',
                     display: 'grid',
                     placeItems: 'center',
                     fontWeight: 800,
@@ -241,7 +241,7 @@ export default function RestaurantsPestControlPage() {
                 >
                   0{i + 1}
                 </div>
-                <h4 style={{ fontSize: '16px', fontWeight: 800, color: '#17354a', margin: '0 0 8px' }}>
+                <h4 style={{ fontSize: '16px', fontWeight: 800, color: '#1b3f5a', margin: '0 0 8px' }}>
                   {feat.title}
                 </h4>
                 <p style={{ fontSize: '13px', color: '#687770', lineHeight: 1.7, margin: 0 }}>
@@ -262,7 +262,7 @@ export default function RestaurantsPestControlPage() {
           >
             <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 28px' }}>
               <span className="eyebrow">حجز معاينة B2B مجانية</span>
-              <h3 style={{ fontSize: '22px', fontWeight: 900, color: '#17354a', margin: '6px 0 10px' }}>
+              <h3 style={{ fontSize: '22px', fontWeight: 900, color: '#1b3f5a', margin: '6px 0 10px' }}>
                 اطلب زيارة تقييمية لمطعمك أو الكافيه اليوم
               </h3>
               <p style={{ fontSize: '13.5px', color: '#687770', lineHeight: 1.7, margin: 0 }}>

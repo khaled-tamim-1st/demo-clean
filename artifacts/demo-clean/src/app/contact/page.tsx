@@ -62,7 +62,7 @@ export default function ContactPage() {
       <section className="page-header" dir="rtl">
         <div className="container">
           <div className="page-header-content">
-            <span className="eyebrow" style={{ color: '#b2d488' }}>
+            <span className="eyebrow" style={{ color: '#bee58f' }}>
               خدمة سريعة على مدار الساعة
             </span>
             <h1>تواصل مع ديمو كلين لحجز المعاينة الفورية</h1>
@@ -85,7 +85,7 @@ export default function ContactPage() {
               يسعدنا تلقي طلبك<br />أو استفسارك بأي وقت
             </h2>
             <p className="section-copy">
-              سواء كنت بحاجة لتدخل عاجل لـ <Link href="/services/bedbugs" style={{ color: '#52813b', textDecoration: 'underline', fontWeight: 600 }}>مكافحة بق الفراش</Link> أو استشارة لحقن <Link href="/services/termites" style={{ color: '#52813b', textDecoration: 'underline', fontWeight: 600 }}>النمل الأبيض</Link> أو عقد صيانة دوري لـ <Link href="/services/cockroaches" style={{ color: '#52813b', textDecoration: 'underline', fontWeight: 600 }}>إبادة الصراصير</Link>، فريقنا الهندسي والفني في خدمتك دائماً عبر جميع <Link href="/coverage" style={{ color: '#52813b', textDecoration: 'underline', fontWeight: 600 }}>محافظات ومناطق الكويت</Link>.
+              سواء كنت بحاجة لتدخل عاجل لـ <Link href="/services/bedbugs" style={{ color: '#559a35', textDecoration: 'underline', fontWeight: 600 }}>مكافحة بق الفراش</Link> أو استشارة لحقن <Link href="/services/termites" style={{ color: '#559a35', textDecoration: 'underline', fontWeight: 600 }}>النمل الأبيض</Link> أو عقد صيانة دوري لـ <Link href="/services/cockroaches" style={{ color: '#559a35', textDecoration: 'underline', fontWeight: 600 }}>إبادة الصراصير</Link>، فريقنا الهندسي والفني في خدمتك دائماً عبر جميع <Link href="/coverage" style={{ color: '#559a35', textDecoration: 'underline', fontWeight: 600 }}>محافظات ومناطق الكويت</Link>.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '32px' }}>
@@ -105,12 +105,12 @@ export default function ContactPage() {
                   transition: 'border-color .2s, transform .2s',
                 }}
               >
-                <div style={{ width: '46px', height: '46px', borderRadius: '50%', background: '#eaf2e3', color: '#52813b', display: 'grid', placeItems: 'center', flex: 'none' }}>
+                <div style={{ width: '46px', height: '46px', borderRadius: '50%', background: '#eaf2e3', color: '#559a35', display: 'grid', placeItems: 'center', flex: 'none' }}>
                   <PhoneCall size={20} />
                 </div>
                 <div>
                   <div style={{ fontSize: '11px', color: '#7a8781', fontWeight: 600 }}>الخط الساخن المباشر (24 ساعة)</div>
-                  <strong style={{ fontSize: '18px', color: '#173449', direction: 'ltr', display: 'inline-block' }}>{COMPANY_INFO.phone}</strong>
+                  <strong style={{ fontSize: '18px', color: '#1b3f5a', direction: 'ltr', display: 'inline-block' }}>{COMPANY_INFO.phone}</strong>
                 </div>
               </a>
 
@@ -137,7 +137,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <div style={{ fontSize: '11px', color: '#7a8781', fontWeight: 600 }}>المحادثة الفورية عبر واتساب</div>
-                  <strong style={{ fontSize: '15px', color: '#173449' }}>تواصل واتساب مباشر: {COMPANY_INFO.phone}</strong>
+                  <strong style={{ fontSize: '15px', color: '#1b3f5a' }}>تواصل واتساب مباشر: {COMPANY_INFO.phone}</strong>
                 </div>
               </a>
 
@@ -155,20 +155,20 @@ export default function ContactPage() {
                   color: '#2d3b36',
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#204733', fontWeight: 700 }}>
-                  <CheckCircle2 size={16} style={{ color: '#52813b' }} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#296142', fontWeight: 700 }}>
+                  <CheckCircle2 size={16} style={{ color: '#559a35' }} />
                   <span>شركة ديمو كلين (Demo Clean) كويتية معتمدة ومرخصة</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <FileText size={16} style={{ color: '#52813b' }} />
-                  <span>رقم الترخيص: <strong style={{ color: '#173449' }}>{COMPANY_INFO.licenseNumber}</strong></span>
+                  <FileText size={16} style={{ color: '#559a35' }} />
+                  <span>رقم الترخيص: <strong style={{ color: '#1b3f5a' }}>{COMPANY_INFO.licenseNumber}</strong></span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <ShieldCheck size={16} style={{ color: '#52813b' }} />
-                  <span>السجل التجاري: <strong style={{ color: '#173449' }}>{COMPANY_INFO.commercialRegister}</strong></span>
+                  <ShieldCheck size={16} style={{ color: '#559a35' }} />
+                  <span>السجل التجاري: <strong style={{ color: '#1b3f5a' }}>{COMPANY_INFO.commercialRegister}</strong></span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <MapPin size={16} style={{ color: '#52813b' }} />
+                  <MapPin size={16} style={{ color: '#559a35' }} />
                   <span>نطاق العمل: جميع محافظات ومناطق دولة الكويت (خدمة 24 ساعة)</span>
                 </div>
               </div>

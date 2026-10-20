@@ -98,8 +98,8 @@ export default function ReviewSubmitPage() {
                 width: '42px',
                 height: '42px',
                 borderRadius: '10px',
-                background: '#204733',
-                color: '#b4d78b',
+                background: '#296142',
+                color: '#bee58f',
                 display: 'grid',
                 placeItems: 'center',
                 fontWeight: 900,
@@ -109,14 +109,14 @@ export default function ReviewSubmitPage() {
               د
             </div>
             <div style={{ textAlign: 'right' }}>
-              <span style={{ fontSize: '18px', fontWeight: 900, color: '#17354a', display: 'block', lineHeight: 1.1 }}>
+              <span style={{ fontSize: '18px', fontWeight: 900, color: '#1b3f5a', display: 'block', lineHeight: 1.1 }}>
                 ديمو كلين الكويت
               </span>
               <small style={{ fontSize: '11px', color: '#687770' }}>مكافحة الحشرات والقوارض المعتمدة</small>
             </div>
           </Link>
 
-          <h1 style={{ fontSize: '24px', fontWeight: 900, color: '#17354a', margin: '0 0 8px' }}>
+          <h1 style={{ fontSize: '24px', fontWeight: 900, color: '#1b3f5a', margin: '0 0 8px' }}>
             تقييم مستوى الخدمة ورأيك يهمنا
           </h1>
           <p style={{ fontSize: '14px', color: '#63736b', margin: 0, lineHeight: 1.7 }}>
@@ -151,7 +151,7 @@ export default function ReviewSubmitPage() {
                 <CheckCircle2 size={36} />
               </div>
 
-              <h2 style={{ fontSize: '22px', fontWeight: 900, color: '#17354a', marginBottom: '10px' }}>
+              <h2 style={{ fontSize: '22px', fontWeight: 900, color: '#1b3f5a', marginBottom: '10px' }}>
                 شكراً جزيلاً لك على تقييمك!
               </h2>
               <p style={{ fontSize: '14px', color: '#55655d', lineHeight: 1.8, marginBottom: '24px' }}>
@@ -185,7 +185,7 @@ export default function ReviewSubmitPage() {
                     alignItems: 'center',
                     gap: '6px',
                     padding: '11px 22px',
-                    background: '#204733',
+                    background: '#296142',
                     color: '#fff',
                     borderRadius: '8px',
                     textDecoration: 'none',
@@ -204,7 +204,7 @@ export default function ReviewSubmitPage() {
                     gap: '6px',
                     padding: '11px 22px',
                     background: '#eef3ea',
-                    color: '#204733',
+                    color: '#296142',
                     borderRadius: '8px',
                     textDecoration: 'none',
                     fontWeight: 700,
@@ -235,7 +235,7 @@ export default function ReviewSubmitPage() {
 
               {/* Star Rating Picker */}
               <div style={{ textAlign: 'center', padding: '8px 0 16px', borderBottom: '1px solid #edf0e7' }}>
-                <label style={{ display: 'block', fontSize: '14px', fontWeight: 700, color: '#17354a', marginBottom: '10px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: 700, color: '#1b3f5a', marginBottom: '10px' }}>
                   ما هو تقييمك العام لخدمتنا؟
                 </label>
                 <div style={{ display: 'inline-flex', gap: '8px', direction: 'ltr' }}>
@@ -401,7 +401,7 @@ export default function ReviewSubmitPage() {
                   justifyContent: 'center',
                   gap: '8px',
                   padding: '14px',
-                  background: '#204733',
+                  background: '#296142',
                   color: '#fff',
                   borderRadius: '10px',
                   border: 'none',
@@ -435,7 +435,7 @@ export default function ReviewSubmitPage() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '6px',
-                color: '#204733',
+                color: '#296142',
                 fontSize: '13px',
                 fontWeight: 700,
                 textDecoration: 'none',

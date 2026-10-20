@@ -42,7 +42,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                   className={`breadcrumbs-item ${isLast ? 'active' : ''}`}
                 >
                   {index > 0 && <ChevronLeft size={13} className="breadcrumbs-separator" />}
-                  {index === 0 && <Home size={14} style={{ marginLeft: '4px', color: '#54883a' }} />}
+                  {index === 0 && <Home size={14} style={{ marginLeft: '4px', color: '#559a35' }} />}
                   {item.href && !isLast ? (
                     <Link href={item.href}>{item.label}</Link>
                   ) : (

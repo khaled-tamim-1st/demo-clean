@@ -117,7 +117,7 @@ export default async function AreaDetailPage({ params }: Props) {
       <section className="page-header" dir="rtl">
         <div className="container">
           <div className="page-header-content">
-            <span className="eyebrow" style={{ color: '#b2d488' }}>
+            <span className="eyebrow" style={{ color: '#bee58f' }}>
               محافظة {gov.name} · منطقة {area.name}
             </span>
             <h1>{area.title}</h1>
@@ -133,7 +133,7 @@ export default async function AreaDetailPage({ params }: Props) {
               <a
                 href={COMPANY_INFO.phoneTel}
                 className="button-primary"
-                style={{ background: '#a9cd7d', color: '#18354b', borderColor: '#a9cd7d' }}
+                style={{ background: '#b5dd84', color: '#1e4663', borderColor: '#b5dd84' }}
               >
                 <PhoneCall size={16} />
                 <span>اتصل بفني منطقة {area.name}: {COMPANY_INFO.phone}</span>
@@ -162,7 +162,7 @@ export default async function AreaDetailPage({ params }: Props) {
             {/* Area Details & Protocols */}
             <div style={{ background: '#fff', padding: '32px', borderRadius: '10px', border: '1px solid #e2e4db', marginBottom: '28px' }}>
               <span className="eyebrow">رعاية بيئية مخصصة</span>
-              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 16px', color: '#173449' }}>
+              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 16px', color: '#1b3f5a' }}>
                 بروتوكول مكافحة الحشرات المعتمد في {area.name}
               </h2>
               <p style={{ color: '#546363', lineHeight: 2.1, fontSize: '15px', margin: 0 }}>
@@ -171,7 +171,7 @@ export default async function AreaDetailPage({ params }: Props) {
 
               {/* Contextual Services Links */}
               <div style={{ marginTop: '24px' }}>
-                <h3 style={{ fontSize: '16px', fontWeight: 700, margin: '0 0 12px', color: '#173449' }}>أهم خدماتنا المتاحة لمنطقة {area.name}:</h3>
+                <h3 style={{ fontSize: '16px', fontWeight: 700, margin: '0 0 12px', color: '#1b3f5a' }}>أهم خدماتنا المتاحة لمنطقة {area.name}:</h3>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                   {servicesData.slice(0, 5).map((s) => (
                     <Link key={s.slug} href={`/services/${s.slug}`} style={{ background: '#f5f7f2', padding: '8px 16px', borderRadius: '20px', fontSize: '13px', color: '#385527', textDecoration: 'none', border: '1px solid #dce4d3', fontWeight: 600 }}>
@@ -184,8 +184,8 @@ export default async function AreaDetailPage({ params }: Props) {
               {/* Landmarks Served */}
               {area.landmarks.length > 0 && (
                 <div style={{ marginTop: '22px', paddingTop: '18px', borderTop: '1px solid #edf0e6' }}>
-                  <h3 style={{ fontSize: '14px', fontWeight: 700, color: '#18354b', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Building size={16} style={{ color: '#578740' }} />
+                  <h3 style={{ fontSize: '14px', fontWeight: 700, color: '#1e4663', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Building size={16} style={{ color: '#559a35' }} />
                     <span>معالم وأماكن مشمولة بخدمة الطوارئ في {area.name}:</span>
                   </h3>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -213,13 +213,13 @@ export default async function AreaDetailPage({ params }: Props) {
             {/* Key Features in Area */}
             <div style={{ background: '#fff', padding: '32px', borderRadius: '10px', border: '1px solid #e2e4db', marginBottom: '28px' }}>
               <span className="eyebrow">مميزات خدمتنا في {area.name}</span>
-              <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 18px', color: '#173449' }}>
+              <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 18px', color: '#1b3f5a' }}>
                 لماذا يفضل أهالي {area.name} ديمو كلين؟
               </h2>
               <div style={{ display: 'grid', gap: '14px' }}>
                 {area.keyFeatures.map((feat, i) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                    <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#e5efd8', color: '#55833c', display: 'grid', placeItems: 'center', flex: 'none', marginTop: '2px' }}>
+                    <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#e5efd8', color: '#559a35', display: 'grid', placeItems: 'center', flex: 'none', marginTop: '2px' }}>
                       <Check size={13} />
                     </div>
                     <span style={{ fontSize: '14px', color: '#536361', lineHeight: 1.8 }}>{feat}</span>
@@ -231,7 +231,7 @@ export default async function AreaDetailPage({ params }: Props) {
             {/* Common Pests in Area */}
             <div style={{ background: '#fff', padding: '32px', borderRadius: '10px', border: '1px solid #e2e4db', marginBottom: '28px' }}>
               <span className="eyebrow">الآفات الأكثر انتشاراً</span>
-              <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 16px', color: '#173449' }}>
+              <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 16px', color: '#1b3f5a' }}>
                 أنواع الحشرات الشائعة في {area.name}
               </h2>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
@@ -262,7 +262,7 @@ export default async function AreaDetailPage({ params }: Props) {
             {otherAreasInGov.length > 0 && (
               <div style={{ background: '#fff', padding: '32px', borderRadius: '10px', border: '1px solid #e2e4db' }}>
                 <span className="eyebrow">مناطق قريبة</span>
-                <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 16px', color: '#173449' }}>
+                <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 16px', color: '#1b3f5a' }}>
                   مناطق أخرى نغطيها في محافظة {gov.name}
                 </h2>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
@@ -285,7 +285,7 @@ export default async function AreaDetailPage({ params }: Props) {
                       }}
                     >
                       <span>منطقة {otherArea.name}</span>
-                      <ArrowLeft size={13} style={{ color: '#578740' }} />
+                      <ArrowLeft size={13} style={{ color: '#559a35' }} />
                     </Link>
                   ))}
                 </div>
@@ -301,14 +301,14 @@ export default async function AreaDetailPage({ params }: Props) {
             <div
               style={{
                 marginTop: '24px',
-                background: 'linear-gradient(135deg, #18354b 0%, #20455f 100%)',
+                background: 'linear-gradient(135deg, #1e4663 0%, #20455f 100%)',
                 color: '#fff',
                 padding: '24px',
                 borderRadius: '10px',
                 textAlign: 'center',
               }}
             >
-              <h4 style={{ fontSize: '17px', fontWeight: 700, margin: '0 0 8px', color: '#a9cd7d' }}>
+              <h4 style={{ fontSize: '17px', fontWeight: 700, margin: '0 0 8px', color: '#b5dd84' }}>
                 هل تحتاج فني مكافحة في {area.name} الآن؟
               </h4>
               <p style={{ margin: '0 0 16px', fontSize: '12px', color: 'rgba(255,255,255,.8)', lineHeight: 1.8 }}>
@@ -317,7 +317,7 @@ export default async function AreaDetailPage({ params }: Props) {
               <a
                 href={COMPANY_INFO.phoneTel}
                 className="button-primary"
-                style={{ width: '100%', background: '#a9cd7d', color: '#18354b', borderColor: '#a9cd7d' }}
+                style={{ width: '100%', background: '#b5dd84', color: '#1e4663', borderColor: '#b5dd84' }}
               >
                 <PhoneCall size={15} />
                 <span>اتصل الآن: {COMPANY_INFO.phone}</span>
@@ -334,7 +334,7 @@ export default async function AreaDetailPage({ params }: Props) {
                 border: '1px solid #e2e4db',
               }}
             >
-              <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 12px', color: '#18354b' }}>
+              <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 12px', color: '#1e4663' }}>
                 الخدمات الأكثر طلباً في {area.name}:
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -356,7 +356,7 @@ export default async function AreaDetailPage({ params }: Props) {
                     }}
                   >
                     <span>{s.title}</span>
-                    <span style={{ fontSize: '11px', color: '#578740' }}>{s.priceStartingFrom}</span>
+                    <span style={{ fontSize: '11px', color: '#559a35' }}>{s.priceStartingFrom}</span>
                   </Link>
                 ))}
               </div>

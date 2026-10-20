@@ -36,7 +36,7 @@ export default function CoveragePage() {
       <section className="page-header" dir="rtl">
         <div className="container">
           <div className="page-header-content">
-            <span className="eyebrow" style={{ color: '#b2d488' }}>
+            <span className="eyebrow" style={{ color: '#bee58f' }}>
               تغطية شاملة 24 ساعة
             </span>
             <h1>مناطق ونطاق تغطية ديمو كلين في الكويت</h1>
@@ -88,7 +88,7 @@ export default function CoveragePage() {
                         height: '36px',
                         borderRadius: '50%',
                         background: '#eef3e8',
-                        color: '#52813b',
+                        color: '#559a35',
                         display: 'grid',
                         placeItems: 'center',
                         fontWeight: 800,
@@ -98,7 +98,7 @@ export default function CoveragePage() {
                       {gov.number}
                     </div>
                     <div>
-                      <h3 style={{ fontSize: '19px', fontWeight: 700, margin: 0, color: '#173449' }}>
+                      <h3 style={{ fontSize: '19px', fontWeight: 700, margin: 0, color: '#1b3f5a' }}>
                         {gov.name}
                       </h3>
                       <span style={{ fontSize: '11px', color: '#798782' }}>{gov.nameEn}</span>
@@ -123,7 +123,7 @@ export default function CoveragePage() {
                 </p>
 
                 <div style={{ borderTop: '1px solid #edf0e6', paddingTop: '12px' }}>
-                  <div style={{ fontSize: '12px', fontWeight: 700, color: '#18354b', marginBottom: '8px' }}>
+                  <div style={{ fontSize: '12px', fontWeight: 700, color: '#1e4663', marginBottom: '8px' }}>
                     المناطق والضواحي المشمولة:
                   </div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>

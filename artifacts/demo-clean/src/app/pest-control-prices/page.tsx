@@ -98,7 +98,7 @@ export default function PricingPage() {
       <section className="page-header" dir="rtl">
         <div className="container">
           <div className="page-header-content">
-            <span className="eyebrow" style={{ color: '#b2d488' }}>
+            <span className="eyebrow" style={{ color: '#bee58f' }}>
               شفافية مطلقة • ترخيص وزارة الصحة (14620/2025)
             </span>
             <h1>اسعار مكافحة الحشرات في الكويت 2026</h1>
@@ -118,7 +118,7 @@ export default function PricingPage() {
         <div className="container">
           <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 40px' }}>
             <span className="eyebrow">الباقات السكنية</span>
-            <h2 style={{ fontSize: '26px', fontWeight: 900, color: '#17354a', margin: '8px 0 12px' }}>
+            <h2 style={{ fontSize: '26px', fontWeight: 900, color: '#1b3f5a', margin: '8px 0 12px' }}>
               تكلفة رش الحشرات المعتمدة
             </h2>
             <p style={{ color: '#687770', fontSize: '14.5px', lineHeight: 1.8 }}>
@@ -133,7 +133,7 @@ export default function PricingPage() {
                 key={idx}
                 style={{
                   background: '#fff',
-                  border: pkg.popular ? '2px solid #204733' : '1px solid #dce2d6',
+                  border: pkg.popular ? '2px solid #296142' : '1px solid #dce2d6',
                   borderRadius: '14px',
                   padding: '28px 24px',
                   display: 'flex',
@@ -148,8 +148,8 @@ export default function PricingPage() {
                       position: 'absolute',
                       top: '-12px',
                       left: '20px',
-                      background: '#204733',
-                      color: '#b4d78b',
+                      background: '#296142',
+                      color: '#bee58f',
                       fontSize: '11px',
                       fontWeight: 800,
                       padding: '4px 12px',
@@ -161,8 +161,8 @@ export default function PricingPage() {
                 )}
 
                 <div style={{ marginBottom: '16px' }}>
-                  <span style={{ fontSize: '12px', color: '#54883a', fontWeight: 700 }}>{pkg.badge}</span>
-                  <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#17354a', margin: '6px 0 4px' }}>
+                  <span style={{ fontSize: '12px', color: '#559a35', fontWeight: 700 }}>{pkg.badge}</span>
+                  <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#1b3f5a', margin: '6px 0 4px' }}>
                     {pkg.title}
                   </h3>
                   <p style={{ fontSize: '12.5px', color: '#6f7e77', margin: 0 }}>{pkg.subtitle}</p>
@@ -171,7 +171,7 @@ export default function PricingPage() {
                 <div style={{ background: '#f8faf6', padding: '16px', borderRadius: '10px', marginBottom: '20px', border: '1px solid #e5ece0' }}>
                   <span style={{ fontSize: '12px', color: '#687770', display: 'block' }}>السعر التقريبي:</span>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
-                    <span style={{ fontSize: '38px', fontWeight: 900, color: '#17354a', lineHeight: 1 }}>{pkg.price}</span>
+                    <span style={{ fontSize: '38px', fontWeight: 900, color: '#1b3f5a', lineHeight: 1 }}>{pkg.price}</span>
                     <span style={{ fontSize: '14px', fontWeight: 700, color: '#45564e' }}>{pkg.unit}</span>
                   </div>
                 </div>
@@ -179,7 +179,7 @@ export default function PricingPage() {
                 <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
                   {pkg.features.map((feat, fIdx) => (
                     <li key={fIdx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '13px', color: '#4a5b52', lineHeight: 1.6 }}>
-                      <CheckCircle2 size={16} color="#204733" style={{ flexShrink: 0, marginTop: '2px' }} />
+                      <CheckCircle2 size={16} color="#296142" style={{ flexShrink: 0, marginTop: '2px' }} />
                       <span>{feat}</span>
                     </li>
                   ))}
@@ -216,7 +216,7 @@ export default function PricingPage() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       padding: '11px 14px',
-                      background: '#204733',
+                      background: '#296142',
                       color: '#fff',
                       borderRadius: '8px',
                       textDecoration: 'none',
@@ -232,21 +232,21 @@ export default function PricingPage() {
 
           {/* Pricing Factors Guide */}
           <div style={{ marginTop: '50px', background: '#fff', padding: '32px', borderRadius: '16px', border: '1px solid #dce2d6' }}>
-             <h3 style={{ fontSize: '20px', fontWeight: 900, color: '#17354a', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-               <Calculator size={24} color="#204733" />
+             <h3 style={{ fontSize: '20px', fontWeight: 900, color: '#1b3f5a', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+               <Calculator size={24} color="#296142" />
                كيف يتم حساب تكلفة مكافحة الحشرات النهائية؟
              </h3>
              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
                 <div>
-                  <strong style={{ color: '#204733', fontSize: '15px' }}>1. مساحة العقار</strong>
+                  <strong style={{ color: '#296142', fontSize: '15px' }}>1. مساحة العقار</strong>
                   <p style={{ color: '#55655d', fontSize: '13.5px', marginTop: '6px' }}>تكلفة معالجة شقة من غرفتين تختلف عن معالجة فيلا من 3 طوابق أو قسيمة قيد الإنشاء. نغطي جميع مساحات الكويت.</p>
                 </div>
                 <div>
-                  <strong style={{ color: '#204733', fontSize: '15px' }}>2. نوع وشدة الإصابة</strong>
+                  <strong style={{ color: '#296142', fontSize: '15px' }}>2. نوع وشدة الإصابة</strong>
                   <p style={{ color: '#55655d', fontSize: '13.5px', marginTop: '6px' }}>الإصابات المتقدمة (مثل تفشي بق الفراش بكثافة) تتطلب بروتوكولات معقدة كالبخار الحراري وجلسات متباعدة.</p>
                 </div>
                 <div>
-                  <strong style={{ color: '#204733', fontSize: '15px' }}>3. طبيعة المبيدات المطلوبة</strong>
+                  <strong style={{ color: '#296142', fontSize: '15px' }}>3. طبيعة المبيدات المطلوبة</strong>
                   <p style={{ color: '#55655d', fontSize: '13.5px', marginTop: '6px' }}>استخدام جل أدفايون للصراصير أو حقن النمل الأبيض يحدد التكلفة بناءً على كميات المواد الألمانية/الأمريكية المستخدمة.</p>
                 </div>
              </div>
@@ -255,7 +255,7 @@ export default function PricingPage() {
           {/* Transparent Trust Banner */}
           <div
             style={{
-              background: '#204733',
+              background: '#296142',
               borderRadius: '16px',
               padding: '36px',
               color: '#fff',
@@ -268,7 +268,7 @@ export default function PricingPage() {
             }}
           >
             <div style={{ maxWidth: '600px' }}>
-              <span style={{ color: '#b4d78b', fontSize: '13px', fontWeight: 800 }}>ضمان حق العميل - س.ت: 532627</span>
+              <span style={{ color: '#bee58f', fontSize: '13px', fontWeight: 800 }}>ضمان حق العميل - س.ت: 532627</span>
               <h3 style={{ fontSize: '22px', fontWeight: 900, margin: '8px 0 10px' }}>
                 كفالة 6 شهور خطية لجميع الأعمال المنفذة
               </h3>
@@ -284,7 +284,7 @@ export default function PricingPage() {
                   alignItems: 'center',
                   gap: '8px',
                   padding: '12px 24px',
-                  background: '#b4d78b',
+                  background: '#bee58f',
                   color: '#122e20',
                   borderRadius: '10px',
                   fontWeight: 800,
@@ -300,7 +300,7 @@ export default function PricingPage() {
 
           {/* Pricing FAQs */}
           <div style={{ marginTop: '60px' }}>
-            <h3 style={{ fontSize: '22px', fontWeight: 900, color: '#17354a', textAlign: 'center', marginBottom: '24px' }}>
+            <h3 style={{ fontSize: '22px', fontWeight: 900, color: '#1b3f5a', textAlign: 'center', marginBottom: '24px' }}>
               الأسئلة الشائعة حول أسعار رش الحشرات
             </h3>
             <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '14px' }}>
@@ -314,7 +314,7 @@ export default function PricingPage() {
                     padding: '20px 24px',
                   }}
                 >
-                  <strong style={{ fontSize: '15px', color: '#17354a', display: 'block', marginBottom: '8px' }}>
+                  <strong style={{ fontSize: '15px', color: '#1b3f5a', display: 'block', marginBottom: '8px' }}>
                     {faq.q}
                   </strong>
                   <p style={{ fontSize: '13.5px', color: '#55655d', lineHeight: 1.8, margin: 0 }}>

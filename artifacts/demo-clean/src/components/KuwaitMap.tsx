@@ -33,12 +33,12 @@ export default function KuwaitMap({ initialGovSlug, showLinkToPage = true }: Kuw
       {/* Top Header */}
       <div className="map-top" style={{ flexWrap: 'wrap', gap: '8px', paddingBottom: '12px', borderBottom: '1px solid #e1e6db' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#54883a', boxShadow: '0 0 0 3px rgba(84, 136, 58, 0.25)' }} />
-          <strong style={{ fontSize: '15px', color: '#17354a' }}>خريطة التغطية والفرق الفنية في الكويت</strong>
+          <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#559a35', boxShadow: '0 0 0 3px rgba(84, 136, 58, 0.25)' }} />
+          <strong style={{ fontSize: '15px', color: '#1b3f5a' }}>خريطة التغطية والفرق الفنية في الكويت</strong>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '11px', color: '#687770' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: '#eaf2e3', color: '#2d5236', padding: '3px 8px', borderRadius: '6px', fontWeight: 600 }}>
-            <Radio size={12} style={{ color: '#54883a' }} /> طواقم مجهزة 24 ساعة
+            <Radio size={12} style={{ color: '#559a35' }} /> طواقم مجهزة 24 ساعة
           </span>
           <span style={{ direction: 'ltr', letterSpacing: '0.08em', fontWeight: 700 }}>6 GOVERNORATES</span>
         </div>
@@ -63,7 +63,7 @@ export default function KuwaitMap({ initialGovSlug, showLinkToPage = true }: Kuw
                 onClick={() => setSelectedGov(gov)}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                  <strong style={{ fontSize: '14px', color: '#17354a' }}>{gov.name}</strong>
+                  <strong style={{ fontSize: '14px', color: '#1b3f5a' }}>{gov.name}</strong>
                   <span className="gov-item-number" style={{ fontSize: '10px', color: '#8d9c90', direction: 'ltr' }}>
                     {gov.number}
                   </span>
@@ -92,7 +92,7 @@ export default function KuwaitMap({ initialGovSlug, showLinkToPage = true }: Kuw
                 <stop offset="100%" stopColor="#bde4fa" />
               </linearGradient>
               <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="0" dy="8" stdDeviation="12" floodColor="#204733" floodOpacity="0.3" />
+                <feDropShadow dx="0" dy="8" stdDeviation="12" floodColor="#296142" floodOpacity="0.3" />
               </filter>
             </defs>
 
@@ -197,7 +197,7 @@ export default function KuwaitMap({ initialGovSlug, showLinkToPage = true }: Kuw
                     className={`map-region ${isSelected ? 'selected' : ''}`}
                     d={gov.path}
                     style={{
-                      fill: isSelected ? '#528938' : defaultFill,
+                      fill: isSelected ? '#5ca837' : defaultFill,
                       filter: isSelected ? 'url(#softGlow)' : undefined,
                       transition: 'all 0.25s ease',
                       stroke: isSelected ? '#1b402e' : '#555555',
@@ -256,11 +256,11 @@ export default function KuwaitMap({ initialGovSlug, showLinkToPage = true }: Kuw
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#204733', color: '#b4d78b', display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: '13px' }}>
+              <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#296142', color: '#bee58f', display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: '13px' }}>
                 {selectedGov.number}
               </div>
               <div>
-                <strong style={{ fontSize: '17px', color: '#17354a', display: 'block' }}>محافظة {selectedGov.name}</strong>
+                <strong style={{ fontSize: '17px', color: '#1b3f5a', display: 'block' }}>محافظة {selectedGov.name}</strong>
                 <span style={{ fontSize: '11px', color: '#687770' }}>{selectedGov.nameEn}</span>
               </div>
             </div>
@@ -275,7 +275,7 @@ export default function KuwaitMap({ initialGovSlug, showLinkToPage = true }: Kuw
               fontSize: '12px',
               fontWeight: 700,
             }}>
-              <Clock size={13} style={{ color: '#54883a' }} /> {selectedGov.responseTime}
+              <Clock size={13} style={{ color: '#559a35' }} /> {selectedGov.responseTime}
             </span>
           </div>
 
@@ -284,7 +284,7 @@ export default function KuwaitMap({ initialGovSlug, showLinkToPage = true }: Kuw
           </p>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11.5px', color: '#6b7972', borderTop: '1px dashed #e1e6db', paddingTop: '10px' }}>
-            <ShieldCheck size={14} style={{ color: '#54883a', flex: 'none' }} />
+            <ShieldCheck size={14} style={{ color: '#559a35', flex: 'none' }} />
             <span>سيارات الرش مجهزة بكافة مبيدات وزارة الصحة ومكافحة القوارض مع الضمان.</span>
           </div>
 
@@ -341,8 +341,8 @@ export default function KuwaitMap({ initialGovSlug, showLinkToPage = true }: Kuw
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px', marginBottom: '8px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <MapPin size={16} style={{ color: '#54883a' }} />
-            <strong style={{ fontSize: '13.5px', color: '#17354a' }}>
+            <MapPin size={16} style={{ color: '#559a35' }} />
+            <strong style={{ fontSize: '13.5px', color: '#1b3f5a' }}>
               المناطق والأحياء المغطاة في محافظة {selectedGov.name} ({selectedGov.areas.length} مناطق):
             </strong>
           </div>

@@ -650,7 +650,7 @@ export default function DashboardPage() {
           minHeight: '100vh',
           display: 'grid',
           placeItems: 'center',
-          background: 'linear-gradient(135deg, #18354b 0%, #1e455e 100%)',
+          background: 'linear-gradient(135deg, #1e4663 0%, #1e455e 100%)',
           padding: '20px',
         }}
       >
@@ -679,10 +679,10 @@ export default function DashboardPage() {
               boxShadow: '0 0 0 8px rgba(84, 136, 58, 0.1)',
             }}
           >
-            <Lock size={28} style={{ color: '#54883a' }} />
+            <Lock size={28} style={{ color: '#559a35' }} />
           </div>
 
-          <h2 style={{ fontSize: '21px', fontWeight: 800, color: '#17354a', margin: '0 0 8px' }}>
+          <h2 style={{ fontSize: '21px', fontWeight: 800, color: '#1b3f5a', margin: '0 0 8px' }}>
             لوحة تحكم ديمو كلين
           </h2>
           <p style={{ margin: '0 0 24px', fontSize: '13px', color: '#6a7972', lineHeight: 1.7 }}>
@@ -758,7 +758,7 @@ export default function DashboardPage() {
               style={{
                 width: '100%',
                 padding: '12px',
-                background: '#204733',
+                background: '#296142',
                 color: '#fff',
                 border: 'none',
                 borderRadius: '10px',
@@ -814,8 +814,8 @@ export default function DashboardPage() {
         }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#54883a' }} />
-              <h1 style={{ fontSize: '22px', fontWeight: 800, margin: 0, color: '#17354a' }}>
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#559a35' }} />
+              <h1 style={{ fontSize: '22px', fontWeight: 800, margin: 0, color: '#1b3f5a' }}>
                 لوحة تحكم ديمو كلين (Demo Clean Admin)
               </h1>
             </div>
@@ -912,9 +912,9 @@ export default function DashboardPage() {
           <div style={{ background: '#fff', border: '1px solid #dce2d6', padding: '18px 20px', borderRadius: '12px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#66756d', fontSize: '13px', fontWeight: 600 }}>
               <span>طلبات مكتملة تم رشها</span>
-              <CheckCircle2 size={16} style={{ color: '#54883a' }} />
+              <CheckCircle2 size={16} style={{ color: '#559a35' }} />
             </div>
-            <div style={{ fontSize: '30px', fontWeight: 800, color: '#54883a', marginTop: '8px' }}>
+            <div style={{ fontSize: '30px', fontWeight: 800, color: '#559a35', marginTop: '8px' }}>
               {completedCount}
             </div>
           </div>
@@ -924,7 +924,7 @@ export default function DashboardPage() {
               <span>إجمالي الآراء والتقييمات</span>
               <Star size={16} style={{ color: '#eab308' }} />
             </div>
-            <div style={{ fontSize: '30px', fontWeight: 800, color: '#17354a', marginTop: '8px' }}>
+            <div style={{ fontSize: '30px', fontWeight: 800, color: '#1b3f5a', marginTop: '8px' }}>
               {reviews.length} <span style={{ fontSize: '16px', color: '#66756d', fontWeight: 600 }}>({averageRating} ★)</span>
             </div>
           </div>
@@ -1073,9 +1073,9 @@ export default function DashboardPage() {
               fontWeight: 700,
               cursor: 'pointer',
               border: '1px solid',
-              background: activeTab === 'leads' ? '#204733' : '#fff',
+              background: activeTab === 'leads' ? '#296142' : '#fff',
               color: activeTab === 'leads' ? '#fff' : '#45564e',
-              borderColor: activeTab === 'leads' ? '#204733' : '#d5dfce',
+              borderColor: activeTab === 'leads' ? '#296142' : '#d5dfce',
               boxShadow: activeTab === 'leads' ? '0 4px 12px rgba(32,71,51,0.2)' : 'none',
               display: 'inline-flex',
               alignItems: 'center',
@@ -1094,9 +1094,9 @@ export default function DashboardPage() {
               fontWeight: 700,
               cursor: 'pointer',
               border: '1px solid',
-              background: activeTab === 'reviews' ? '#204733' : '#fff',
+              background: activeTab === 'reviews' ? '#296142' : '#fff',
               color: activeTab === 'reviews' ? '#fff' : '#45564e',
-              borderColor: activeTab === 'reviews' ? '#204733' : '#d5dfce',
+              borderColor: activeTab === 'reviews' ? '#296142' : '#d5dfce',
               boxShadow: activeTab === 'reviews' ? '0 4px 12px rgba(32,71,51,0.2)' : 'none',
               display: 'inline-flex',
               alignItems: 'center',
@@ -1115,9 +1115,9 @@ export default function DashboardPage() {
               fontWeight: 700,
               cursor: 'pointer',
               border: '1px solid',
-              background: activeTab === 'articles' ? '#204733' : '#fff',
+              background: activeTab === 'articles' ? '#296142' : '#fff',
               color: activeTab === 'articles' ? '#fff' : '#45564e',
-              borderColor: activeTab === 'articles' ? '#204733' : '#d5dfce',
+              borderColor: activeTab === 'articles' ? '#296142' : '#d5dfce',
               boxShadow: activeTab === 'articles' ? '0 4px 12px rgba(32,71,51,0.2)' : 'none',
               display: 'inline-flex',
               alignItems: 'center',
@@ -1136,7 +1136,7 @@ export default function DashboardPage() {
             {/* Action Bar Header */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '14px', marginBottom: '22px', borderBottom: '1px solid #edf0e9', paddingBottom: '18px' }}>
               <div>
-                <h3 style={{ margin: '0 0 6px', fontSize: '18px', fontWeight: 800, color: '#17354a' }}>
+                <h3 style={{ margin: '0 0 6px', fontSize: '18px', fontWeight: 800, color: '#1b3f5a' }}>
                   سجل طلبات المعاينة والاتصالات ({leads.length})
                 </h3>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px' }}>
@@ -1183,7 +1183,7 @@ export default function DashboardPage() {
                     alignItems: 'center',
                     gap: '6px',
                     padding: '9px 16px',
-                    background: '#204733',
+                    background: '#296142',
                     border: 'none',
                     borderRadius: '8px',
                     color: '#fff',
@@ -1236,7 +1236,7 @@ export default function DashboardPage() {
                       cursor: 'pointer',
                       border: '1px solid',
                       background: statusFilter === st ? '#eaf2e3' : '#f8faf6',
-                      color: statusFilter === st ? '#204733' : '#687770',
+                      color: statusFilter === st ? '#296142' : '#687770',
                       borderColor: statusFilter === st ? '#8cb867' : '#dce3d5',
                     }}
                   >
@@ -1275,11 +1275,11 @@ export default function DashboardPage() {
                       const cleanPhone = lead.phone.replace(/[^0-9]/g, '');
                       return (
                         <tr key={lead.id} style={{ borderBottom: '1px solid #edf0e7', transition: 'background 0.15s' }}>
-                          <td style={{ padding: '14px', fontWeight: 700, color: '#17354a', direction: 'ltr', textAlign: 'right' }}>
+                          <td style={{ padding: '14px', fontWeight: 700, color: '#1b3f5a', direction: 'ltr', textAlign: 'right' }}>
                             #{lead.id}
                           </td>
                           <td style={{ padding: '14px' }}>
-                            <strong style={{ display: 'block', color: '#17354a' }}>{lead.name}</strong>
+                            <strong style={{ display: 'block', color: '#1b3f5a' }}>{lead.name}</strong>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px' }}>
                               <a
                                 href={`tel:${cleanPhone}`}
@@ -1321,7 +1321,7 @@ export default function DashboardPage() {
                           <td style={{ padding: '14px', color: '#4d5d55' }}>
                             <span style={{ fontWeight: 600 }}>{lead.governorate}</span>
                           </td>
-                          <td style={{ padding: '14px', color: '#204733', fontWeight: 600 }}>
+                          <td style={{ padding: '14px', color: '#296142', fontWeight: 600 }}>
                             {lead.service}
                           </td>
                           <td style={{ padding: '14px', color: '#687770', maxWidth: '220px', lineHeight: 1.6 }}>
@@ -1425,7 +1425,7 @@ export default function DashboardPage() {
                     padding: '4px 10px',
                     borderRadius: '6px',
                     fontSize: '12px',
-                    color: '#204733',
+                    color: '#296142',
                     border: '1px solid #d4e0cf',
                     direction: 'ltr',
                   }}
@@ -1448,7 +1448,7 @@ export default function DashboardPage() {
                     alignItems: 'center',
                     gap: '6px',
                     padding: '8px 16px',
-                    background: copiedReviewLink ? '#15803d' : '#204733',
+                    background: copiedReviewLink ? '#15803d' : '#296142',
                     color: '#fff',
                     border: 'none',
                     borderRadius: '8px',
@@ -1471,7 +1471,7 @@ export default function DashboardPage() {
                     gap: '4px',
                     padding: '8px 14px',
                     background: '#fff',
-                    color: '#204733',
+                    color: '#296142',
                     border: '1px solid #cad8bf',
                     borderRadius: '8px',
                     fontSize: '12px',
@@ -1495,7 +1495,7 @@ export default function DashboardPage() {
                     padding: '7px 14px',
                     borderRadius: '8px',
                     border: '1px solid #cad8bf',
-                    background: reviewStatusFilter === 'all' ? '#204733' : '#fff',
+                    background: reviewStatusFilter === 'all' ? '#296142' : '#fff',
                     color: reviewStatusFilter === 'all' ? '#fff' : '#45564e',
                     fontSize: '12px',
                     fontWeight: 700,
@@ -1576,7 +1576,7 @@ export default function DashboardPage() {
                   alignItems: 'center',
                   gap: '6px',
                   padding: '9px 18px',
-                  background: '#204733',
+                  background: '#296142',
                   color: '#fff',
                   borderRadius: '8px',
                   border: 'none',
@@ -1634,7 +1634,7 @@ export default function DashboardPage() {
                       >
                         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                           <div>
-                            <strong style={{ fontSize: '15px', color: '#17354a', display: 'block' }}>{rev.authorName}</strong>
+                            <strong style={{ fontSize: '15px', color: '#1b3f5a', display: 'block' }}>{rev.authorName}</strong>
                             <span style={{ fontSize: '11px', color: '#6d7b74' }}>
                               {rev.governorateName} · {rev.areaName}
                             </span>
@@ -1684,7 +1684,7 @@ export default function DashboardPage() {
                                 alignItems: 'center',
                                 gap: '3px',
                                 fontSize: '10.5px',
-                                color: '#204733',
+                                color: '#296142',
                                 background: '#f0f5ee',
                                 padding: '2px 7px',
                                 borderRadius: '4px',
@@ -1812,8 +1812,8 @@ export default function DashboardPage() {
               }}
             >
               <div>
-                <h2 style={{ fontSize: '18px', fontWeight: 800, color: '#17354a', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <BookOpen size={20} style={{ color: '#204733' }} />
+                <h2 style={{ fontSize: '18px', fontWeight: 800, color: '#1b3f5a', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <BookOpen size={20} style={{ color: '#296142' }} />
                   <span>إدارة مقالات المدونة والمركز المعرفي</span>
                 </h2>
                 <p style={{ margin: '4px 0 0', fontSize: '12.5px', color: '#687770' }}>
@@ -1876,7 +1876,7 @@ export default function DashboardPage() {
                   onClick={handleOpenNewArticleModal}
                   style={{
                     padding: '9px 18px',
-                    background: '#204733',
+                    background: '#296142',
                     color: '#fff',
                     border: 'none',
                     borderRadius: '8px',
@@ -1965,7 +1965,7 @@ export default function DashboardPage() {
                         fontSize: '12px',
                         fontWeight: 700,
                         cursor: 'pointer',
-                        background: articleStatusFilter === st ? '#204733' : 'transparent',
+                        background: articleStatusFilter === st ? '#296142' : 'transparent',
                         color: articleStatusFilter === st ? '#fff' : '#52635a',
                       }}
                     >
@@ -2065,7 +2065,7 @@ export default function DashboardPage() {
 
                       {/* Title & Slug */}
                       <div>
-                        <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#17354a', margin: '0 0 4px', lineHeight: 1.4 }}>
+                        <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#1b3f5a', margin: '0 0 4px', lineHeight: 1.4 }}>
                           {art.title}
                         </h3>
                         <div style={{ fontSize: '11.5px', color: '#687770', direction: 'ltr', textAlign: 'right', fontFamily: 'monospace' }}>
@@ -2083,12 +2083,12 @@ export default function DashboardPage() {
                       {/* Meta Pills (Reading time, paragraphs, FAQs) */}
                       <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap', fontSize: '11.5px', color: '#66776f', borderTop: '1px dashed #e5ebe2', paddingTop: '10px' }}>
                         <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                          <Clock size={13} style={{ color: '#204733' }} />
+                          <Clock size={13} style={{ color: '#296142' }} />
                           <span>{art.readingTimeMinutes || 3} دقائق قراءة</span>
                         </span>
 
                         <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                          <FileText size={13} style={{ color: '#204733' }} />
+                          <FileText size={13} style={{ color: '#296142' }} />
                           <span>{parasCount} فقرات</span>
                         </span>
 
@@ -2177,7 +2177,7 @@ export default function DashboardPage() {
                             onClick={() => handleOpenEditArticleModal(art)}
                             style={{
                               padding: '6px 14px',
-                              background: '#204733',
+                              background: '#296142',
                               color: '#fff',
                               border: 'none',
                               borderRadius: '6px',
@@ -2269,7 +2269,7 @@ export default function DashboardPage() {
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px', borderBottom: '1px solid #edf1ea', paddingBottom: '14px' }}>
                 <div>
-                  <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 800, color: '#17354a' }}>
+                  <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 800, color: '#1b3f5a' }}>
                     {editingArticleId ? 'تعديل المقال' : 'إنشاء مقال جديد للمدونة'}
                   </h3>
                   <p style={{ margin: '3px 0 0', fontSize: '12px', color: '#687770' }}>
@@ -2288,7 +2288,7 @@ export default function DashboardPage() {
               <form onSubmit={handleSaveArticle} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {/* Title */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: '#204733', marginBottom: '6px' }}>
+                  <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: '#296142', marginBottom: '6px' }}>
                     عنوان المقال الرئيسي: *
                   </label>
                   <input
@@ -2360,7 +2360,7 @@ export default function DashboardPage() {
 
                 {/* Content Paragraphs */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: '#204733', marginBottom: '4px' }}>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: '#296142', marginBottom: '4px' }}>
                     محتوى المقال (افصل بين كل فقرة بسطر فارغ): *
                   </label>
                   <textarea
@@ -2439,7 +2439,7 @@ export default function DashboardPage() {
                 {/* FAQ Builder */}
                 <div style={{ background: '#fdfdfb', border: '1px solid #e1e7dc', padding: '14px', borderRadius: '10px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-                    <div style={{ fontSize: '13px', fontWeight: 800, color: '#17354a' }}>
+                    <div style={{ fontSize: '13px', fontWeight: 800, color: '#1b3f5a' }}>
                       الأسئلة الشائعة حول الموضوع (FAQ Schema)
                     </div>
                     <button
@@ -2453,7 +2453,7 @@ export default function DashboardPage() {
                       style={{
                         padding: '4px 10px',
                         background: '#eef5ec',
-                        color: '#204733',
+                        color: '#296142',
                         border: '1px solid #c9dec1',
                         borderRadius: '6px',
                         fontSize: '11.5px',
@@ -2539,7 +2539,7 @@ export default function DashboardPage() {
                     style={{
                       flex: 1,
                       padding: '12px',
-                      background: '#204733',
+                      background: '#296142',
                       color: '#fff',
                       border: 'none',
                       borderRadius: '8px',
@@ -2594,7 +2594,7 @@ export default function DashboardPage() {
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
-                <h3 style={{ margin: 0, fontSize: '17px', fontWeight: 800, color: '#17354a' }}>
+                <h3 style={{ margin: 0, fontSize: '17px', fontWeight: 800, color: '#1b3f5a' }}>
                   إضافة تقييم عميل جديد
                 </h3>
                 <button
@@ -2607,7 +2607,7 @@ export default function DashboardPage() {
 
               <form onSubmit={handleAddReview} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div style={{ background: '#f5f7f3', padding: '12px', borderRadius: '8px', border: '1px solid #d8e2d4' }}>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: '#204733', marginBottom: '6px' }}>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 700, color: '#296142', marginBottom: '6px' }}>
                     مصدر التقييم (من أين جاء؟):
                   </label>
                   <div style={{ display: 'flex', gap: '10px' }}>
@@ -2649,12 +2649,12 @@ export default function DashboardPage() {
                         gap: '6px',
                         padding: '8px 12px',
                         borderRadius: '6px',
-                        border: newReview.source === 'website' ? '2px solid #204733' : '1px solid #ccd8c7',
+                        border: newReview.source === 'website' ? '2px solid #296142' : '1px solid #ccd8c7',
                         background: newReview.source === 'website' ? '#edf5ea' : '#fff',
                         cursor: 'pointer',
                         fontSize: '12.5px',
                         fontWeight: 700,
-                        color: newReview.source === 'website' ? '#204733' : '#45564e',
+                        color: newReview.source === 'website' ? '#296142' : '#45564e',
                       }}
                     >
                       <input
@@ -2773,7 +2773,7 @@ export default function DashboardPage() {
                     style={{
                       flex: 1,
                       padding: '11px',
-                      background: '#204733',
+                      background: '#296142',
                       color: '#fff',
                       border: 'none',
                       borderRadius: '8px',
@@ -2833,7 +2833,7 @@ export default function DashboardPage() {
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
-                <h3 style={{ margin: 0, fontSize: '17px', fontWeight: 800, color: '#17354a' }}>
+                <h3 style={{ margin: 0, fontSize: '17px', fontWeight: 800, color: '#1b3f5a' }}>
                   تسجيل طلب معاينة جديد (يدوياً)
                 </h3>
                 <button
@@ -2943,7 +2943,7 @@ export default function DashboardPage() {
                     style={{
                       flex: 1,
                       padding: '11px',
-                      background: '#204733',
+                      background: '#296142',
                       color: '#fff',
                       border: 'none',
                       borderRadius: '8px',

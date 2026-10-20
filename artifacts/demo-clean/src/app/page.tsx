@@ -300,7 +300,7 @@ export default function HomePage() {
                       style={{
                         fontSize: '11px',
                         fontWeight: 700,
-                        background: '#19364c',
+                        background: '#1e4663',
                         color: '#f5f4ed',
                         padding: '3px 9px',
                         borderRadius: '999px',
@@ -310,7 +310,7 @@ export default function HomePage() {
                     </span>
                   </div>
 
-                  <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#17334a', marginBottom: '8px' }}>
+                  <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#1b3f5a', marginBottom: '8px' }}>
                     {svc.title}
                   </h3>
                   <p style={{ fontSize: '13px', color: '#687771', lineHeight: '1.7', marginBottom: '16px' }}>
@@ -321,7 +321,7 @@ export default function HomePage() {
                     <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '6px' }}>
                       {svc.features.slice(0, 2).map((f, i) => (
                         <li key={i} style={{ fontSize: '12px', color: '#445650', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          <CheckCircle2 size={13} style={{ color: '#54883a', flexShrink: 0 }} />
+                          <CheckCircle2 size={13} style={{ color: '#559a35', flexShrink: 0 }} />
                           <span>{f}</span>
                         </li>
                       ))}
@@ -332,7 +332,7 @@ export default function HomePage() {
                 <div style={{ borderTop: '1px solid #edf0ea', paddingTop: '14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <span style={{ fontSize: '11px', color: '#4a5550', display: 'block' }}>يبدأ من</span>
-                    <strong style={{ fontSize: '16px', color: '#19364c' }}>{svc.priceStartingFrom}</strong>
+                    <strong style={{ fontSize: '16px', color: '#1e4663' }}>{svc.priceStartingFrom}</strong>
                   </div>
                   <Link
                     href={`/cleaning-services/${svc.slug}`}
@@ -439,8 +439,8 @@ export default function HomePage() {
                         width: '36px',
                         height: '36px',
                         borderRadius: '8px',
-                        background: '#204733',
-                        color: '#b4d78b',
+                        background: '#296142',
+                        color: '#bee58f',
                         display: 'grid',
                         placeItems: 'center',
                         fontWeight: 800,
@@ -450,7 +450,7 @@ export default function HomePage() {
                       {gov.number}
                     </div>
                     <div>
-                      <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#17354a' }}>
+                      <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#1b3f5a' }}>
                         محافظة {gov.name}
                       </h3>
                       <span style={{ fontSize: '11px', color: '#4a5550' }}>{gov.nameEn}</span>
@@ -469,7 +469,7 @@ export default function HomePage() {
                       gap: '4px',
                     }}
                   >
-                    <Clock size={12} style={{ color: '#54883a' }} />
+                    <Clock size={12} style={{ color: '#559a35' }} />
                     {gov.responseTime}
                   </span>
                 </div>
@@ -519,7 +519,7 @@ export default function HomePage() {
                   <a
                     href={COMPANY_INFO.phoneTel}
                     style={{
-                      color: '#54883a',
+                      color: '#559a35',
                       fontSize: '12px',
                       fontWeight: 700,
                       textDecoration: 'none',

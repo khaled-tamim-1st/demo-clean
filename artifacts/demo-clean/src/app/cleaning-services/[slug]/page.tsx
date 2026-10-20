@@ -142,14 +142,14 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
                   height: '48px',
                   borderRadius: '12px',
                   background: 'rgba(169, 205, 125, 0.2)',
-                  color: '#b2d488',
+                  color: '#bee58f',
                   display: 'grid',
                   placeItems: 'center',
                 }}
               >
                 {cleaningIcons[service.iconName] || <Sparkles size={28} />}
               </div>
-              <span className="eyebrow" style={{ color: '#b2d488' }}>
+              <span className="eyebrow" style={{ color: '#bee58f' }}>
                 {service.badge} · ضمان معتمد
               </span>
             </div>
@@ -178,7 +178,7 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
               <a
                 href={COMPANY_INFO.phoneTel}
                 className="button-primary"
-                style={{ background: '#a9cd7d', color: '#18354b', borderColor: '#a9cd7d' }}
+                style={{ background: '#b5dd84', color: '#1e4663', borderColor: '#b5dd84' }}
               >
                 <PhoneCall size={16} />
                 <span>حجز الخدمة هاتفياً ({COMPANY_INFO.phone})</span>
@@ -215,7 +215,7 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
               }}
             >
               <span className="eyebrow">عن الخدمة ومواصفاتها</span>
-              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 16px', color: '#173449' }}>
+              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 16px', color: '#1b3f5a' }}>
                 نظرة شاملة على خدمة {service.title}
               </h2>
               <p style={{ color: '#546363', lineHeight: 2.1, fontSize: '15px', margin: 0 }}>
@@ -234,7 +234,7 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
               }}
             >
               <span className="eyebrow">مزايا التنظيف المتقدم</span>
-              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 18px', color: '#173449' }}>
+              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 18px', color: '#1b3f5a' }}>
                 ماذا تشمل هذه الخدمة؟
               </h2>
               <div style={{ display: 'grid', gap: '14px' }}>
@@ -246,7 +246,7 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
                         height: '22px',
                         borderRadius: '50%',
                         background: '#e5efd8',
-                        color: '#55833c',
+                        color: '#559a35',
                         display: 'grid',
                         placeItems: 'center',
                         flex: 'none',
@@ -272,7 +272,7 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
               }}
             >
               <span className="eyebrow">المعدات والتجهيزات</span>
-              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 18px', color: '#173449' }}>
+              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 18px', color: '#1b3f5a' }}>
                 الماكينات ومواد التنظيف المستخدمة
               </h2>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px' }}>
@@ -289,7 +289,7 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
                       gap: '10px',
                     }}
                   >
-                    <Wrench size={16} style={{ color: '#54883a', flexShrink: 0 }} />
+                    <Wrench size={16} style={{ color: '#559a35', flexShrink: 0 }} />
                     <span style={{ fontSize: '13px', color: '#33493f', fontWeight: 600 }}>{equip}</span>
                   </div>
                 ))}
@@ -307,7 +307,7 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
               }}
             >
               <span className="eyebrow">مراحل التنفيذ</span>
-              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 20px', color: '#173449' }}>
+              <h2 style={{ fontSize: '24px', fontWeight: 700, margin: '12px 0 20px', color: '#1b3f5a' }}>
                 كيف ينفذ فريق ديمو كلين العمل خطوة بخطوة؟
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -328,8 +328,8 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
                       style={{
                         width: '40px',
                         height: '40px',
-                        background: '#19364c',
-                        color: '#a9cd7d',
+                        background: '#1e4663',
+                        color: '#b5dd84',
                         borderRadius: '50%',
                         display: 'grid',
                         placeItems: 'center',
@@ -340,7 +340,7 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
                       {step.step}
                     </div>
                     <div>
-                      <h3 style={{ fontSize: '16px', fontWeight: 700, margin: '0 0 6px', color: '#18354b' }}>
+                      <h3 style={{ fontSize: '16px', fontWeight: 700, margin: '0 0 6px', color: '#1e4663' }}>
                         {step.title}
                       </h3>
                       <p style={{ margin: 0, fontSize: '13px', color: '#687774', lineHeight: 1.85 }}>
@@ -355,7 +355,7 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
             {/* Guarantee Box */}
             <div
               style={{
-                background: 'linear-gradient(135deg, #18354b 0%, #20455f 100%)',
+                background: 'linear-gradient(135deg, #1e4663 0%, #20455f 100%)',
                 color: '#f5f3ec',
                 padding: '28px',
                 borderRadius: '10px',
@@ -371,7 +371,7 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
                   height: '56px',
                   borderRadius: '50%',
                   background: 'rgba(169,205,125,.2)',
-                  color: '#a9cd7d',
+                  color: '#b5dd84',
                   display: 'grid',
                   placeItems: 'center',
                   flex: 'none',
@@ -380,7 +380,7 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
                 <ShieldCheck size={32} />
               </div>
               <div>
-                <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 6px', color: '#a9cd7d' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 6px', color: '#b5dd84' }}>
                   ضمان الجودة والرضا التام
                 </h3>
                 <p style={{ margin: 0, fontSize: '13px', lineHeight: 1.8, color: 'rgba(245,243,236,.85)' }}>
@@ -393,7 +393,7 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
             {service.faqs && service.faqs.length > 0 && (
               <div style={{ background: '#fff', padding: '32px', borderRadius: '10px', border: '1px solid #e2e4db' }}>
                 <span className="eyebrow">إجابات الخبراء</span>
-                <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 20px', color: '#173449' }}>
+                <h2 style={{ fontSize: '22px', fontWeight: 700, margin: '12px 0 20px', color: '#1b3f5a' }}>
                   أسئلة شائعة حول {service.title}
                 </h2>
                 <FaqAccordion items={service.faqs} includeSchema={true} />
@@ -416,13 +416,13 @@ export default async function CleaningServiceDetailPage({ params }: Props) {
                 border: '1px solid #e2e4db',
               }}
             >
-              <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 12px', color: '#18354b' }}>
+              <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '0 0 12px', color: '#1e4663' }}>
                 المنشآت والمواقع التي نخدمها:
               </h4>
               <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 18px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {service.targetLocations.map((loc, i) => (
                   <li key={i} style={{ fontSize: '13px', color: '#5c6966', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <MapPin size={14} style={{ color: '#578740' }} />
+                    <MapPin size={14} style={{ color: '#559a35' }} />
                     <span>{loc}</span>
                   </li>
                 ))}

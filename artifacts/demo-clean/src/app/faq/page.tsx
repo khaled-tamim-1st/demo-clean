@@ -69,7 +69,7 @@ export default function FaqPage() {
       <section className="page-header" dir="rtl">
         <div className="container">
           <div className="page-header-content">
-            <span className="eyebrow" style={{ color: '#b2d488' }}>
+            <span className="eyebrow" style={{ color: '#bee58f' }}>
               مركز المعلومات والإجابات
             </span>
             <h1>الأسئلة الشائعة حول مكافحة الآفات في الكويت</h1>
@@ -91,7 +91,7 @@ export default function FaqPage() {
 
           <div
             style={{
-              background: '#18354b',
+              background: '#1e4663',
               color: '#fff',
               padding: '30px',
               borderRadius: '10px',
@@ -103,7 +103,7 @@ export default function FaqPage() {
             }}
           >
             <div>
-              <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 6px', color: '#a9cd7d' }}>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 6px', color: '#b5dd84' }}>
                 هل لديك استفسار آخر لم تجد إجابته هنا؟
               </h3>
               <p style={{ margin: 0, fontSize: '13px', color: 'rgba(255,255,255,.8)' }}>
@@ -114,7 +114,7 @@ export default function FaqPage() {
               <a
                 href={COMPANY_INFO.phoneTel}
                 className="button-primary"
-                style={{ background: '#a9cd7d', color: '#18354b', borderColor: '#a9cd7d' }}
+                style={{ background: '#b5dd84', color: '#1e4663', borderColor: '#b5dd84' }}
               >
                 <PhoneCall size={15} />
                 <span>اتصل بنا: {COMPANY_INFO.phone}</span>
