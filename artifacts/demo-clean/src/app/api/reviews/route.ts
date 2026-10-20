@@ -31,9 +31,17 @@ export async function POST(request: Request) {
       date: new Date().toISOString().split('T')[0],
     });
 
-    // Send instant Telegram Notification for new review
+    // Send instant Telegram Notification for new review with Approve/Reject buttons
     try {
       const { sendTelegramAlert, formatReviewMessage } = await import('@/lib/telegram');
+      const reviewMarkup = {
+        inline_keyboard: [
+          [
+            { text: '✅ قبول واعتماد التقييم', callback_data: `approve_rev_${newRev.id}` },
+            { text: '❌ رفض التقييم', callback_data: `reject_rev_${newRev.id}` },
+          ],
+        ],
+      };
       await sendTelegramAlert(
         formatReviewMessage({
           authorName: authorName.trim(),
@@ -43,7 +51,9 @@ export async function POST(request: Request) {
           areaName,
           comment: comment.trim(),
           source: 'موقع ديمو كلين',
-        })
+        }),
+        undefined,
+        reviewMarkup
       );
     } catch (telegramErr) {
       console.warn('Telegram alert error in reviews route:', telegramErr);

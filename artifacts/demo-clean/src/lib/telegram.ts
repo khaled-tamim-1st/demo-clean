@@ -10,7 +10,11 @@ export function escapeHtml(text?: string | number | null): string {
     .replace(/"/g, '&quot;');
 }
 
-export async function sendTelegramAlert(htmlText: string, chatIdOverride?: string | number): Promise<boolean> {
+export async function sendTelegramAlert(
+  htmlText: string,
+  chatIdOverride?: string | number,
+  replyMarkup?: any
+): Promise<boolean> {
   try {
     const token = TELEGRAM_BOT_TOKEN;
     const chatId = chatIdOverride || DEFAULT_TELEGRAM_CHAT_ID;
@@ -19,15 +23,20 @@ export async function sendTelegramAlert(htmlText: string, chatIdOverride?: strin
       return false;
     }
 
+    const payload: Record<string, any> = {
+      chat_id: chatId,
+      text: htmlText,
+      parse_mode: 'HTML',
+      disable_web_page_preview: true,
+    };
+    if (replyMarkup) {
+      payload.reply_markup = replyMarkup;
+    }
+
     const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: htmlText,
-        parse_mode: 'HTML',
-        disable_web_page_preview: true,
-      }),
+      body: JSON.stringify(payload),
     });
 
     const data = await response.json();

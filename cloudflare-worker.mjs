@@ -51,6 +51,7 @@ const SECURITY_HEADERS = {
 
 const TELEGRAM_BOT_TOKEN = '8831150430:AAEBlt_dCYxXgcFRsTUgYHQ-fBXar9oEATU';
 const DEFAULT_TELEGRAM_CHAT_ID = '-5284629423';
+let memoryTelegramChatId = DEFAULT_TELEGRAM_CHAT_ID;
 
 function escapeHtml(text) {
   if (text === undefined || text === null) return '';
@@ -61,23 +62,28 @@ function escapeHtml(text) {
     .replace(/"/g, '&quot;');
 }
 
-async function sendTelegramNotification(env, htmlText) {
+async function sendTelegramNotification(env, htmlText, replyMarkup = null) {
   try {
     const token = env?.TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN;
-    const chatId = env?.TELEGRAM_CHAT_ID || await getKv(env, 'TELEGRAM_CHAT_ID', DEFAULT_TELEGRAM_CHAT_ID);
+    const kvChatId = await getKv(env, 'TELEGRAM_CHAT_ID', null);
+    const chatId = env?.TELEGRAM_CHAT_ID || kvChatId || memoryTelegramChatId || DEFAULT_TELEGRAM_CHAT_ID;
     if (!chatId) {
       console.warn('Telegram notification skipped: TELEGRAM_CHAT_ID not configured yet');
       return false;
     }
+    const payload = {
+      chat_id: chatId,
+      text: htmlText,
+      parse_mode: 'HTML',
+      disable_web_page_preview: true,
+    };
+    if (replyMarkup) {
+      payload.reply_markup = replyMarkup;
+    }
     const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: htmlText,
-        parse_mode: 'HTML',
-        disable_web_page_preview: true,
-      }),
+      body: JSON.stringify(payload),
     });
     const result = await res.json();
     return Boolean(result.ok);
@@ -183,7 +189,7 @@ async function handleApi(request, url, env) {
         .filter(Boolean)
         .join('\n');
 
-      sendTelegramNotification(env, leadMsg);
+      await sendTelegramNotification(env, leadMsg);
 
       return jsonResponse(
         {
@@ -236,10 +242,10 @@ async function handleApi(request, url, env) {
         reviewsStore.unshift(newRev);
         await setKv(env, 'reviewsStore', reviewsStore);
 
-        // Send Telegram notification
+        // Send Telegram notification with Action Buttons (Accept / Reject)
         const stars = '⭐'.repeat(Math.min(5, Math.max(1, Number(rating) || 5)));
         const revMsg = [
-          `🌟 <b>تقييم جديد من الموقع!</b>`,
+          `🌟 <b>تقييم جديد يحتاج اعتمادك!</b>`,
           ``,
           `👤 <b>الاسم:</b> ${escapeHtml(authorName.trim())}`,
           `⭐️ <b>التقييم:</b> ${stars} (${newRev.rating}/5)`,
@@ -249,7 +255,16 @@ async function handleApi(request, url, env) {
           `⏰ <b>الوقت:</b> ${new Date().toLocaleString('ar-KW', { timeZone: 'Asia/Kuwait' })}`,
         ].join('\n');
 
-        sendTelegramNotification(env, revMsg);
+        const reviewMarkup = {
+          inline_keyboard: [
+            [
+              { text: '✅ قبول واعتماد التقييم', callback_data: `approve_rev_${newRev.id}` },
+              { text: '❌ رفض التقييم', callback_data: `reject_rev_${newRev.id}` },
+            ],
+          ],
+        };
+
+        await sendTelegramNotification(env, revMsg, reviewMarkup);
 
         return jsonResponse({
           success: true,
@@ -308,7 +323,7 @@ async function handleApi(request, url, env) {
           .filter(Boolean)
           .join('\n');
 
-        sendTelegramNotification(env, manLeadMsg);
+        await sendTelegramNotification(env, manLeadMsg);
         return jsonResponse({ success: true, lead: newLead, message: 'تم تسجيل الطلب بنجاح' }, 201);
       } catch {
         return jsonResponse({ success: false, message: 'فشل إضافة الطلب' }, 500);
@@ -375,10 +390,10 @@ async function handleApi(request, url, env) {
         reviewsStore.unshift(newRev);
         await setKv(env, 'reviewsStore', reviewsStore);
 
-        // Send Telegram notification
+        // Send Telegram notification with Action Buttons (Accept / Reject)
         const stars = '⭐'.repeat(Math.min(5, Math.max(1, Number(rating) || 5)));
         const revMsg = [
-          `🌟 <b>تقييم جديد من الموقع!</b>`,
+          `🌟 <b>تقييم جديد يحتاج اعتمادك!</b>`,
           ``,
           `👤 <b>الاسم:</b> ${escapeHtml(authorName.trim())}`,
           `⭐️ <b>التقييم:</b> ${stars} (${newRev.rating}/5)`,
@@ -388,7 +403,16 @@ async function handleApi(request, url, env) {
           `⏰ <b>الوقت:</b> ${new Date().toLocaleString('ar-KW', { timeZone: 'Asia/Kuwait' })}`,
         ].join('\n');
 
-        sendTelegramNotification(env, revMsg);
+        const reviewMarkup = {
+          inline_keyboard: [
+            [
+              { text: '✅ قبول واعتماد التقييم', callback_data: `approve_rev_${newRev.id}` },
+              { text: '❌ رفض التقييم', callback_data: `reject_rev_${newRev.id}` },
+            ],
+          ],
+        };
+
+        await sendTelegramNotification(env, revMsg, reviewMarkup);
         return jsonResponse({ success: true, review: newRev, message: 'تمت إضافة التقييم بنجاح' }, 201);
       } catch {
         return jsonResponse({ success: false, message: 'فشل إضافة التقييم' }, 500);
@@ -648,13 +672,76 @@ async function handleApi(request, url, env) {
 
   // Telegram Integration Status & Sync API
   if (pathname === '/api/telegram/status') {
-    const configuredChatId = await getKv(env, 'TELEGRAM_CHAT_ID', env?.TELEGRAM_CHAT_ID || null);
+    const configuredChatId = await getKv(env, 'TELEGRAM_CHAT_ID', null) || memoryTelegramChatId || DEFAULT_TELEGRAM_CHAT_ID;
     return jsonResponse({
       success: true,
       bot: '@democlean_assistant_bot',
       connected: Boolean(configuredChatId),
       chatId: configuredChatId ? String(configuredChatId) : null,
     });
+  }
+
+  // Telegram Webhook for Inline Buttons (Approve / Reject Reviews)
+  if (pathname === '/api/telegram/webhook' && method === 'POST') {
+    try {
+      const update = await request.json();
+      if (update?.callback_query) {
+        const cq = update.callback_query;
+        const cqId = cq.id;
+        const data = cq.data || '';
+        const message = cq.message;
+        const chatId = message?.chat?.id;
+        const messageId = message?.message_id;
+
+        if (data.startsWith('approve_rev_') || data.startsWith('reject_rev_')) {
+          const isApprove = data.startsWith('approve_rev_');
+          const revId = data.replace('approve_rev_', '').replace('reject_rev_', '');
+
+          reviewsStore = await getKv(env, 'reviewsStore', reviewsStore);
+          const item = reviewsStore.find((r) => r.id === revId);
+          if (item) {
+            item.status = isApprove ? 'approved' : 'rejected';
+            await setKv(env, 'reviewsStore', reviewsStore);
+          }
+
+          // Acknowledge callback query with toast alert in Telegram
+          await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/answerCallbackQuery`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              callback_query_id: cqId,
+              text: isApprove ? '✅ تم اعتماد التقييم ونشره في الموقع بنجاح!' : '❌ تم رفض التقييم.',
+              show_alert: true,
+            }),
+          });
+
+          // Edit message to remove buttons and show confirmation badge
+          const originalText = message?.text || '';
+          const badge = isApprove
+            ? '✅ <b>[تم الاعتماد والنشر على الموقع]</b>'
+            : '❌ <b>[تم الرفض ولم يُنشر]</b>';
+          const newText = `${badge}\n\n${escapeHtml(originalText)}`;
+
+          await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/editMessageText`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: chatId,
+              message_id: messageId,
+              text: newText,
+              parse_mode: 'HTML',
+              reply_markup: { inline_keyboard: [] },
+            }),
+          });
+
+          return jsonResponse({ success: true });
+        }
+      }
+      return jsonResponse({ ok: true });
+    } catch (err) {
+      console.error('Webhook processing error:', err);
+      return jsonResponse({ ok: true });
+    }
   }
 
   if (pathname === '/api/telegram/sync') {
